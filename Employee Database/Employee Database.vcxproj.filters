@@ -48,10 +48,10 @@
     <ClCompile Include="src\Validator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\views\CommonLogic.cpp">
+    <ClCompile Include="src\views\ViewDepartment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\views\ViewDepartment.cpp">
+    <ClCompile Include="src\views\Common.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -121,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="include\views\ViewDepartment.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\views\Common.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

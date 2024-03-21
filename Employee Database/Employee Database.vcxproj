@@ -151,12 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\views\Common.h" />
     <ClInclude Include="include\views\ViewDepartment.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="lib\sqlite\shell.c" />
     <ClCompile Include="lib\sqlite\sqlite3.c" />
     <ClCompile Include="src\Validator.cpp" />
-    <ClCompile Include="src\views\CommonLogic.cpp" />
+    <ClCompile Include="src\views\Common.cpp" />
     <ClCompile Include="src\views\ConsoleManager.cpp" />
     <ClCompile Include="src\DBManager.cpp" />
     <ClCompile Include="src\views\ViewDepartment.cpp" />
