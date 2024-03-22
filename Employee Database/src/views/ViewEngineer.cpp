@@ -141,13 +141,21 @@ bool EmployeeDB::Console::insertEngineer() {
 
 bool EmployeeDB::Console::updateEngineer() {
 	EmployeeDB::Model::Engineer e{ false };
-	/*short int cnt = 0;*/ //for cin.ignore() so it will only ignore once 
 
 	int id = inputID("update", "employee");
 
-	if (id == 0) {
+	if (id == 0) {   // ------------ REMOVE
 		return false;
 	}
+
+	// Fetch the record for the ID given
+	//bool DBSuccess = selectEngineer("employeeID", id);
+	/*if (DBSuccess) {
+		
+	}
+	else {
+
+	}*/
 
 	while (true) {
 		printEmpFields("engineer");
@@ -167,7 +175,6 @@ bool EmployeeDB::Console::updateEngineer() {
 			else {
 				std::string str;
 				std::getline(std::cin, str);
-				//std::cin >> str;
 				std::string input = a + str;
 
 				while (true) {

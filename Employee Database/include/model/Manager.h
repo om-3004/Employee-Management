@@ -73,7 +73,6 @@ namespace EmployeeDB::Model {
             role = rl;
         }
 
-        double computeSalary() override { return 10.2; };
     private:
         int managerID;
         int departmentID;

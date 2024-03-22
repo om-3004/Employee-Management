@@ -25,6 +25,7 @@ int EmployeeDB::Console::inputID(const std::string& op, const std::string& ent) 
 				if (id == 0) {
 					std::cout << "Press enter to continue...\n";
 					std::cin.get();
+					
 					system("cls");
 
 					return 0;

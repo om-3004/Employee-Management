@@ -18,7 +18,6 @@ namespace EmployeeDB::Model {
             hrSpecialization = specialization;
         }
 
-        double computeSalary() override { return 10.2; };
     private:
         std::string hrSpecialization;
     };

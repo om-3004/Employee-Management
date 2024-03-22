@@ -3,6 +3,7 @@
 
 #include <string>
 #include <algorithm>
+#include "Salary.h"
 
 namespace EmployeeDB::Model {
     enum class Gender
@@ -158,7 +159,7 @@ namespace EmployeeDB::Model {
             bonus = b;
         }
 
-        virtual double computeSalary() { return 10.2; }
+        static inline double computeSalary(Salary& obj);
     private:
         int	employeeID;
         std::string firstName;
@@ -205,6 +206,18 @@ namespace EmployeeDB::Model {
             gender = Gender::Other;
         }
         return gender;
+    }
+
+    inline double Employee::computeSalary(Salary& obj) {
+        double totalSalary{ 0.0 };
+
+        totalSalary += obj.getBaseSalary();
+        totalSalary += obj.getAllowance();
+        totalSalary -= obj.getDeduction();
+        totalSalary += obj.getBonus();
+        totalSalary += (obj.getBaseSalary() * (obj.getPerformanceMetric() / 100));
+
+        return totalSalary;
     }
 }
 

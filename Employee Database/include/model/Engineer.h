@@ -18,7 +18,6 @@ namespace EmployeeDB::Model {
             technology = tech;
         }
 
-        double computeSalary() override { return 10.2; };
     private:
         std::string technology;
     };
