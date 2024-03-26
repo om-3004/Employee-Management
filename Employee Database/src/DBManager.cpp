@@ -2,10 +2,10 @@
 #include <string>
 #include <iomanip>
 #include <exception>
-#include "Config.h"
-#include "DBManager.h"
-#include "Salary.h"
-#include "EmployeeController.h"
+#include "../Config.h"
+#include "../DBManager.h"
+#include "../include/model/Salary.h"
+#include "../include/controller/EmployeeController.h"
 
 using EmployeeDB::DBManager;
 using EmployeeDB::Model::Salary;
@@ -17,7 +17,7 @@ DBManager& DBManager::instance() {
 }
 
 int DBManager::openConnection() {
-	m_ResultCode = sqlite3_open(EmployeeDB::Config::DbFilePath.string().c_str(), &m_DB);
+	m_ResultCode = sqlite3_open(EmployeeDB::Config::dbFilePath.string().c_str(), &m_DB);
 
 	if (m_ResultCode == SQLITE_OK) {
 		std::cout << "Successfully opened DB connection" << '\n';

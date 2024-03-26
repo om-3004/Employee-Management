@@ -1,5 +1,6 @@
 #include"../../include/views/ViewQA.h"
 #include "../../include/views/Common.h"
+#include "../../include/controller/QAController.h"
 
 void EmployeeDB::Console::inQA() {
 	while (true) {
@@ -98,7 +99,7 @@ bool EmployeeDB::Console::insertInQA() {
 
 	char input;
 
-	bool x = insertOperation(input, "qa");
+	bool x = insertOperation(input, "QA");
 	if (!x) {
 		return false;
 	}
@@ -120,18 +121,19 @@ bool EmployeeDB::Console::insertInQA() {
 		}
 	}
 
-	//{
-	//	bool DbSuccess;
-	//	//Logic to send an object
-	//	DbSuccess = fun(e);
-	//	if (DbSuccess) {
-	//		std::cout << "Employee Entered SuccessFull\n";
-	//	}
-	//	else {
-	//		return false; //For Menu OF Enginner 
-	//		return true; //for again show insert option
-	//	}
-	//}
+	// ------------------LOGIC----------------------
+	bool DbSuccess;
+	//Logic to send an object
+	DbSuccess = EmployeeDB::Controller::QAController::insertQA(q);
+	if (DbSuccess) {
+		std::cout << "Employee Entered SuccessFull\n";
+	}
+	else {
+		std::cout << "Please enter to continue...\n";
+		std::cin.get();
+		return false; //For Menu OF Enginner 
+		//return true; //for again show insert option
+	}
 
 
 	if (repeatOperation("insert", "QA")) {
@@ -146,14 +148,17 @@ bool EmployeeDB::Console::updateInQA() {
 	EmployeeDB::Model::QA q{ true };
 	bool x{ true };
 
-	int id = inputID("update", "employee");
+	int id = inputID("update", "QA");
 
 	if (id == 0) {
 		return false;
 	}
 
+	q.setEmployeeID(id);
+	bool DBSuccess;
 	while (true) {
-		printEmpFields("qa");
+		DBSuccess = EmployeeDB::Controller::QAController::selectQA("employeeID", std::to_string(id));
+		printEmpFields("QA");
 		std::cout << "Enter the field which you want to update(1-13): ";
 
 		while (true) {
@@ -215,12 +220,18 @@ bool EmployeeDB::Console::updateInQA() {
 		}
 	}
 
+	DBSuccess = EmployeeDB::Controller::QAController::updateQA(q);
 
-	if (repeatOperation("update", "QA")) {
-		return true;
+	if (DBSuccess) {
+		if (repeatOperation("update", "QA")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	else {
-		return false;
+		return true;
 	}
 }
 
@@ -233,7 +244,10 @@ bool EmployeeDB::Console::deleteInQA() {
 		return false;
 	}
 
-	if (!dltConfirmation(id)) {
+	bool DBSuccess;
+	DBSuccess = EmployeeDB::Controller::QAController::selectQA("employeeID", std::to_string(id));
+
+	if (!dltConfirmation(id, "QA")) {
 		return false;
 	}
 
@@ -257,16 +271,15 @@ bool EmployeeDB::Console::viewInQA() {
 		std::string arg1, arg2;
 		switch (input) {
 		case '1': {
-			//	bool DbSuccess;
-			//	//Logic to send an object
-			//	DbSuccess = fun(int);
-			//	if (DbSuccess) {
-			//		std::cout << "Employee Entered SuccessFull\n";
-			//	}
-			//	else {
-			//		return false; //For Menu OF Enginner 
-			//		return true; //for again show insert option
-			//	}
+			bool DBSuccess;
+			//Logic to send an object
+			DBSuccess = EmployeeDB::Controller::QAController::selectQA(arg1, arg2);
+			if (DBSuccess) {}
+			else {
+				std::cout << "Press enter to continue...";
+				std::cin.get();
+				return false; //For Menu OF Enginner 			
+			}
 			break;
 		}
 		case '2': {
@@ -324,22 +337,14 @@ bool EmployeeDB::Console::viewInQA() {
 				}
 			}
 
-			// logic
-			// bool success ;
-			// success = fun(arg1,arg2);
-			// if(success){
-			// std::cout << "Successfull\n";
-			// std::cin.clear();
-			// std::cin.ignore();
-			//}
-			//else{
-			//  std::cout << "Database Error\n";
-			//  std::cin.clear();
-			//  std::cin.ignore();
-			//  std::cout << "Press enter to continue...";
-			//  std::cin.get();
-			//  return false ;
-			//}
+			bool DBSuccess;
+			DBSuccess = EmployeeDB::Controller::QAController::selectQA(arg1, arg2);
+			if (DBSuccess) {}
+			else {
+				std::cout << "Press enter to continue...";
+				std::cin.get();
+				return false;
+			}
 
 			break;
 		}

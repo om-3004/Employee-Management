@@ -1,4 +1,7 @@
 #include "../../include/views/Common.h"
+#include "../../include/controller/EmployeeController.h"
+#include "../../include/controller/ManagerController.h"
+#include "../../include/controller/DepartmentController.h"
 
 int EmployeeDB::Console::inputID(const std::string& op, const std::string& ent) {
 
@@ -25,13 +28,15 @@ int EmployeeDB::Console::inputID(const std::string& op, const std::string& ent) 
 				if (id == 0) {
 					std::cout << "Press enter to continue...\n";
 					std::cin.get();
-					
 					system("cls");
-
 					return 0;
 				}
-				//e.setEmployeeID(id);
-				return id;
+				if (EmployeeDB::Controller::EmployeeController::checkEmployeeExistence(std::to_string(id), ent)) {
+					return id;
+				}
+				else {
+					std::cout << "No records found for the given emloyeeID...\n";
+				}
 				//break;
 			}
 			catch (...) {
@@ -46,10 +51,11 @@ int EmployeeDB::Console::inputID(const std::string& op, const std::string& ent) 
 }
 
 void EmployeeDB::Console::printEmpFields(const std::string& empType) {
-	if (empType == "department") {
-		std::cout << "1. baseSalary*: \n";
-		std::cout << "2. allowance*: \n";
-		std::cout << "3. deduction*: \n";
+	if (empType == "Department") {
+		std::cout << "1. departmentName*: \n";
+		std::cout << "2. baseSalary*: \n";
+		std::cout << "3. allowance*: \n";
+		std::cout << "4. deduction*: \n";
 	}
 	else {
 		std::cout << "1. firstName*: " << '\n';
@@ -64,19 +70,19 @@ void EmployeeDB::Console::printEmpFields(const std::string& empType) {
 		std::cout << "10. mentorID*:" << '\n';
 		std::cout << "11. performanceMetric:" << '\n';
 		std::cout << "12. bonus:" << '\n';
-		if (empType == "engineer") {
+		if (empType == "Engineer") {
 			std::cout << "13. technology*:" << '\n';
 		}
-		else if (empType == "finance") {
+		else if (empType == "Finance") {
 			std::cout << "13. accountingTool*:" << '\n';
 		}
-		else if (empType == "hr") {
+		else if (empType == "HR") {
 			std::cout << "13. hrSpecialization*:" << '\n';
 		}
-		else if (empType == "qa") {
+		else if (empType == "QA") {
 			std::cout << "13. testingTool*:" << '\n';
 		}
-		else if (empType == "manager") {
+		else if (empType == "Manager") {
 			std::cout << "13. teamSize*:" << '\n';
 			std::cout << "14. yearsOfExperince*:" << '\n';
 			std::cout << "15. projectTitle*:" << '\n';
@@ -86,7 +92,7 @@ void EmployeeDB::Console::printEmpFields(const std::string& empType) {
 }
 
 void EmployeeDB::Console::printEmpFieldsWithID(const std::string& empType) {
-	if (empType == "department") {
+	if (empType == "Department") {
 		std::cout << "1. Department ID*: \n";
 		std::cout << "2. Department Name*: \n";
 		std::cout << "3. Base Salaray*: \n";
@@ -109,19 +115,19 @@ void EmployeeDB::Console::printEmpFieldsWithID(const std::string& empType) {
 		std::cout << "13. performanceMetric:" << '\n';
 		std::cout << "14. bonus:" << '\n';
 
-		if (empType == "engineer") {
+		if (empType == "Engineer") {
 			std::cout << "15. technology*:" << '\n';
 		}
-		else if (empType == "finance") {
+		else if (empType == "Finance") {
 			std::cout << "15. accountingTool*:" << '\n';
 		}
-		else if (empType == "hr") {
+		else if (empType == "HR") {
 			std::cout << "15. hrSpecialization*:" << '\n';
 		}
-		else if (empType == "qa") {
+		else if (empType == "QA") {
 			std::cout << "15. testingTool*:" << '\n';
 		}
-		else if (empType == "manager") {
+		else if (empType == "Manager") {
 			std::cout << "15. teamSize*:" << '\n';
 			std::cout << "16. yearsOfExperince*:" << '\n';
 			std::cout << "17. projectTitle*:" << '\n';
@@ -167,7 +173,7 @@ bool EmployeeDB::Console::repeatUpdateField(bool& x) {
 	return true;
 }
 
-bool EmployeeDB::Console::dltConfirmation(const int& id) {
+bool EmployeeDB::Console::dltConfirmation(const int& id, const std::string& ent) {
 	while (true) {
 		// fetch the row of the employee which is selected using the ID
 		// bool DbSuccess{ false };
@@ -191,23 +197,24 @@ bool EmployeeDB::Console::dltConfirmation(const int& id) {
 		else if (EmployeeDB::Validator::validateCharInput(confirm)) {
 			if (confirm == '1')
 			{
-				//bool DbSuccess{ false };
-				//	//Logic to send an object
-				//	DbSuccess = fun(int);
-				/*if (DbSuccess) {
+				bool DbSuccess{ false };
+
+				//Logic to send an object
+				if (ent == "Manager")
+					DbSuccess = EmployeeDB::Controller::ManagerController::deleteManagerByID(id);
+				else if (ent == "Department")
+					DbSuccess = EmployeeDB::Controller::DepartmentController::deleteDepartmentByID(id);
+				else
+					DbSuccess = EmployeeDB::Controller::EmployeeController::deleteEmployeeByID(id);
+
+				if (DbSuccess) {
 					std::cout << "Employee Deleted SuccessFull\n";
-					std::cin.clear();
-					std::cin.ignore();
 					return true;
 				}
 				else {
 					std::cout << "Error from DB\n";
-					std::cout << "Press enter key to continue...\n";
-					std::cin.clear();
-					std::cin.ignore();
-					std::cin.get();
 					return false;
-				}*/
+				}
 			}
 			else {
 				std::cin.ignore();
@@ -220,6 +227,7 @@ bool EmployeeDB::Console::dltConfirmation(const int& id) {
 			std::cout << "Please enter valid input...\n";
 		}
 	}
+	return true;
 }
 
 bool EmployeeDB::Console::repeatOperation(const std::string& op, const std::string& ent) {
@@ -1075,7 +1083,7 @@ bool EmployeeDB::Console::insertOperation(char& input, const std::string& empTyp
 			std::cin.ignore();
 			cnt++;
 		}
-		if (empType != "manager")
+		if (empType != "Manager")
 			printEmpFields(empType);
 
 		char a;

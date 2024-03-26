@@ -18,8 +18,8 @@ CREATE TABLE "Employee" (
 	"address"	TEXT NOT NULL,
 	"gender"	TEXT NOT NULL,
 	"dateOfJoining"	TEXT NOT NULL,
-	"departmentID"	INTEGER NOT NULL,
-	"mentorID"	INTEGER NOT NULL,
+	"departmentID"	INTEGER,
+	"mentorID"	INTEGER,
 	"performanceMetric"	REAL,
 	"bonus"	REAL,
 	FOREIGN KEY("departmentID") REFERENCES "Department"("departmentID") ON DELETE SET NULL,
@@ -34,7 +34,7 @@ CREATE TABLE "Manager" (
 	"teamSize"	INTEGER NOT NULL,
 	"yearsOfExp"	REAL NOT NULL,
 	"projectTitle"	TEXT,
-	"role" TEXT NOT NULL,
+	"role" TEXT,
 	PRIMARY KEY("managerID"),
 	FOREIGN KEY("managerID") REFERENCES "Employee"("employeeID") ON DELETE CASCADE,
 	FOREIGN KEY("departmentID") REFERENCES "Department"("departmentID") ON DELETE CASCADE
@@ -44,6 +44,7 @@ CREATE TABLE "Engineer" (
 	"employeeID"	INTEGER NOT NULL,
 	"technology"	TEXT NOT NULL,
 	FOREIGN KEY("employeeID") REFERENCES "Employee"("employeeID") ON DELETE CASCADE
+
 );
  
 CREATE TABLE "QA" (
@@ -54,7 +55,7 @@ CREATE TABLE "QA" (
  
 CREATE TABLE "Finance" (
 	"employeeID"	INTEGER NOT NULL,
-	"accountingTool"	TEXT NOT NULL,
+	"accountingTool" TEXT NOT NULL,
 	FOREIGN KEY("employeeID") REFERENCES "Employee"("employeeID") ON DELETE CASCADE
 );
  
@@ -67,3 +68,7 @@ CREATE TABLE "HR" (
 CREATE VIEW ManagerView
 AS
 	SELECT Employee.*,Manager.teamSize,Manager.yearsOfExp,Manager.projectTitle,Manager.role FROM Employee INNER JOIN Manager ON Employee.employeeID = Manager.managerID;
+
+CREATE VIEW SalaryView
+AS
+	SELECT employeeID, departmentID, performanceMetric, bonus ,baseSalary, allowance, deduction FROM Employee NATURAL JOIN Department;

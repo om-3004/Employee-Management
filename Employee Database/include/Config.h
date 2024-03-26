@@ -4,7 +4,7 @@
 #include <filesystem>
 
 namespace EmployeeDB::Config {
-	static std::filesystem::path DbFilePath = "./data/Employee.db";
+	static std::filesystem::path dbFilePath = "./data/EmployeeDB.db";
 }
 
 #endif

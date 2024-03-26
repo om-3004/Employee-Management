@@ -1,5 +1,6 @@
 #include"../../include/views/ViewHR.h"
 #include "../../include/views/Common.h"
+#include "../../include/controller/HRController.h"
 
 void EmployeeDB::Console::inHR() {
 	while (true) {
@@ -98,7 +99,7 @@ bool EmployeeDB::Console::insertHR() {
 
 	char input;
 
-	bool x = insertOperation(input, "hr");
+	bool x = insertOperation(input, "HR");
 	if (!x) {
 		return false;
 	}
@@ -120,18 +121,19 @@ bool EmployeeDB::Console::insertHR() {
 	}
 
 
-	//{
-	//	bool DbSuccess;
-	//	//Logic to send an object
-	//	DbSuccess = fun(e);
-	//	if (DbSuccess) {
-	//		std::cout << "Employee Entered SuccessFull\n";
-	//	}
-	//	else {
-	//		return false; //For Menu OF Enginner 
-	//		return true; //for again show insert option
-	//	}
-	//}
+	// ------------------LOGIC----------------------
+	bool DbSuccess;
+	//Logic to send an object
+	DbSuccess = EmployeeDB::Controller::HRController::insertHR(h);
+	if (DbSuccess) {
+		std::cout << "Employee Entered SuccessFull\n";
+	}
+	else {
+		std::cout << "Please enter to continue...\n";
+		std::cin.get();
+		return false; //For Menu OF Enginner 
+		//return true; //for again show insert option
+	}
 
 
 	if (repeatOperation("insert", "HR")) {
@@ -146,14 +148,17 @@ bool EmployeeDB::Console::updateHR() {
 	EmployeeDB::Model::HR h{ true };
 	bool x{ false };
 
-	int id = inputID("update", "employee");
+	int id = inputID("update", "HR");
 
 	if (id == 0) {
 		return false;
 	}
+	h.setEmployeeID(id);
+	bool DBSuccess;
 
 	while (true) {
-		printEmpFields("hr");
+		DBSuccess = EmployeeDB::Controller::HRController::selectHR("employeeID", std::to_string(id));
+		printEmpFields("HR");
 		std::cout << "Enter the field which you want to update(1-13): ";
 
 		while (true) {
@@ -215,12 +220,18 @@ bool EmployeeDB::Console::updateHR() {
 		}
 	}
 
+	DBSuccess = EmployeeDB::Controller::HRController::updateHR(h);
 
-	if (repeatOperation("update", "HR")) {
-		return true;
+	if (DBSuccess) {
+		if (repeatOperation("update", "HR")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	else {
-		return false;
+		return true;
 	}
 }
 
@@ -233,7 +244,10 @@ bool EmployeeDB::Console::deleteHR() {
 		return false;
 	}
 
-	if (!dltConfirmation(id)) {
+	bool DBSuccess;
+	DBSuccess = EmployeeDB::Controller::HRController::selectHR("employeeID", std::to_string(id));
+
+	if (!dltConfirmation(id, "HR")) {
 		return false;
 	}
 
@@ -257,16 +271,15 @@ bool EmployeeDB::Console::viewHR() {
 		std::string arg1, arg2;
 		switch (input) {
 		case '1': {
-			//	bool DbSuccess;
+			bool DBSuccess;
 			//	//Logic to send an object
-			//	DbSuccess = fun(int);
-			//	if (DbSuccess) {
-			//		std::cout << "Employee Entered SuccessFull\n";
-			//	}
-			//	else {
-			//		return false; //For Menu OF Enginner 
-			//		return true; //for again show insert option
-			//	}
+			DBSuccess = EmployeeDB::Controller::HRController::selectHR();
+			if (DBSuccess) {}
+			else {
+				std::cout << "Press enter to continue...";
+				std::cin.get();
+				return false; //For Menu OF Enginner 
+			}
 			break;
 		}
 		case '2': {
@@ -323,23 +336,15 @@ bool EmployeeDB::Console::viewHR() {
 						break;
 				}
 			}
-			// logic
-			// bool success ;
-			// success = fun(arg1,arg2);
-			// if(success){
-			// std::cout << "Successfull\n";
-			// std::cin.clear();
-			// std::cin.ignore();
-			// break;
-			//}
-			//else{
-			//  std::cout << "Database Error\n";
-			//  std::cin.clear();
-			//  std::cin.ignore();
-			//  std::cout << "Press enter to continue...";
-			//  std::cin.get();
-			//  return false ;
-			//}
+			bool DBSuccess;
+			//	//Logic to send an object
+			DBSuccess = EmployeeDB::Controller::HRController::selectHR(arg1, arg2);
+			if (DBSuccess) {}
+			else {
+				std::cout << "Press enter to continue...";
+				std::cin.get();
+				return false; //For Menu OF Enginner 
+			}
 			break;
 		}
 		}

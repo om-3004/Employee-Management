@@ -7,7 +7,7 @@ using EmployeeDB::Controller::EmployeeController, EmployeeDB::Controller::Depart
 using EmployeeDB::DBManager;
 
 bool EmployeeController::insertEmployee(const Employee& obj) {
-	std::string queryString = "INSERT INTO Employee (firstName, middleName, lastName, dateOfBirth, mobileNumber, email, address, gender, dateOfJoining, departmentID, mentorID, performanceMetric, bonus) "
+	std::string queryString = "INSERT INTO Employee (firstName, middleName, lastName, dateOfBirth, mobileNo, email, address, gender, dateOfJoining, departmentID, mentorID, performanceMetric, bonus) "
 		+ std::string{ "VALUES (" } +
 		"\"" + obj.getFirstName() + "\"" + ", " +
 		(obj.getMiddleName().size() == 0 ? "NULL" : "\"" + obj.getMiddleName() + "\"") + ", " +
@@ -79,19 +79,25 @@ int EmployeeController::getDepartmentIDbyEmployeeID(int ID) {
 	return departmentID;
 }
 
-bool EmployeeController::checkEmployeeExistence(const std::string& employeeID, const std::string& departmentName) {
+bool EmployeeController::checkEmployeeExistence(const std::string& ID, const std::string& departmentName) {
 
-	int departmentID{ -1 };
+	int departmentID;
+	std::string queryString;
 
-	if (departmentName != "*") {
+	if (departmentName == "Manager") {
+		queryString = "SELECT managerID FROM Manager WHERE managerID = " + ID + ";";
+	}
+	else if (departmentName == "Department") {
+		queryString = "SELECT departmentID FROM Department WHERE departmentID = " + ID + ";";
+	}
+	else {
 		departmentID = DepartmentController::getDepartmentIDbyName(departmentName);
 		if (departmentID == -1) {
 			return false;
 		}
+		queryString = "SELECT employeeID FROM Employee WHERE employeeID = " + ID + " AND departmentID = " + std::to_string(departmentID) + ";";
 	}
-
-	std::string queryString = "SELECT employeeID FROM Employee WHERE employeeID = " + employeeID + (departmentID == -1 ? "" : " AND departmentID = " + std::to_string(departmentID)) + ";";
-
+	std::cout << "departmentID: " << departmentID << '\n';
 	int callbackCount{ 0 };
 
 	try {
@@ -102,9 +108,10 @@ bool EmployeeController::checkEmployeeExistence(const std::string& employeeID, c
 	}
 
 	if (callbackCount == 0) {
+		std::cout << "Callback is 0\n";
 		return false;
 	}
-
+	std::cout << "Callback: " << callbackCount << '\n';
 	return true;
 }
 
@@ -221,14 +228,14 @@ bool EmployeeController::getSalaryDetails(Salary& obj) {
 	auto getSalaryDetailsCallback = [](void* data, int argc, char** argv, char** azColName) -> int {
 		Salary* salaryObj = static_cast<Salary*>(data);
 
-		salaryObj->setDepartmentID(std::stoi(argv[1]));
-		salaryObj->setPerformanceMetric(std::stod(argv[2]));
-		salaryObj->setBonus(std::stod(argv[3]));
-		salaryObj->setBaseSalary(std::stod(argv[4]));
-		salaryObj->setAllowance(std::stod(argv[5]));
-		salaryObj->setDeduction(std::stod(argv[6]));
-		return 0;
-		};
+		salaryObj->setDepartmentID(argv[1] ? std::stoi(argv[1]) : 0);
+		salaryObj->setPerformanceMetric(argv[2] ? std::stoi(argv[2]) : 0.0);
+		salaryObj->setBonus(argv[3] ? std::stoi(argv[3]) : 0.0);
+		salaryObj->setBaseSalary(argv[4] ? std::stoi(argv[4]) : 0.0);
+		salaryObj->setAllowance(argv[5] ? std::stoi(argv[5]) : 0.0);
+		salaryObj->setDeduction(argv[6] ? std::stoi(argv[6]) : 0.0);
+		return 0;  
+	};
 
 	try {
 		DBManager::instance().executeCustomQuery(queryString.c_str(), getSalaryDetailsCallback, &obj);

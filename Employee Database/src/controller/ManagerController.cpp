@@ -7,22 +7,22 @@ using EmployeeDB::Controller::ManagerController, EmployeeDB::Controller::Employe
 
 bool ManagerController::insertManager(Manager& obj) {
 
-	int departmentID = EmployeeController::getDepartmentIDbyEmployeeID(obj.getManagerID());
+	/*int departmentID = EmployeeController::getDepartmentIDbyEmployeeID(obj.getManagerID());
 
 	if (departmentID == -1) {
 		std::cerr << "Department was not found for provided managerID.";
 		return false;
-	}
+	}*/
 
-	obj.setDepartmentID(departmentID);
+	//obj.setDepartmentID(departmentID);
 
-	std::string queryString = "INSERT INTO Manager (managerID, departmentID, teamSize, yearsOfExperience, projectTitle, role) VALUES (" +
+	std::string queryString = "INSERT INTO Manager (managerID, departmentID, teamSize, yearsOfExp, projectTitle, role) VALUES (" +
 		std::to_string(obj.getManagerID()) + ", " +
 		std::to_string(obj.getDepartmentID()) + ", " +
 		std::to_string(obj.getTeamSize()) + ", " +
-		std::to_string(obj.getYearsOfExperience()) + ", " +
+		std::to_string(obj.getYearsOfExp()) + ", " +
 		(obj.getProjectTitle().size() == 0 ? "NULL" : "\"" + obj.getProjectTitle() + "\"") + "," +
-		(obj.getRole().size() == 0 ? "NULL" : "\"" + obj.getRole() + "\"") + "\");";
+		(obj.getRole().size() == 0 ? "NULL" : "\"" + obj.getRole() + "\"") + ");";
 
 	try {
 		DBManager::instance().executeQuery(queryString.c_str());
@@ -71,11 +71,11 @@ std::string ManagerController::getUpdateQueryCondition(Manager& obj) {
 	if (obj.getTeamSize() != -1) {
 		updateQueryCondition += "teamSize = " + std::to_string(obj.getTeamSize());
 	}
-	if (obj.getYearsOfExperience() != -1) {
+	if (obj.getYearsOfExp() != -1) {
 		if (updateQueryCondition.size() != 0) {
 			updateQueryCondition += ", ";
 		}
-		updateQueryCondition += "yearsOfExperience = " + std::to_string(obj.getYearsOfExperience());
+		updateQueryCondition += "yearsOfExp = " + std::to_string(obj.getYearsOfExp());
 	}
 	if (obj.getProjectTitle() != "#") {
 		if (updateQueryCondition.size() != 0) {

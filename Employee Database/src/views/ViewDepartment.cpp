@@ -1,4 +1,5 @@
 #include"../../include/views/ViewDepartment.h"
+#include "../../include/controller/DepartmentController.h"
 #include "../../include/views/Common.h"
 
 void EmployeeDB::Console::inDepartment() {
@@ -95,7 +96,7 @@ bool EmployeeDB::Console::insertDept() {
 	EmployeeDB::Model::Department d;
 	char input;
 
-	bool x = insertOperation(input, "department");
+	bool x = insertOperation(input, "Department");
 	if (!x) {
 		return false;
 	}
@@ -114,7 +115,6 @@ bool EmployeeDB::Console::insertDept() {
 				break;
 			}
 		}
-
 		while (true) {
 			std::string inputField;
 			std::cout << "baseSalary*: ";
@@ -153,7 +153,6 @@ bool EmployeeDB::Console::insertDept() {
 				break;
 			}
 		}
-
 		while (true) {
 			std::string inputField;
 			std::cout << "deduction*: ";
@@ -175,20 +174,21 @@ bool EmployeeDB::Console::insertDept() {
 		}
 	}
 
-	//{
-	//	bool DbSuccess;
-	//	//Logic to send an object
-	//	DbSuccess = fun(d);
-	//	if (DbSuccess) {
-	//		std::cout << "Employee Entered SuccessFull\n";
-	//	}
-	//	else {
-	//		return false; //For Menu OF Enginner 
-	//		return true; //for again show insert option
-	//	}
-	//}
+	// ------------------LOGIC----------------------
+	bool DbSuccess;
+	//Logic to send an object
+	DbSuccess = EmployeeDB::Controller::DepartmentController::insertDepartment(d);
+	if (DbSuccess) {
+		std::cout << "Department Entered SuccessFull\n";
+	}
+	else {
+		std::cout << "Please enter to continue...\n";
+		std::cin.get();
+		return false; //For Menu OF Enginner 
+		//return true; //for again show insert option
+	}
 
-	if (repeatOperation("insert", "department")) {
+	if (repeatOperation("insert", "Department")) {
 		return true;
 	}
 	else {
@@ -200,13 +200,17 @@ bool EmployeeDB::Console::updateDept() {
 	EmployeeDB::Model::Department d(true);
 	bool x{ true };
 
-	int id = inputID("update", "department");
+	int id = inputID("update", "Department");
 
 	if (id == 0) {
 		return false;
 	}
 
+	d.setDepartmentID(id);
+	bool DBSuccess;
+
 	while (true) {
+		DBSuccess = EmployeeDB::Controller::DepartmentController::selectDepartment("departmentID", std::to_string(id));
 		std::cout << "1. baseSalary*: \n";
 		std::cout << "2. allowance*: \n";
 		std::cout << "3. deduction*: \n";
@@ -320,30 +324,39 @@ bool EmployeeDB::Console::updateDept() {
 			break;
 		}
 	}
+	DBSuccess = EmployeeDB::Controller::DepartmentController::updateDepartment(d);
 
-	if (repeatOperation("update", "department")) {
-		return true;
+	if (DBSuccess) {
+		if (repeatOperation("update", "Department")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	else {
-		return false;
+		return true;
 	}
 }
 
 bool EmployeeDB::Console::deleteDept() {
 	EmployeeDB::Model::Department d;
 
-	int id = inputID("delete", "department");
+	int id = inputID("delete", "Department");
 
 	if (id == 0) {
 		return false;
 	}
 
-	if (!dltConfirmation(id)) {
+	bool DBSuccess;
+	DBSuccess = EmployeeDB::Controller::DepartmentController::selectDepartment("departmentID", std::to_string(id));
+
+	if (!dltConfirmation(id, "Department")) {
 		return false;
 	}
 
 	std::cin.ignore();
-	if (repeatOperation("delete", "department")) {
+	if (repeatOperation("delete", "Department")) {
 		return true;
 	}
 	else {
@@ -362,21 +375,20 @@ bool EmployeeDB::Console::viewDept() {
 		std::string arg1, arg2;
 		switch (input) {
 		case '1': {
-			//	bool DbSuccess;
+			bool DBSuccess;
 			//	//Logic to send an object
-			//	DbSuccess = fun(int);
-			//	if (DbSuccess) {
-			//		std::cout << "Employee Entered SuccessFull\n";
-			//	}
-			//	else {
-			//		return false; //For Menu OF Enginner 
-			//		return true; //for again show insert option
-			//	}
+			DBSuccess = EmployeeDB::Controller::DepartmentController::selectDepartment();
+			if (DBSuccess) {}
+			else {
+				std::cout << "Press enter to continue...";
+				std::cin.get();
+				return false; //For Menu OF Enginner 
+			}
 			break;
 		}
 		case '2': {
 			while (true) {
-				printEmpFields("department");
+				printEmpFieldsWithID("Department");
 				std::cout << "Select the field using which you want to view the Employee details(1-5): ";
 				char a;
 				a = std::cin.get();
@@ -410,30 +422,22 @@ bool EmployeeDB::Console::viewDept() {
 						break;
 				}
 			}
-			// logic
-			// bool success ;
-			// success = fun(arg1,arg2);
-			// if(success){
-			// std::cout << "Successfull\n";
-			// std::cin.clear();
-			// std::cin.ignore();
-			// break;
-			//}
-			//else{
-			//  std::cout << "Database Error\n";
-			//  std::cin.clear();
-			//  std::cin.ignore();
-			//  std::cout << "Press enter to continue...";
-			//  std::cin.get();
-			//  return false ;
-			//}
+			bool DBSuccess;
+			//	//Logic to send an object
+			DBSuccess = EmployeeDB::Controller::DepartmentController::selectDepartment(arg1, arg2);
+			if (DBSuccess) {}
+			else {
+				std::cout << "Press enter to continue...";
+				std::cin.get();
+				return false; //For Menu OF Enginner 
+			}
 
 			break;
 		}
 		}
 	}
 
-	if (repeatOperation("view", "department")) {
+	if (repeatOperation("view", "Department")) {
 		return true;
 	}
 	else {

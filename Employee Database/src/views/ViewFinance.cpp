@@ -1,5 +1,6 @@
 #include"../../include/views/ViewFinance.h"
 #include "../../include/views/Common.h"
+#include "../../include/controller/FinanceController.h"
 
 void EmployeeDB::Console::inFinance() {
 	while (true) {
@@ -96,7 +97,7 @@ bool EmployeeDB::Console::insertInFinance() {
 
 	char input;
 
-	bool x = insertOperation(input, "finance");
+	bool x = insertOperation(input, "Finance");
 	if (!x) {
 		return false;
 	}
@@ -116,21 +117,23 @@ bool EmployeeDB::Console::insertInFinance() {
 			}
 		}
 	}
-	////{ ------------------LOGIC----------------------
-	//	bool DbSuccess;
-	//	//Logic to send an object
-	//	DbSuccess = fun(e);
-	//	if (DbSuccess) {
-	//		std::cout << "Employee Entered SuccessFull\n";
-	//	}
-	//	else {
-	//		return false; //For Menu OF Enginner 
-	//		return true; //for again show insert option
-	//	}
-	//}
+
+	// ------------------LOGIC----------------------
+	bool DbSuccess;
+	//Logic to send an object
+	DbSuccess = EmployeeDB::Controller::FinanceController::insertFinance(f);
+	if (DbSuccess) {
+		std::cout << "Employee Entered SuccessFull\n";
+	}
+	else {
+		std::cout << "Please enter to continue...\n";
+		std::cin.get();
+		return false; //For Menu OF Enginner 
+		//return true; //for again show insert option
+	}
 
 
-	if (repeatOperation("insert", "finance")) {
+	if (repeatOperation("insert", "Finance")) {
 		return true;
 	}
 	else {
@@ -143,14 +146,17 @@ bool EmployeeDB::Console::updateInFinance() {
 	bool x{ true };
 	// short int cnt = 0; //for cin.ignore() so it will only ignore once 
 
-	int id = inputID("update", "employee");
+	int id = inputID("update", "Finance");
 
 	if (id == 0) {
 		return false;
 	}
+	f.setEmployeeID(id);
+	bool DBSuccess;
 
 	while (true) {
-		printEmpFields("finance");
+		DBSuccess = EmployeeDB::Controller::FinanceController::selectFinance("employeeID", std::to_string(id));
+		printEmpFields("Finance");
 		std::cout << "Enter the field which you want to update(1-13): ";
 
 		while (true) {
@@ -212,29 +218,40 @@ bool EmployeeDB::Console::updateInFinance() {
 		}
 	}
 
-	if (repeatOperation("update", "finance")) {
-		return true;
+	DBSuccess = EmployeeDB::Controller::FinanceController::updateFinance(f);
+
+	if (DBSuccess) {
+		if (repeatOperation("update", "Finance")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	else {
-		return false;
+		return true;
 	}
 }
 
 bool EmployeeDB::Console::deleteInFinance() {
 	EmployeeDB::Model::Finance f;
 
-	int id = inputID("delete", "finance");
+	int id = inputID("delete", "Finance");
 
 	if (id == 0) {
 		return false;
 	}
 
-	if (!dltConfirmation(id)) {
+	bool DBSuccess;
+	DBSuccess = EmployeeDB::Controller::FinanceController::selectFinance("employeeID", std::to_string(id));
+
+	if (!dltConfirmation(id, "Finance")) {
 		return false;
 	}
 
+
 	std::cin.ignore();
-	if (repeatOperation("delete", "finance")) {
+	if (repeatOperation("delete", "Finance")) {
 		return true;
 	}
 	else {
@@ -253,21 +270,20 @@ bool EmployeeDB::Console::viewInFinance() {
 		std::string arg1, arg2;
 		switch (input) {
 		case '1': {
-			//	bool DbSuccess;
+			bool DBSuccess;
 			//	//Logic to send an object
-			//	DbSuccess = fun(int);
-			//	if (DbSuccess) {
-			//		std::cout << "Employee Entered SuccessFull\n";
-			//	}
-			//	else {
-			//		return false; //For Menu OF Enginner 
-			//		return true; //for again show insert option
-			//	}
+			DBSuccess = EmployeeDB::Controller::FinanceController::selectFinance();
+			if (DBSuccess) {}
+			else {
+				std::cout << "Press enter to continue...";
+				std::cin.get();
+				return false; //For Menu OF Enginner 
+			}
 			break;
 		}
 		case '2': {
 			while (true) {
-				printEmpFieldsWithID("finance");
+				printEmpFieldsWithID("Finance");
 				std::cout << "Select the field using which you want to view the Employee details(1-15): ";
 				char a;
 				a = std::cin.get();
@@ -320,30 +336,22 @@ bool EmployeeDB::Console::viewInFinance() {
 						break;
 				}
 			}
-			// logic
-			// bool success ;
-			// success = fun(arg1,arg2);
-			// if(success){
-			// std::cout << "Successfull\n";
-			// std::cin.clear();
-			// std::cin.ignore();
-			// break;
-			//}
-			//else{
-			//  std::cout << "Database Error\n";
-			//  std::cin.clear();
-			//  std::cin.ignore();
-			//  std::cout << "Press enter to continue...";
-			//  std::cin.get();
-			//  return false ;
-			//}
+			bool DBSuccess;
+			//	//Logic to send an object
+			DBSuccess = EmployeeDB::Controller::FinanceController::selectFinance(arg1, arg2);
+			if (DBSuccess) {}
+			else {
+				std::cout << "Press enter to continue...";
+				std::cin.get();
+				return false; //For Menu OF Enginner 
+			}
 
 			break;
 		}
 		}
 	}
 
-	if (repeatOperation("view", "finance")) {
+	if (repeatOperation("view", "Finance")) {
 		return true;
 	}
 	else {

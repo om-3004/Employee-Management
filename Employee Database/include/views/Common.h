@@ -14,7 +14,7 @@ namespace EmployeeDB::Console {
 
 	bool repeatUpdateField(bool& x);
 
-	bool dltConfirmation(const int& id);
+	bool dltConfirmation(const int& id, const std::string& ent);
 
 	bool repeatOperation(const std::string& op, const std::string& ent);
 

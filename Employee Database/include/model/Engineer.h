@@ -10,7 +10,7 @@ namespace EmployeeDB::Model {
         Engineer() : technology{ "" } {}
         Engineer(bool isUpdateObj) : Employee{ isUpdateObj }, technology{ "#" } {}
 
-        const std::string& getTechnology() const {  
+        const std::string& getTechnology() const {
             return technology;
         }
 

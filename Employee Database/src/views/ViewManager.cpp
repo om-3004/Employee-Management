@@ -1,5 +1,7 @@
 #include"../../include/views/ViewManager.h"
 #include "../../include/views/Common.h"
+#include "../../include/controller/ManagerController.h"
+#include "../../include/controller/EmployeeController.h"
 
 void EmployeeDB::Console::inManager() {
 	while (true) {
@@ -97,7 +99,7 @@ bool EmployeeDB::Console::makeManager() {
 	EmployeeDB::Model::Manager m;
 	char input;
 
-	bool x = insertOperation(input, "manager");
+	bool x = insertOperation(input, "Manager");
 	if (!x) {
 		return false;
 	}
@@ -110,6 +112,19 @@ bool EmployeeDB::Console::makeManager() {
 			int ID;
 			try {
 				ID = std::stoi(id);
+
+				m.setManagerID(ID);
+
+				int DepartmentID;
+				DepartmentID = EmployeeDB::Controller::EmployeeController::getDepartmentIDbyEmployeeID(m.getManagerID());
+
+				if (DepartmentID == -1) {
+					std::cerr << "No employee was not found for provided managerID...\n";
+					continue;
+				}
+
+				m.setDepartmentID(DepartmentID);
+
 				break;
 			}
 			catch (...) {
@@ -147,7 +162,7 @@ bool EmployeeDB::Console::makeManager() {
 			}
 			else {
 				try {
-					m.setYearsOfExperience(std::stoi(inputField));
+					m.setYearsOfExp(std::stoi(inputField));
 				}
 				catch (...) {
 					std::cerr << "Invalid input...Please enter integer\n";
@@ -185,17 +200,26 @@ bool EmployeeDB::Console::makeManager() {
 				std::cout << "role is mandatory...Please enter again!!\n";
 			}
 			else {
-				m.setProjectTitle(inputField);
+				m.setRole(inputField);
 				break;
 			}
 		}
 	}
 
-	////send to validator
+	// ------------------LOGIC----------------------
+	bool DbSuccess;
+	DbSuccess = EmployeeDB::Controller::ManagerController::insertManager(m);
+	if (DbSuccess) {
+		std::cout << "Manager Entered SuccessFully\n";
+	}
+	else {
+		std::cout << "Please enter to continue...\n";
+		std::cin.get();
+		return false; //For Menu OF Enginner 
+	}
 
-	//Logic to send an object
 
-	if (repeatOperation("insert", "manager")) {
+	if (repeatOperation("insert", "Manager")) {
 		return true;
 	}
 	else {
@@ -207,14 +231,19 @@ bool EmployeeDB::Console::updateManager() {
 	EmployeeDB::Model::Manager m{ false };
 	bool x{ false };
 
-	int id = inputID("update", "manager");
+	int id = inputID("update", "Manager");
 
 	if (id == 0) {
 		return false;
 	}
 
+	m.setManagerID(id);
+	m.setEmployeeID(id);
+	bool DBSuccess;
+
 	while (true) {
-		printEmpFields("manager");
+		DBSuccess = EmployeeDB::Controller::ManagerController::selectManager("employeeID", std::to_string(id));
+		printEmpFields("Manager");
 		std::cout << "Enter the field which you want to update(1-16): ";
 
 		while (true) {
@@ -267,7 +296,7 @@ bool EmployeeDB::Console::updateManager() {
 								}
 								else {
 									try {
-										m.setYearsOfExperience(std::stoi(inputField));
+										m.setYearsOfExp(std::stoi(inputField));
 										break;
 									}
 									catch (...) {
@@ -333,31 +362,39 @@ bool EmployeeDB::Console::updateManager() {
 		}
 	}
 
-	//Logic Pass object to controller 
+	DBSuccess = EmployeeDB::Controller::ManagerController::updateManager(m);
 
-	if (repeatOperation("update", "manager")) {
-		return true;
+	if (DBSuccess) {
+		if (repeatOperation("update", "Manager")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	else {
-		return false;
+		return true;
 	}
 }
 
 bool EmployeeDB::Console::deleteManager() {
 	EmployeeDB::Model::Manager m;
 
-	int id = inputID("delete", "manager");
+	int id = inputID("delete", "Manager");
 
 	if (id == 0) {
 		return false;
 	}
 
-	if (!dltConfirmation(id)) {
+	bool DBSuccess;
+	DBSuccess = EmployeeDB::Controller::ManagerController::selectManager("employeeID", std::to_string(id));
+
+	if (!dltConfirmation(id, "Manager")) {
 		return false;
 	}
 
 	std::cin.ignore();
-	if (repeatOperation("delete", "manager")) {
+	if (repeatOperation("delete", "Manager")) {
 		return true;
 	}
 	else {
@@ -376,21 +413,20 @@ bool EmployeeDB::Console::viewManager() {
 		std::string arg1, arg2;
 		switch (input) {
 		case '1': {
-			//	bool DbSuccess;
+			bool DBSuccess;
 			//	//Logic to send an object
-			//	DbSuccess = fun(int);
-			//	if (DbSuccess) {
-			//		std::cout << "Employee Entered SuccessFull\n";
-			//	}
-			//	else {
-			//		return false; //For Menu OF Enginner 
-			//		return true; //for again show insert option
-			//	}
+			DBSuccess = EmployeeDB::Controller::ManagerController::selectManager();
+			if (DBSuccess) {}
+			else {
+				std::cout << "Press enter to continue...";
+				std::cin.get();
+				return false; //For Menu OF Enginner 
+			}
 			break;
 		}
 		case '2': {
 			while (true) {
-				printEmpFieldsWithID("manager");
+				printEmpFieldsWithID("Manager");
 				std::cout << "Select the field using which you want to view the Employee details(1-18): ";
 				char input;
 				input = std::cin.get();
@@ -407,7 +443,6 @@ bool EmployeeDB::Console::viewManager() {
 						std::string str;
 						std::getline(std::cin, str);
 						std::string inputField = input + str;
-						std::cout << inputField << '\n';
 						if (EmployeeDB::Validator::validateViewOfManFields(inputField)) {
 
 							if (std::stoi(inputField) == 15) {
@@ -445,6 +480,7 @@ bool EmployeeDB::Console::viewManager() {
 									}
 									else {
 										arg2 = inputField;
+										break;
 									}
 								}
 							}
@@ -460,6 +496,7 @@ bool EmployeeDB::Console::viewManager() {
 									}
 									else {
 										arg2 = inputField;
+										break;
 									}
 								}
 							}
@@ -475,6 +512,7 @@ bool EmployeeDB::Console::viewManager() {
 									}
 									else {
 										arg2 = inputField;
+										break;
 									}
 								}
 							}
@@ -497,23 +535,15 @@ bool EmployeeDB::Console::viewManager() {
 						break;
 				}
 			}
-			// logic
-			// bool success ;
-			// success = fun(arg1,arg2);
-			// if(success){
-			// std::cout << "Successfull\n";
-			// std::cin.clear();
-			// std::cin.ignore();
-			// break;
-			//}
-			//else{
-			//  std::cout << "Database Error\n";
-			//  std::cin.clear();
-			//  std::cin.ignore();
-			//  std::cout << "Press enter to continue...";
-			//  std::cin.get();
-			//  return false ;
-			//}
+			bool DBSuccess;
+			//	//Logic to send an object
+			DBSuccess = EmployeeDB::Controller::ManagerController::selectManager(arg1, arg2);
+			if (DBSuccess) {}
+			else {
+				std::cout << "Press enter to continue...";
+				std::cin.get();
+				return false; //For Menu OF Enginner 
+			}
 
 			break;
 		}

@@ -6,9 +6,14 @@
 #include "ViewQA.h"
 #include "ViewDepartment.h"
 #include "Validator.h"
+#include"../../include/DBManager.h"
 #include<iostream>
 
+using EmployeeDB::DBManager;
+
 void EmployeeDB::Console::viewMenu() {
+	DBManager::executeConfigQuery();
+	system("cls");
 	while (true) {
 		std::cout << "------------------------------------------Welcome to Database Managment-------------------------------------------------\n";
 		std::cout << "0. Quit\n";

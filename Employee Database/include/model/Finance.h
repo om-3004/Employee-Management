@@ -16,7 +16,6 @@ namespace EmployeeDB::Model {
         void setAccountingTool(const std::string& tool) {
             accountingTool = tool;
         }
-
     private:
         std::string accountingTool;
     };

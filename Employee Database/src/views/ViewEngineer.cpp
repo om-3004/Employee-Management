@@ -1,5 +1,6 @@
 #include"../../include/views/ViewEngineer.h"
 #include "../../include/views/Common.h"
+#include "../../include/controller/EngineerController.h"
 
 void EmployeeDB::Console::inEngineer() {
 	while (true) {
@@ -97,7 +98,7 @@ bool EmployeeDB::Console::insertEngineer() {
 
 	char input;
 
-	bool x = insertOperation(input, "engineer");
+	bool x = insertOperation(input, "Engineer");
 	if (!x) {
 		return false;
 	}
@@ -118,20 +119,21 @@ bool EmployeeDB::Console::insertEngineer() {
 		}
 	}
 
-	////{ ------------------LOGIC----------------------
-	//bool DbSuccess;
-	////	//Logic to send an object
-	//DbSuccess = EmployeeDB::Controller::EngineerController::insertEngineer(e);
-	//if (DbSuccess) {
-	//	std::cout << "Employee Entered SuccessFull\n";
-	//}
-	//else {
-	//	return false; //For Menu OF Enginner 
-	//	//return true; //for again show insert option
-	//}
-	////}
+	// ------------------LOGIC----------------------
+	bool DbSuccess;
+	//Logic to send an object
+	DbSuccess = EmployeeDB::Controller::EngineerController::insertEngineer(e);
+	if (DbSuccess) {
+		std::cout << "Employee Entered Successfully\n";
+	}
+	else {
+		std::cout << "Please enter to continue...\n";
+		std::cin.get();
+		return false; //For Menu OF Enginner 
+		//return true; //for again show insert option
+	}
 
-	if (repeatOperation("insert", "engineer")) {
+	if (repeatOperation("insert", "Engineer")) {
 		return true;
 	}
 	else {
@@ -142,26 +144,21 @@ bool EmployeeDB::Console::insertEngineer() {
 bool EmployeeDB::Console::updateEngineer() {
 	EmployeeDB::Model::Engineer e{ false };
 
-	int id = inputID("update", "employee");
+	int id = inputID("update", "Engineer");
 
-	if (id == 0) {   // ------------ REMOVE
+	if (id == 0) {
 		return false;
 	}
 
-	// Fetch the record for the ID given
-	//bool DBSuccess = selectEngineer("employeeID", id);
-	/*if (DBSuccess) {
-		
-	}
-	else {
-
-	}*/
+	e.setEmployeeID(id);
+	bool DBSuccess;
 
 	while (true) {
-		printEmpFields("engineer");
-		//std::cout << "13. technology*:" << '\n';
+		DBSuccess = EmployeeDB::Controller::EngineerController::selectEngineer("employeeID", std::to_string(id));
+		std::cout << "\n";
+		printEmpFields("Engineer");
 		std::cout << "Enter the field which you want to update(1-13): ";
-		bool x{ true }; //for asking that you want to update another field
+		bool x{ true };
 		while (true) {
 			char a = std::cin.get();
 			if (a == '\n') {
@@ -221,13 +218,18 @@ bool EmployeeDB::Console::updateEngineer() {
 		}
 	}
 
-	//Logic Pass object to controller 
+	DBSuccess = EmployeeDB::Controller::EngineerController::updateEngineer(e);
 
-	if (repeatOperation("update", "engineer")) {
-		return true;
+	if (DBSuccess) {
+		if (repeatOperation("update", "Engineer")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	else {
-		return false;
+		return true;
 	}
 }
 
@@ -235,18 +237,21 @@ bool EmployeeDB::Console::deleteEngineer() {
 
 	EmployeeDB::Model::Engineer e;
 
-	int id = inputID("delete", "engineer");
+	int id = inputID("delete", "Engineer");
 
 	if (id == 0) {
 		return false;
 	}
 
-	if (!dltConfirmation(id)) {
+	bool DBSuccess;
+	DBSuccess = EmployeeDB::Controller::EngineerController::selectEngineer("employeeID", std::to_string(id));
+
+	if (!dltConfirmation(id, "Engineer")) {
 		return false;
 	}
 
 	std::cin.ignore();
-	if (repeatOperation("delete", "engineer")) {
+	if (repeatOperation("delete", "Engineer")) {
 		return true;
 	}
 	else {
@@ -264,21 +269,20 @@ bool EmployeeDB::Console::viewEngineer() {
 		std::string arg1, arg2;
 		switch (input) {
 		case '1': {
-			//	bool DbSuccess;
-			//	//Logic to send an object
-			//	DbSuccess = fun(int);
-			//	if (DbSuccess) {
-			//		std::cout << "Employee Entered SuccessFull\n";
-			//	}
-			//	else {
-			//		return false; //For Menu OF Enginner 
-			//		return true; //for again show insert option
-			//	}
+			bool DBSuccess;
+			//Logic to send an object
+			DBSuccess = EmployeeDB::Controller::EngineerController::selectEngineer();
+			if (DBSuccess) {}
+			else {
+				std::cout << "Press enter to continue...";
+				std::cin.get();
+				return false; //For Menu OF Enginner 
+			}
 			break;
 		}
 		case '2': {
 			while (true) {
-				printEmpFieldsWithID("engineer");
+				printEmpFieldsWithID("Engineer");
 				std::cout << "Select the field using which you want to view the Employee details(1-15): ";
 				char a;
 				a = std::cin.get();
@@ -331,27 +335,19 @@ bool EmployeeDB::Console::viewEngineer() {
 				}
 			}
 			// logic
-			// bool success ;
-			// success = fun(arg1,arg2);
-			// if(success){
-			// std::cout << "Successfull\n";
-			// std::cin.clear();
-			// std::cin.ignore();
-			// break;
-			//}
-			//else{
-			//  std::cout << "Database Error\n";
-			//  std::cin.clear();
-			//  std::cin.ignore();
-			//  std::cout << "Press enter to continue...";
-			//  std::cin.get();
-			//  return false ;
-			//}
+			bool DBSuccess;
+			DBSuccess = EmployeeDB::Controller::EngineerController::selectEngineer(arg1, arg2);
+			if (DBSuccess) {}
+			else {
+				std::cout << "Press enter to continue...";
+				std::cin.get();
+				return false;
+			}
 			break;
 		}
 		}
 	}
-	if (repeatOperation("view", "engineer")) {
+	if (repeatOperation("view", "Engineer")) {
 		return true;
 	}
 	else {
