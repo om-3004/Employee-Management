@@ -175,3 +175,29 @@ void DBManager::executeConfigQuery() {
 		LogSystem::Error("[FAIL]", e.what(), "->", queryString);
 	}
 }
+
+//------------------EXPORT TO CSV
+void DBManager::dumpCSV(const char* queryString, int (*callback)(void*, int, char**, char**), char* m_Message) {
+	m_ResultCode = sqlite3_exec(m_DB, queryString, callback, 0, &m_Message);
+	if (m_ResultCode == SQLITE_OK) {
+		LogSystem::Info("[SUCCESS]", "Successfully executed Query ->", queryString);
+
+	}
+	else {
+		LogSystem::Error("[FAIL]", m_ErrorMessage, "->", queryString);
+		throw std::runtime_error{ m_ErrorMessage };
+	}
+}
+
+void DBManager::executeDumpQuery(const char* queryString, int(*Callback)(void*, int, char**, char**), void* arg) {
+	m_ResultCode = sqlite3_exec(m_DB, queryString, Callback, arg, &m_ErrorMessage);
+
+	if (m_ResultCode == SQLITE_OK) {
+		LogSystem::Info("[SUCCESS]", "Successfully executed Query ->", queryString);
+
+	}
+	else {
+		LogSystem::Error("[FAIL]", m_ErrorMessage, "->", queryString);
+		throw std::runtime_error{ m_ErrorMessage };
+	}
+}

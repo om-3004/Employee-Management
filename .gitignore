@@ -39,3 +39,4 @@ bin-int/
 #others
 *.docx
 logs.txt
+DBtable.csv

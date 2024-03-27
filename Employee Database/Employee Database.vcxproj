@@ -161,6 +161,7 @@
     <ClInclude Include="include\model\Salary.h" />
     <ClInclude Include="include\views\Common.h" />
     <ClInclude Include="include\views\ViewDepartment.h" />
+    <ClCompile Include="exportToCSV\To_csv.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="lib\sqlite\shell.c" />
     <ClCompile Include="lib\sqlite\sqlite3.c" />

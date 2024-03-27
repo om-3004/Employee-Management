@@ -75,6 +75,9 @@
     <ClCompile Include="src\controller\QAController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="exportToCSV\To_csv.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\sqlite\sqlite3.h">
