@@ -6,6 +6,7 @@
 #include "../DBManager.h"
 #include "../include/model/Salary.h"
 #include "../include/controller/EmployeeController.h"
+#include "../logs/Logger.h"
 
 using EmployeeDB::DBManager;
 using EmployeeDB::Model::Salary;
@@ -20,10 +21,11 @@ int DBManager::openConnection() {
 	m_ResultCode = sqlite3_open(EmployeeDB::Config::dbFilePath.string().c_str(), &m_DB);
 
 	if (m_ResultCode == SQLITE_OK) {
-		std::cout << "Successfully opened DB connection" << '\n';
+		LogSystem::Info("[SUCCESS]", "Successfully opened DB connection");
 	}
 	else {
-		std::cerr << "Error opening DB connection" << '\n';
+		LogSystem::Error("[FAIL]", "Error opening DB connection");
+
 	}
 	return m_ResultCode;
 }
@@ -32,10 +34,10 @@ int DBManager::closeConnection() {
 	m_ResultCode = sqlite3_close(m_DB);
 
 	if (m_ResultCode == SQLITE_OK) {
-		std::cout << "Successfully closed DB connection" << '\n';
+		LogSystem::Info("[SUCCESS]", "Successfully closed DB connection");
 	}
 	else {
-		std::cerr << "Error closing DB connection" << '\n';
+		LogSystem::Error("[FAIL]", "Error closing DB connection");
 	}
 	return m_ResultCode;
 }
@@ -44,9 +46,10 @@ int DBManager::executeQuery(const char* queryString) {
 	m_ResultCode = sqlite3_exec(m_DB, queryString, 0, 0, &m_ErrorMessage);
 
 	if (m_ResultCode == SQLITE_OK) {
-		std::cout << "Successfully executed Query" << '\n';
+		LogSystem::Info("[SUCCESS]", "Successfully executed Query ->", queryString);
 	}
 	else {
+		LogSystem::Error("[FAIL]", m_ErrorMessage, "->", queryString);
 		throw std::runtime_error{ m_ErrorMessage };
 	}
 
@@ -57,9 +60,10 @@ int DBManager::executeCustomQuery(const char* queryString, int (*callback)(void*
 	m_ResultCode = sqlite3_exec(m_DB, queryString, callback, arg, &m_ErrorMessage);
 
 	if (m_ResultCode == SQLITE_OK) {
-		std::cout << "Successfully executed Query" << '\n';
+		LogSystem::Info("[SUCCESS]", "Successfully executed Query ->", queryString);
 	}
 	else {
+		LogSystem::Error("[FAIL]", m_ErrorMessage, "->", queryString);
 		throw std::runtime_error{ m_ErrorMessage };
 	}
 
@@ -84,9 +88,11 @@ int DBManager::executeSelectQuery(const char* queryString) {
 	m_ResultCode = sqlite3_exec(m_DB, queryString, selectCallback, &rowCount, &m_ErrorMessage);
 
 	if (m_ResultCode == SQLITE_OK) {
-		std::cout << "Successfully executed Query" << '\n';
+		LogSystem::Info("[SUCCESS]", "Successfully executed Query ->", queryString);
+
 	}
 	else {
+		LogSystem::Error("[FAIL]", m_ErrorMessage, "->", queryString);
 		throw std::runtime_error{ m_ErrorMessage };
 	}
 	return rowCount;
@@ -119,9 +125,10 @@ int DBManager::executeSelectSalaryQuery(const char* queryString) {
 	m_ResultCode = sqlite3_exec(m_DB, queryString, selectSalaryCallback, &rowCount, &m_ErrorMessage);
 
 	if (m_ResultCode == SQLITE_OK) {
-		std::cout << "Successfully executed Query" << '\n';
+		LogSystem::Info("[SUCCESS]", "Successfully executed Query ->", queryString);
 	}
 	else {
+		LogSystem::Error("[FAIL]", m_ErrorMessage, "->", queryString);
 		throw std::runtime_error{ m_ErrorMessage };
 	}
 	return rowCount;
@@ -138,9 +145,10 @@ int DBManager::executeRowCountQuery(const char* queryString) {
 	m_ResultCode = sqlite3_exec(m_DB, queryString, rowCountCallback, &rowCount, &m_ErrorMessage);
 
 	if (m_ResultCode == SQLITE_OK) {
-		std::cout << "Successfully executed Query" << '\n';
+		LogSystem::Info("[SUCCESS]", "Successfully executed Query ->", queryString);
 	}
 	else {
+		LogSystem::Error("[FAIL]", m_ErrorMessage, "->", queryString);
 		throw std::runtime_error{ m_ErrorMessage };
 	}
 	return rowCount;
@@ -154,6 +162,7 @@ void DBManager::executeConfigQuery() {
 	}
 	catch (const std::exception& e) {
 		std::cerr << e.what() << '\n';
+		LogSystem::Error("[FAIL]", e.what(), "->", queryString);
 	}
 
 	queryString = "PRAGMA case_sensitive_like = ON;";
@@ -163,5 +172,6 @@ void DBManager::executeConfigQuery() {
 	}
 	catch (const std::exception& e) {
 		std::cerr << e.what() << '\n';
+		LogSystem::Error("[FAIL]", e.what(), "->", queryString);
 	}
 }

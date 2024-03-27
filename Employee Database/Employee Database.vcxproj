@@ -202,6 +202,9 @@
     <ClInclude Include="include\views\ViewQA.h" />
     <ClInclude Include="lib\sqlite\sqlite3.h" />
     <ClInclude Include="lib\sqlite\sqlite3ext.h" />
+    <ClInclude Include="logs\FileDump.h" />
+    <ClInclude Include="logs\Log.h" />
+    <ClInclude Include="logs\Logger.h" />
     <ClInclude Include="model\Department.h" />
     <ClInclude Include="model\Employee.h" />
   </ItemGroup>

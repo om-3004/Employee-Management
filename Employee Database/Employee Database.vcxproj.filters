@@ -170,5 +170,14 @@
     <ClInclude Include="include\controller\QAController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="logs\Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="logs\Log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="logs\FileDump.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
