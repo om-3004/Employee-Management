@@ -2,7 +2,7 @@
 #include "../../include/views/Common.h"
 #include "../../include/controller/HRController.h"
 
-void EmployeeDB::Console::inHR() {
+void EmployeeDB::Console::inHR() noexcept {
 	while (true) {
 		std::cout << "0. Quit\n";
 		std::cout << "1. Insert\n";
@@ -58,7 +58,7 @@ void EmployeeDB::Console::inHR() {
 	}
 }
 
-void EmployeeDB::Console::operationOfHR(const char& input) {
+void EmployeeDB::Console::operationOfHR(const char& input) noexcept {
 	bool repeat{ true };
 	switch (input) {
 	case '0':

@@ -4,8 +4,8 @@
 
 namespace EmployeeDB::Console {
 
-	void inDepartment();
-	void operationOfDept(const char& input);
+	void inDepartment() noexcept;
+	void operationOfDept(const char& input) noexcept;
 	bool insertDept();
 	bool deleteDept();
 	bool updateDept();

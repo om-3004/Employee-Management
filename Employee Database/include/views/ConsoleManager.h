@@ -3,8 +3,8 @@
 
 namespace EmployeeDB::Console {
 
-	void viewMenu();
-	void viewFields(const char& input);
+	void viewMenu() noexcept;
+	void viewFields(const char& input) noexcept;
 }
 
 

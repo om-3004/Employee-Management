@@ -13,7 +13,7 @@ using EmployeeDB::DBManager;
 
 void tableToCSV();
 
-void EmployeeDB::Console::viewMenu() {
+void EmployeeDB::Console::viewMenu() noexcept {
 	DBManager::executeConfigQuery();
 	system("cls");
 	while (true) {
@@ -25,7 +25,6 @@ void EmployeeDB::Console::viewMenu() {
 		std::cout << "4. QA\n";
 		std::cout << "5. Manager\n";
 		std::cout << "6. Department\n";
-		std::cout << "7. Export all tables to CSV\n";
 		std::cout << "Please select entity on which you want to perform operation: ";
 
 		char input;
@@ -65,9 +64,9 @@ void EmployeeDB::Console::viewMenu() {
 			system("cls");
 		}
 	}
-}
+}  
 
-void EmployeeDB::Console::viewFields(const char& input) {
+void EmployeeDB::Console::viewFields(const char& input) noexcept {
 	std::cin.clear();
 	std::cin.ignore();
 	switch (input) {

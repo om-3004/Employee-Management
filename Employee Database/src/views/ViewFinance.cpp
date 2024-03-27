@@ -2,7 +2,7 @@
 #include "../../include/views/Common.h"
 #include "../../include/controller/FinanceController.h"
 
-void EmployeeDB::Console::inFinance() {
+void EmployeeDB::Console::inFinance() noexcept {
 	while (true) {
 
 		std::cout << "0. Quit\n";
@@ -57,7 +57,8 @@ void EmployeeDB::Console::inFinance() {
 		}
 	}
 }
-void EmployeeDB::Console::operationOfFin(const char& input) {
+
+void EmployeeDB::Console::operationOfFin(const char& input) noexcept {
 	bool repeat{ true };
 	switch (input) {
 	case '0':
@@ -92,6 +93,7 @@ void EmployeeDB::Console::operationOfFin(const char& input) {
 	}
 	}
 }
+
 bool EmployeeDB::Console::insertInFinance() {
 	EmployeeDB::Model::Finance f;
 

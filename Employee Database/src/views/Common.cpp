@@ -3,7 +3,7 @@
 #include "../../include/controller/ManagerController.h"
 #include "../../include/controller/DepartmentController.h"
 
-int EmployeeDB::Console::inputID(const std::string& op, const std::string& ent) {
+int EmployeeDB::Console::inputID(const std::string_view& op, const std::string_view& ent) {
 
 	short int cnt = 0;
 	while (true) {
@@ -50,7 +50,7 @@ int EmployeeDB::Console::inputID(const std::string& op, const std::string& ent) 
 	}
 }
 
-void EmployeeDB::Console::printEmpFields(const std::string& empType) {
+void EmployeeDB::Console::printEmpFields(const std::string_view& empType) {
 	if (empType == "Department") {
 		std::cout << "1. departmentName*: \n";
 		std::cout << "2. baseSalary*: \n";
@@ -91,7 +91,7 @@ void EmployeeDB::Console::printEmpFields(const std::string& empType) {
 	}
 }
 
-void EmployeeDB::Console::printEmpFieldsWithID(const std::string& empType) {
+void EmployeeDB::Console::printEmpFieldsWithID(const std::string_view& empType) {
 	if (empType == "Department") {
 		std::cout << "1. Department ID*: \n";
 		std::cout << "2. Department Name*: \n";
@@ -173,7 +173,7 @@ bool EmployeeDB::Console::repeatUpdateField(bool& x) {
 	return true;
 }
 
-bool EmployeeDB::Console::dltConfirmation(const int& id, const std::string& ent) {
+bool EmployeeDB::Console::dltConfirmation(const int& id, const std::string_view& ent) {
 	while (true) {
 		// fetch the row of the employee which is selected using the ID
 		// bool DbSuccess{ false };
@@ -1076,7 +1076,7 @@ bool EmployeeDB::Console::viewOperation(char& input) {
 	}
 }
 
-bool EmployeeDB::Console::insertOperation(char& input, const std::string& empType) {
+bool EmployeeDB::Console::insertOperation(char& input, const std::string_view& empType) {
 	short int cnt = 0;
 	while (true) {
 		if (cnt == 0) {

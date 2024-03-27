@@ -3,7 +3,7 @@
 #include "../../include/controller/ManagerController.h"
 #include "../../include/controller/EmployeeController.h"
 
-void EmployeeDB::Console::inManager() {
+void EmployeeDB::Console::inManager() noexcept {
 	while (true) {
 
 		std::cout << "0. Quit\n";
@@ -59,7 +59,7 @@ void EmployeeDB::Console::inManager() {
 	}
 }
 
-void EmployeeDB::Console::operationOfMan(const char& input) {
+void EmployeeDB::Console::operationOfMan(const char& input) noexcept {
 	bool repeat{ true };
 	switch (input) {
 	case '0':

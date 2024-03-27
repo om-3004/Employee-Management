@@ -2,7 +2,7 @@
 #include "../../include/views/Common.h"
 #include "../../include/controller/EngineerController.h"
 
-void EmployeeDB::Console::inEngineer() {
+void EmployeeDB::Console::inEngineer() noexcept {
 	while (true) {
 		std::cout << "0. Quit\n";
 		std::cout << "1. Insert\n";
@@ -57,7 +57,7 @@ void EmployeeDB::Console::inEngineer() {
 	}
 }
 
-void EmployeeDB::Console::operationOfEng(const char& input) {
+void EmployeeDB::Console::operationOfEng(const char& input) noexcept {
 	bool repeat{ true };
 	switch (input) {
 	case '0':

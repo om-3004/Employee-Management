@@ -11,7 +11,7 @@ namespace EmployeeDB::Controller {
 	class DepartmentController {
 	public:
 		static bool insertDepartment(const Department& obj);
-		static int getDepartmentIDbyName(const std::string& departmentName);
+		static int getDepartmentIDbyName(const std::string_view& departmentName);
 		static bool checkDepartmentExistence(const std::string& departmentID);
 		static bool selectDepartment(const std::string& attributeName = "", const std::string& attributeValue = "");
 		static bool deleteDepartmentByID(int ID);

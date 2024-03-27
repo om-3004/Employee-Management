@@ -26,8 +26,9 @@ bool DepartmentController::insertDepartment(const Department& obj) {
 	return true;
 }
 
-int DepartmentController::getDepartmentIDbyName(const std::string& departmentName) {
-	std::string queryString = "SELECT departmentID FROM Department WHERE departmentName = \"" + departmentName + "\";";
+int DepartmentController::getDepartmentIDbyName(const std::string_view& departmentName) {
+	std::string deptName = static_cast<std::string>(departmentName);
+	std::string queryString = "SELECT departmentID FROM Department WHERE departmentName = \"" + deptName + "\";";
 	int departmentID{ -1 };
 
 	auto getDepartmentIDCallback = [](void* data, int argc, char** argv, char** azColName) -> int {

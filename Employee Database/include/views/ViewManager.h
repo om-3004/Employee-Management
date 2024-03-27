@@ -4,8 +4,8 @@
 
 namespace EmployeeDB::Console {
 
-	void inManager();
-	void operationOfMan(const char& input);
+	void inManager() noexcept;
+	void operationOfMan(const char& input) noexcept;
 	bool makeManager();
 	bool deleteManager();
 	bool updateManager();

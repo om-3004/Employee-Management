@@ -2,7 +2,7 @@
 #include "../../include/controller/DepartmentController.h"
 #include "../../include/views/Common.h"
 
-void EmployeeDB::Console::inDepartment() {
+void EmployeeDB::Console::inDepartment() noexcept {
 
 	while (true) {
 		std::cout << "0. Quit\n";
@@ -56,7 +56,7 @@ void EmployeeDB::Console::inDepartment() {
 	}
 }
 
-void EmployeeDB::Console::operationOfDept(const char& input) {
+void EmployeeDB::Console::operationOfDept(const char& input) noexcept {
 	bool repeat{ true };
 	switch (input) {
 	case '0':

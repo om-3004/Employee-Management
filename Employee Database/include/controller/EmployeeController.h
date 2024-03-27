@@ -14,7 +14,7 @@ namespace EmployeeDB::Controller {
 		static bool insertEmployee(const Employee& obj);
 		static int getEmployeeIDbyEmail(const std::string& email);
 		static int getDepartmentIDbyEmployeeID(int ID);
-		static bool checkEmployeeExistence(const std::string& employeeID, const std::string& departmentName);
+		static bool checkEmployeeExistence(const std::string& employeeID, const std::string_view& departmentName);
 		static bool deleteEmployeeByID(int ID);
 		static bool updateEmployee(Employee& obj);
 		static bool getSalaryDetails(Salary& obj);

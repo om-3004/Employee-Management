@@ -79,7 +79,7 @@ int EmployeeController::getDepartmentIDbyEmployeeID(int ID) {
 	return departmentID;
 }
 
-bool EmployeeController::checkEmployeeExistence(const std::string& ID, const std::string& departmentName) {
+bool EmployeeController::checkEmployeeExistence(const std::string& ID, const std::string_view& departmentName) {
 
 	int departmentID;
 	std::string queryString;

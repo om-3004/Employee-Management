@@ -2,7 +2,7 @@
 #include "../../include/views/Common.h"
 #include "../../include/controller/QAController.h"
 
-void EmployeeDB::Console::inQA() {
+void EmployeeDB::Console::inQA() noexcept {
 	while (true) {
 
 		std::cout << "0. Quit\n";
@@ -58,7 +58,7 @@ void EmployeeDB::Console::inQA() {
 	}
 }
 
-void EmployeeDB::Console::operationOfQA(const char& input) {
+void EmployeeDB::Console::operationOfQA(const char& input) noexcept {
 	bool repeat{ true };
 	switch (input) {
 	case '0':
