@@ -2,7 +2,7 @@
 #include "../../include/controller/DepartmentController.h"
 #include "../../include/views/Common.h"
 
-void EmployeeDB::Console::inDepartment() noexcept {
+void EmployeeDB::Console::departmentMenu() noexcept {
 	inputForEnt("Department");
 }
 

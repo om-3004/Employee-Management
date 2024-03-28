@@ -2,7 +2,7 @@
 #include "../../include/views/Common.h"
 #include "../../include/controller/EngineerController.h"
 
-void EmployeeDB::Console::inEngineer() noexcept {
+void EmployeeDB::Console::engineerMenu() noexcept {
 	inputForEnt("Engineer");
 }
 

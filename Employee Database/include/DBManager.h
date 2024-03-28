@@ -1,3 +1,4 @@
+
 #ifndef __DBManager_H__
 #define __DBManager_H__
 
@@ -14,9 +15,6 @@ namespace EmployeeDB {
 		int executeSelectSalaryQuery(const char* queryString);
 		int executeRowCountQuery(const char* queryString);
 		static void executeConfigQuery();
-
-		void dumpCSV(const char* queryString, int (*callback)(void*, int, char**, char**), char* m_Message);
-		void executeDumpQuery(const char* queryString, int(*Callback)(void*, int, char**, char**), void* arg);
 
 		char* getErrorMessage() const {
 			return m_ErrorMessage;

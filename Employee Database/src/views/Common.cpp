@@ -565,7 +565,7 @@ void EmployeeDB::Console::matchInpField(const std::string& inputField, std::stri
 		while (true) {
 			arg1 = "gender";
 			arg2 = checkInput(arg1);
-			if (EmployeeDB::Validator::validateGender(arg2) != -1) {
+			if (EmployeeDB::Validator::validateGender(arg2) != false) {
 				break;
 			}
 			else {

@@ -25,6 +25,8 @@ namespace EmployeeDB {
 		static bool validateViewOfDeptFields(std::string& in) noexcept;
 		static bool validateManUpdate(std::string& in) noexcept;
 		static bool validateViewOfManFields(std::string& in) noexcept;
+
+		static bool validatecsvInput(char& in) noexcept;
 	};
 }
 

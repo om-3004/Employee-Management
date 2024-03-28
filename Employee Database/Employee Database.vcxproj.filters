@@ -75,7 +75,10 @@
     <ClCompile Include="src\controller\QAController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="exportToCSV\ToCSV.cpp">
+    <ClCompile Include="src\views\ViewExportCSV.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\controller\ExportCSVController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -180,6 +183,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="logs\FileDump.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\views\ViewExportCSV.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\controller\ExportCSVController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

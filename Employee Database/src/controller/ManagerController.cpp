@@ -21,8 +21,8 @@ bool ManagerController::insertManager(Manager& obj) {
 		std::to_string(obj.getDepartmentID()) + ", " +
 		std::to_string(obj.getTeamSize()) + ", " +
 		std::to_string(obj.getYearsOfExp()) + ", " +
-		(obj.getProjectTitle().size() == 0 ? "NULL" : "\"" + obj.getProjectTitle() + "\"") + "," +
-		(obj.getRole().size() == 0 ? "NULL" : "\"" + obj.getRole() + "\"") + ");";
+		(obj.getProjectTitle().has_value() ? "\"" + obj.getProjectTitle().value() + "\"" : "NULL") + "," +
+		(obj.getRole().has_value() ? "\"" + obj.getRole().value() + "\"" : "NULL") + ");";
 
 	try {
 		DBManager::instance().executeQuery(queryString.c_str());
@@ -77,17 +77,17 @@ std::string ManagerController::getUpdateQueryCondition(Manager& obj) {
 		}
 		updateQueryCondition += "yearsOfExp = " + std::to_string(obj.getYearsOfExp());
 	}
-	if (obj.getProjectTitle() != "#") {
+	if (obj.getProjectTitle().has_value()) {
 		if (updateQueryCondition.size() != 0) {
 			updateQueryCondition += ", ";
 		}
-		updateQueryCondition += "projectTitle = \"" + obj.getProjectTitle() + "\"";
+		updateQueryCondition += "projectTitle = \"" + obj.getProjectTitle().value() + "\"";
 	}
-	if (obj.getRole() != "#") {
+	if (obj.getRole().has_value()) {
 		if (updateQueryCondition.size() != 0) {
 			updateQueryCondition += ", ";
 		}
-		updateQueryCondition += "role = \"" + obj.getRole() + "\"";
+		updateQueryCondition += "role = \"" + obj.getRole().value() + "\"";
 	}
 
 	return updateQueryCondition;

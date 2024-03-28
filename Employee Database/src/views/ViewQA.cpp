@@ -2,7 +2,7 @@
 #include "../../include/views/Common.h"
 #include "../../include/controller/QAController.h"
 
-void EmployeeDB::Console::inQA() noexcept {
+void EmployeeDB::Console::QAMenu() noexcept {
 	inputForEnt("QA");
 }
 

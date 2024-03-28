@@ -2,7 +2,7 @@
 #include "../../include/views/Common.h"
 #include "../../include/controller/HRController.h"
 
-void EmployeeDB::Console::inHR() noexcept {
+void EmployeeDB::Console::HRMenu() noexcept {
 	inputForEnt("HR");
 }
 

@@ -5,7 +5,7 @@ using EmployeeDB::Validator;
 
 bool Validator::validateNum(const std::string& in) noexcept {
 	try {
-		[[maybe_unused]]auto temp = std::stoll(in);
+		[[maybe_unused]] auto temp = std::stoll(in);
 		return true;
 	}
 	catch (...) {
@@ -63,7 +63,7 @@ bool Validator::validateCharInput(char& in) noexcept {
 
 //this is for validation of input in main menu
 bool Validator::validateInputMainMenu(char& in) noexcept {
-	return std::regex_match(std::to_string(in), std::regex("(^(4[8|9]{1}|5[0|1|2|3|4]{1})$)"));
+	return std::regex_match(std::to_string(in), std::regex("(^(4[8|9]{1}|5[0|1|2|3|4|5]{1})$)"));
 }
 //this is for validation of input in other menu like insert , update ,delete , view  
 bool Validator::validateInputMenu(char& in) noexcept {
@@ -102,4 +102,8 @@ bool Validator::validateViewOfManFields(std::string& in) noexcept {
 //check input for department after validateInputView for selecting field vise view
 bool Validator::validateViewOfDeptFields(std::string& in) noexcept {
 	return std::regex_match(in, std::regex("(^([1-5]{1})$)"));
+}
+
+bool Validator::validatecsvInput(char& in) noexcept {
+	return std::regex_match(std::to_string(in), std::regex("(^(4[8|9]{1}|5[0|1|2|3|4|5|6|7]{1})$)"));
 }

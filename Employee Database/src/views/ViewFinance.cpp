@@ -2,7 +2,7 @@
 #include "../../include/views/Common.h"
 #include "../../include/controller/FinanceController.h"
 
-void EmployeeDB::Console::inFinance() noexcept {
+void EmployeeDB::Console::financeMenu() noexcept {
 	inputForEnt("Finance");
 }
 

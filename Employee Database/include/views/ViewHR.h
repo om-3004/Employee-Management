@@ -4,7 +4,7 @@
 
 namespace EmployeeDB::Console {
 
-	void inHR() noexcept;
+	void HRMenu() noexcept;
 	void operationOfHR(const char& input) noexcept;
 	bool insertHR();
 	bool deleteHR();

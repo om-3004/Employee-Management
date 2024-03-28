@@ -4,7 +4,7 @@
 
 namespace EmployeeDB::Console {
 
-	void inEngineer() noexcept;
+	void engineerMenu() noexcept;
 	void operationOfEng(const char& input) noexcept;
 	bool insertEngineer();
 	bool deleteEngineer();

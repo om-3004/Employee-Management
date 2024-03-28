@@ -1,4 +1,5 @@
 #include "ConsoleManager.h"
+#include "ViewExportCSV.h"
 #include "ViewEngineer.h"
 #include "ViewFinance.h"
 #include "ViewHR.h"
@@ -10,8 +11,6 @@
 #include<iostream>
 
 using EmployeeDB::DBManager;
-
-void tableToCSV();
 
 void EmployeeDB::Console::viewMenu() noexcept {
 	DBManager::executeConfigQuery();
@@ -25,6 +24,7 @@ void EmployeeDB::Console::viewMenu() noexcept {
 		std::cout << "4. QA\n";
 		std::cout << "5. Manager\n";
 		std::cout << "6. Department\n";
+		std::cout << "7. Export Table as CSV\n";
 		std::cout << "Please select entity on which you want to perform operation: ";
 
 		char input;
@@ -64,7 +64,7 @@ void EmployeeDB::Console::viewMenu() noexcept {
 			system("cls");
 		}
 	}
-}  
+}
 
 void EmployeeDB::Console::viewFields(const char& input) noexcept {
 	std::cin.clear();
@@ -73,23 +73,25 @@ void EmployeeDB::Console::viewFields(const char& input) noexcept {
 	case 0:
 		break;
 	case '1':
-		inEngineer();
+		engineerMenu();
 		break;
 	case '2':
-		inFinance();
+		financeMenu();
 		break;
 	case '3':
-		inHR();
+		HRMenu();
 		break;
 	case '4':
-		inQA();
+		QAMenu();
 		break;
 	case '5':
-		inManager();
+		managerMenu();
 		break;
 	case '6':
-		//inDepartment();
-		tableToCSV();
+		departmentMenu();
+		break;
+	case '7':
+		ExportCSVMenu();
 		break;
 	}
 	return;

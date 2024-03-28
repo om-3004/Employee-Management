@@ -3,7 +3,7 @@
 #include "../../include/controller/ManagerController.h"
 #include "../../include/controller/EmployeeController.h"
 
-void EmployeeDB::Console::inManager() noexcept {
+void EmployeeDB::Console::managerMenu() noexcept {
 	inputForEnt("Manager");
 }
 

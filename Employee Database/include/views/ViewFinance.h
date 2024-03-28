@@ -4,7 +4,7 @@
 
 namespace EmployeeDB::Console {
 
-	void inFinance() noexcept;
+	void financeMenu() noexcept;
 	void operationOfFin(const char& input) noexcept;
 	bool insertInFinance();
 	bool deleteInFinance();

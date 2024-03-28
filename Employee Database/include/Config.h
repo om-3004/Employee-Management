@@ -5,6 +5,7 @@
 
 namespace EmployeeDB::Config {
 	static std::filesystem::path dbFilePath = "./data/EmployeeDB.db";
+	static std::filesystem::path CSVFilePath = "./BackupTables_csv";
 }
 
 #endif
