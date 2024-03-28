@@ -6,7 +6,7 @@
 #include "ViewQA.h"
 #include "ViewDepartment.h"
 #include "Validator.h"
-#include"../../include/DBManager.h"
+#include "DBManager.h"
 #include<iostream>
 
 using EmployeeDB::DBManager;
@@ -88,8 +88,8 @@ void EmployeeDB::Console::viewFields(const char& input) noexcept {
 		inManager();
 		break;
 	case '6':
-		inDepartment();
-		//tableToCSV();
+		//inDepartment();
+		tableToCSV();
 		break;
 	}
 	return;

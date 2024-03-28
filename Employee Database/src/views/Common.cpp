@@ -3,6 +3,72 @@
 #include "../../include/controller/ManagerController.h"
 #include "../../include/controller/DepartmentController.h"
 
+void EmployeeDB::Console::inputForEnt(const std::string_view& ent) {
+	while (true) {
+		std::cout << "0. Quit\n";
+		std::cout << "1. Insert\n";
+		std::cout << "2. Update\n";
+		std::cout << "3. Delete\n";
+		std::cout << "4. View\n";
+		std::cout << "5. Main Menu\n";
+		std::cout << "Please select operation which you want to perform on " << ent << ": ";
+
+		char input;
+		input = std::cin.get();
+		if (input == '\n') {
+			std::cout << "Please enter valid input...\n";
+			std::cout << "Press enter to continue...\n";
+			std::cin.get();
+			system("cls");
+		}
+		else if (std::cin.peek() != '\n') {
+			input = ' ';
+
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cerr << "Please enter valid input in the given range(0-5)...\n";
+
+			std::cout << "Press enter to continue...\n";
+			std::cin.get();
+			system("cls");
+		}
+		else if (EmployeeDB::Validator::validateInputMenu(input)) {
+
+			system("cls");
+
+			if (input == '0') {
+				std::exit(0);
+			}
+			if (input == '5') {
+				std::cin.clear();
+				std::cin.ignore();
+				return;
+			}
+			if (ent == "Department")
+				operationOfDept(input);
+			else if (ent == "Engineer")
+				operationOfEng(input);
+			else if (ent == "Finance")
+				operationOfFin(input);
+			else if(ent == "HR")
+				operationOfHR(input);
+			else if (ent == "Manager")
+				operationOfMan(input);
+			else if (ent == "QA")
+				operationOfQA(input);
+
+		}
+		else {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cerr << "Please enter valid input in the given range(0-5)\n";
+			std::cout << "Press enter to continue...\n";
+			std::cin.get();
+			system("cls");
+		}
+	}
+}
+
 int EmployeeDB::Console::inputID(const std::string_view& op, const std::string_view& ent) {
 
 	short int cnt = 0;
@@ -86,7 +152,7 @@ void EmployeeDB::Console::printEmpFields(const std::string_view& empType) {
 			std::cout << "13. teamSize*:" << '\n';
 			std::cout << "14. yearsOfExperince*:" << '\n';
 			std::cout << "15. projectTitle*:" << '\n';
-			std::cout << "16. role*:" << '\n';
+			std::cout << "16. role:" << '\n';
 		}
 	}
 }
@@ -131,7 +197,7 @@ void EmployeeDB::Console::printEmpFieldsWithID(const std::string_view& empType) 
 			std::cout << "15. teamSize*:" << '\n';
 			std::cout << "16. yearsOfExperince*:" << '\n';
 			std::cout << "17. projectTitle*:" << '\n';
-			std::cout << "18. role*:" << '\n';
+			std::cout << "18. role:" << '\n';
 		}
 	}
 }
@@ -293,231 +359,116 @@ std::string EmployeeDB::Console::trim(std::string str, const std::string chars) 
 	}
 }
 
-void EmployeeDB::Console::askUserInput(EmployeeDB::Model::Employee& e) {
+//////////////////////
+std::string EmployeeDB::Console::mandatoryWithValidation(const std::string& fieldName, const std::string& errMsg, bool (*validateField)(const std::string& validateStr)) {
 	std::string inputField;
-
-	std::cin.ignore();
 	while (true) {
-		std::cout << "firstName*: ";
-		std::getline(std::cin, inputField);
-		inputField = trim(inputField);
-		if (inputField.size() == 0) {
-			std::cout << "firstName is mandatory...Please enter again!!" << '\n';
-		}
-		else {
-			e.setFirstName(inputField);
-			break;
-		}
-	}
-
-	while (true) {
-		std::cout << "middleName: ";
+		std::cout << fieldName<< "*: ";
 		std::getline(std::cin, inputField);
 		if (inputField.size() == 0) {
-			break;
-		}
-		inputField = trim(inputField);
-		if (inputField.size() == 0) {
-			std::cout << "Please enter some valid input...\n";
-		}
-		else {
-			e.setMiddleName(inputField);
-			break;
-		}
-	}
-
-	while (true) {
-		std::cout << "lastName*: ";
-		std::getline(std::cin, inputField);
-		inputField = trim(inputField);
-		if (inputField.size() == 0) {
-			std::cout << "lastName is mandatory...Please enter again!!" << '\n';
-		}
-		else {
-			e.setLastName(inputField);
-			break;
-		}
-	}
-
-
-	while (true) {
-		std::cout << "dateOfBirth(dd-mm-yyyy or dd/mm/yyyy or dd.mm.yyyy): ";
-		std::getline(std::cin, inputField);
-		if (inputField.size() == 0) {
-			break;
-		}
-		inputField = trim(inputField);
-
-		if (EmployeeDB::Validator::validateDate(inputField)) {
-			e.setDateOfBirth(inputField);
-			break;
-		}
-		else {
-			std::cerr << "Wrong input...Please enter again!!\n";
-		}
-	}
-
-	while (true) {
-		std::cout << "mobileNo*(Starting from 6-9): ";
-		std::getline(std::cin, inputField);
-		if (inputField.size() == 0) {
-			std::cout << "mobileNo is mandatory...Please enter again!!" << '\n';
+			std::cout << errMsg << '\n';
 		}
 		else {
 			inputField = trim(inputField);
-
-			if (EmployeeDB::Validator::validateMobile(inputField)) {
-				e.setMobileNo(std::stoll(inputField));
-				break;
+			if (validateField(inputField)) {
+				return inputField;
 			}
 			else {
 				std::cerr << "Wrong input...Please enter again!!\n";
 			}
 		}
 	}
-
-	while (true) {
-		std::cout << "email*: ";
-		std::getline(std::cin, inputField);
-		if (inputField.size() == 0) {
-			std::cout << "email is mandatory...Please enter again!!" << '\n';
-		}
-		else {
-			inputField = trim(inputField);
-			if (EmployeeDB::Validator::validateEmail(inputField)) {
-				e.setEmail(inputField);
-				break;
-			}
-			else {
-				std::cerr << "Wrong input...Please enter again!!\n";
-			}
-		}
-	}
-
-	while (true) {
-		std::cout << "address*: ";
-		std::getline(std::cin, inputField);
-		inputField = trim(inputField);
-		if (inputField.size() == 0) {
-			std::cout << "address is mandatory...Please enter again!!" << '\n';
-		}
-		else {
-			e.setAddress(inputField);
-			break;
-		}
-	}
-
-	while (true) {
-		std::cout << "gender*: ";
-		std::getline(std::cin, inputField);
-		if (inputField.size() == 0) {
-			std::cout << "gender is mandatory...Please enter again!!" << '\n';
-		}
-		else {
-			inputField = trim(inputField);
-			int x = EmployeeDB::Validator::validateGender(inputField);
-			if (x == 1) {
-				e.setGender(EmployeeDB::Model::Gender::Male);
-				break;
-			}
-			else if (x == 2) {
-				e.setGender(EmployeeDB::Model::Gender::Female);
-				break;
-			}
-			else if (x == 3) {
-				e.setGender(EmployeeDB::Model::Gender::Other);
-				break;
-			}
-			else {
-				std::cerr << "Wrong input...Please enter again!!\n";
-			}
-		}
-	}
-
-	while (true) {
-		std::cout << "dateOfJoining*(dd-mm-yyyy or dd/mm/yyyy or dd.mm.yyyy): ";
-		std::getline(std::cin, inputField);
-		if (inputField.size() == 0) {
-			std::cout << "dateOfJoining is mandatory...Please enter again!!" << '\n';
-		}
-		else {
-			inputField = trim(inputField);
-
-			if (EmployeeDB::Validator::validateDate(inputField)) {
-				e.setDateOfJoining(inputField);
-				break;
-			}
-			else {
-				std::cerr << "Wrong input...Please enter again!!\n";
-			}
-		}
-	}
-
-	while (true) {
-		std::cout << "mentorID*: ";
-		std::getline(std::cin, inputField);
-		inputField = trim(inputField);
-		if (inputField.size() == 0) {
-			std::cout << "mentorID is mandatory...Please enter again!!" << '\n';
-		}
-		else {
-			try {
-				e.setMentorID(std::stoi(inputField));
-			}
-			catch (...) {
-				std::cout << "Wrong input...Please enter integer!!\n";
-				continue;
-			}
-			break;
-		}
-	}
-
-	while (true) {
-		std::cout << "performanceMetric: ";
-		std::getline(std::cin, inputField);
-		if (inputField.size() == 0) {
-			break;
-		}
-		inputField = trim(inputField);
-		if (inputField.size() == 0) {
-			std::cout << "Wrong input...Please enter integer!!\n";
-		}
-		else {
-			try {
-				e.setPerformanceMetric(std::stod(inputField));
-			}
-			catch (...) {
-				std::cout << "Wrong input...Please enter integer!!\n";
-				continue;
-			}
-			break;
-		}
-	}
-
-	while (true) {
-		std::cout << "bonus: ";
-		std::getline(std::cin, inputField);
-		if (inputField.size() == 0) {
-			break;
-		}
-		inputField = trim(inputField);
-		if (inputField.size() == 0) {
-			std::cout << "Wrong input...Please enter integer!!\n";
-		}
-		else {
-			try {
-				e.setBonus(std::stoi(inputField));
-			}
-			catch (...) {
-				std::cout << "Wrong input...Please enter integer!!\n";
-				continue;
-			}
-			break;
-		}
-	}
-
 }
 
+std::string EmployeeDB::Console::mandatoryWithoutValidation(const std::string& fieldName, const std::string& errMsg) {
+	std::string inputField;
+	while (true) {
+		std::cout << fieldName << "*: ";
+		std::getline(std::cin, inputField);
+		inputField = trim(inputField);
+		if (inputField.size() == 0) {
+			std::cout << errMsg << '\n';
+		}
+		else {
+			return inputField;
+		}
+	}
+}
+
+std::string EmployeeDB::Console::nonMandatoryWithValidation(const std::string& fieldName, const std::string& errMsg, bool (*validateField)(const std::string& validateStr)) {
+	std::string inputField;
+	while (true) {
+		std::cout << fieldName << ": ";
+		std::getline(std::cin, inputField);
+		if (inputField.size() == 0) {
+			return "";
+		}
+		inputField = trim(inputField);
+		if (inputField.size() == 0) {
+			std::cout << errMsg << '\n';
+		}
+		else {
+			if (validateField(inputField)) {
+				return inputField;
+			}
+			else {
+				std::cerr << "Wrong input...Please enter again!!\n";
+			}
+		}
+	}
+}
+
+std::string EmployeeDB::Console::nonMandatoryWithoutValidation(const std::string& fieldName, const std::string& errMsg) {
+	std::string inputField;
+	while (true) {
+		std::cout << fieldName << ": ";
+		std::getline(std::cin, inputField);
+		if (inputField.size() == 0) {
+			return "";
+		}
+		inputField = trim(inputField);
+		if (inputField.size() == 0) {
+			std::cout << errMsg << '\n';
+		}
+		else {
+			return inputField;
+		}
+	}
+}
+
+void EmployeeDB::Console::askUserInput(EmployeeDB::Model::Employee& e) {
+	std::cin.ignore();
+
+	e.setFirstName(mandatoryWithValidation("firstName", "firstName is mandatory...Please enter again!!", EmployeeDB::Validator::validateName));
+	e.setMiddleName(nonMandatoryWithValidation("middleName", "Please enter some valid input...", EmployeeDB::Validator::validateName));
+	e.setLastName(mandatoryWithValidation("lastName", "lastName is mandatory...Please enter again!!", EmployeeDB::Validator::validateName));
+	e.setDateOfBirth(nonMandatoryWithValidation("dateOfBirth(dd-mm-yyyy or dd/mm/yyyy or dd.mm.yyyy)", "Please enter some valid input...", EmployeeDB::Validator::validateDate));
+	e.setMobileNo(std::stoll(mandatoryWithValidation("mobileNo", "mobileNo is mandatory...Please enter again!!", EmployeeDB::Validator::validateMobile)));
+	e.setEmail(mandatoryWithValidation("email", "email is mandatory...Please enter again!!", EmployeeDB::Validator::validateEmail));
+	e.setAddress(mandatoryWithoutValidation("address", "address is mandatory...Please enter again!!"));
+
+	auto gen = mandatoryWithValidation("gender", "gender is mandatory...Please enter again!!", EmployeeDB::Validator::validateGender);
+	if (gen == "male" || gen == "Male") {
+		e.setGender(EmployeeDB::Model::Gender::Male);
+	}
+	else if (gen == "female" || gen == "Female") {
+		e.setGender(EmployeeDB::Model::Gender::Female);
+	}
+	else {
+		e.setGender(EmployeeDB::Model::Gender::Other);
+	}
+
+	e.setDateOfJoining(mandatoryWithValidation("dateOfJoining", "dateOfJoining is mandatory...Please enter again!!", EmployeeDB::Validator::validateDate));
+	e.setMentorID(std::stoi(mandatoryWithValidation("mentorID", "mentorID is mandatory...Please enter again!!", EmployeeDB::Validator::validateNum)));
+	if (nonMandatoryWithValidation("performanceMetric", "Wrong input...Please enter integer!!", EmployeeDB::Validator::validateReal).size() != 0) {
+		e.setPerformanceMetric(std::stod(nonMandatoryWithValidation("performanceMetric", "Wrong input...Please enter integer!!", EmployeeDB::Validator::validateReal)));
+	}
+	if (nonMandatoryWithValidation("bonus", "Wrong input...Please enter integer!!", EmployeeDB::Validator::validateReal).size() != 0) {
+		e.setBonus(std::stod(nonMandatoryWithValidation("bonus", "Wrong input...Please enter integer!!", EmployeeDB::Validator::validateReal)));
+	}
+}
+
+///////////
 std::string EmployeeDB::Console::checkInput(const std::string& s) {
 	std::string inputField;
 	while (true) {
@@ -702,259 +653,70 @@ void EmployeeDB::Console::updateEmp(const std::string& input, EmployeeDB::Model:
 	switch (std::stoi(input)) {
 	case 1:
 	{
-		while (true) {
-			std::string inputField;
-			std::cout << "firstName: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "Please enter some value...\n";
-			}
-			else {
-				e.setFirstName(inputField);
-				break;
-			}
-		}
+		e.setFirstName(mandatoryWithValidation("firstName", "firstName is mandatory...Please enter again!!", EmployeeDB::Validator::validateName));
 		break;
 	}
 	case 2:
 	{
-		while (true) {
-			std::string inputField;
-			std::cout << "middleName: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "Please enter some value...\n";
-			}
-			else {
-				e.setMiddleName(inputField);
-				break;
-			}
-		}
+		e.setMiddleName(mandatoryWithValidation("middleName", "Please enter some valid input...", EmployeeDB::Validator::validateName));
 		break;
 	}
 	case 3:
 	{
-		while (true) {
-			std::string inputField;
-			std::cout << "lastName: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "Please enter some value...\n";
-			}
-			else {
-				e.setLastName(inputField);
-				break;
-			}
-		}
+		e.setLastName(mandatoryWithValidation("lastName", "lastName is mandatory...Please enter again!!", EmployeeDB::Validator::validateName));
 		break;
 	}
 	case 4:
 	{
-		while (true) {
-			std::string inputField;
-			std::cout << "dateOfBirth: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "Please enter some value...\n";
-			}
-			else {
-				if (EmployeeDB::Validator::validateDate(inputField)) {
-					e.setDateOfBirth(inputField);
-				}
-				else {
-					std::cout << "Please enter valid input...\n";
-					continue;
-				}
-				break;
-			}
-		}
+		e.setDateOfBirth(mandatoryWithValidation("dateOfBirth(dd-mm-yyyy or dd/mm/yyyy or dd.mm.yyyy)", "Please enter some valid input...", EmployeeDB::Validator::validateDate));
 		break;
 	}
 	case 5:
 	{
-		while (true) {
-			std::string inputField;
-			std::cout << "mobileNo: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "Please enter some value...\n";
-			}
-			else {
-				if (EmployeeDB::Validator::validateMobile(inputField)) {
-					e.setMobileNo(std::stoll(inputField));
-				}
-				else {
-					std::cout << "Please enter valid input...\n";
-					continue;
-				}
-				break;
-			}
-		}
+		e.setMobileNo(std::stoll(mandatoryWithValidation("mobileNo", "mobileNo is mandatory...Please enter again!!", EmployeeDB::Validator::validateMobile)));
 		break;
 	}
 	case 6:
 	{
-		while (true) {
-			std::string inputField;
-			std::cout << "email: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "Please enter some value...\n";
-			}
-			else {
-				if (EmployeeDB::Validator::validateEmail(inputField)) {
-					e.setEmail(inputField);
-				}
-				else {
-					std::cout << "Please enter valid input...\n";
-					continue;
-				}
-				break;
-			}
-		}
+		e.setEmail(mandatoryWithValidation("email", "email is mandatory...Please enter again!!", EmployeeDB::Validator::validateEmail));
 		break;
 	}
 	case 7:
 	{
-		while (true) {
-			std::string inputField;
-			std::cout << "address: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "Please enter some value...\n";
-			}
-			else {
-				e.setAddress(inputField);
-				break;
-			}
-		}
+		e.setAddress(mandatoryWithoutValidation("address", "address is mandatory...Please enter again!!"));
 		break;
 	}
 	case 8:
 	{
-		while (true) {
-			std::string inputField;
-			std::cout << "gender: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "Please enter some value...\n";
-			}
-			else {
-				if (EmployeeDB::Validator::validateGender(inputField) == 1) {
-					e.setGender(EmployeeDB::Model::Gender::Male);
-				}
-				else if (EmployeeDB::Validator::validateGender(inputField) == 2) {
-					e.setGender(EmployeeDB::Model::Gender::Female);
-				}
-				else if (EmployeeDB::Validator::validateGender(inputField) == 3) {
-					e.setGender(EmployeeDB::Model::Gender::Other);
-				}
-				else {
-					std::cout << "Please enter valid input...\n";
-					continue;
-				}
-				break;
-			}
+		auto gen = mandatoryWithValidation("gender", "gender is mandatory...Please enter again!!", EmployeeDB::Validator::validateGender);
+		if (gen == "male" || gen == "Male") {
+			e.setGender(EmployeeDB::Model::Gender::Male);
+		}
+		else if (gen == "female" || gen == "Female") {
+			e.setGender(EmployeeDB::Model::Gender::Female);
+		}
+		else {
+			e.setGender(EmployeeDB::Model::Gender::Other);
 		}
 		break;
 	}
 	case 9:
 	{
-		while (true) {
-			std::string inputField;
-			std::cout << "dateOfJoining: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "Please enter some value...\n";
-			}
-			else {
-				if (EmployeeDB::Validator::validateDate(inputField)) {
-					e.setDateOfJoining(inputField);
-				}
-				else {
-					std::cout << "Please enter valid input...\n";
-					continue;
-				}
-				break;
-			}
-		}
+		e.setDateOfJoining(mandatoryWithValidation("dateOfJoining", "dateOfJoining is mandatory...Please enter again!!", EmployeeDB::Validator::validateDate));
 		break;
 	}
 	case 10:
 	{
-		while (true) {
-			std::string inputField;
-			std::cout << "mentorID: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "Please enter some value...\n";
-			}
-			else {
-				try {
-					e.setMentorID(std::stoi(inputField));
-				}
-				catch (...) {
-					std::cout << "Please enter a numeric value...\n";
-					continue;
-				}
-				break;
-			}
-		}
+		e.setMentorID(std::stoi(mandatoryWithValidation("mentorID", "mentorID is mandatory...Please enter again!!", EmployeeDB::Validator::validateNum)));
 		break;
 	}
 	case 11:
 	{
-		while (true) {
-			std::string inputField;
-			std::cout << "performanceMetric: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "Please enter some value...\n";
-			}
-			else {
-				try {
-					e.setPerformanceMetric(std::stod(inputField));
-				}
-				catch (...) {
-					std::cout << "Please enter a numeric value...\n";
-					continue;
-				}
-				break;
-			}
-		}
+		e.setPerformanceMetric(std::stod(mandatoryWithValidation("performanceMetric", "Wrong input...Please enter integer!!", EmployeeDB::Validator::validateReal)));
 		break;
 	}
 	case 12: {
-		while (true) {
-			std::string inputField;
-			std::cout << "bonus: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "Please enter some value...\n";
-			}
-			else {
-				try {
-					e.setBonus(std::stoi(inputField));
-				}
-				catch (...) {
-					std::cout << "Please enter a numeric value...\n";
-					continue;
-				}
-				break;
-			}
-		}
+		e.setBonus(std::stod(mandatoryWithValidation("bonus", "Wrong input...Please enter integer!!", EmployeeDB::Validator::validateReal)));
 		break;
 	}
 	}

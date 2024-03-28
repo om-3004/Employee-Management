@@ -3,59 +3,7 @@
 #include "../../include/controller/QAController.h"
 
 void EmployeeDB::Console::inQA() noexcept {
-	while (true) {
-
-		std::cout << "0. Quit\n";
-		std::cout << "1. Insert\n";
-		std::cout << "2. Update\n";
-		std::cout << "3. Delete\n";
-		std::cout << "4. View\n";
-		std::cout << "5. Main Menu\n";
-		std::cout << "Please select operation which you want to perform on QA: ";
-
-		char input;
-		input = std::cin.get();
-		if (input == '\n') {
-			std::cout << "Please enter valid input...\n";
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-		else if (std::cin.peek() != '\n') {
-			input = ' ';
-
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)...\n";
-
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-		else if (EmployeeDB::Validator::validateInputMenu(input)) {
-
-			system("cls");
-
-			if (input == '0') {
-				std::exit(0);
-			}
-			if (input == '5') {
-				std::cin.clear();
-				std::cin.ignore();
-				return;
-			}
-
-			operationOfQA(input);
-		}
-		else {
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)\n";
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-	}
+	inputForEnt("QA");
 }
 
 void EmployeeDB::Console::operationOfQA(const char& input) noexcept {
@@ -105,20 +53,7 @@ bool EmployeeDB::Console::insertInQA() {
 	}
 	else {
 		askUserInput(q);
-		while (true) {
-
-			std::string inputField;
-			std::cout << "testingTool*: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "testingTool is mandatory...Please enter again!!" << '\n';
-			}
-			else {
-				q.setTestingTool(inputField);
-				break;
-			}
-		}
+		q.setTestingTool(mandatoryWithoutValidation("testingTool", "testingTool is mandatory...Please enter again!!"));
 	}
 
 	// ------------------LOGIC----------------------
@@ -131,8 +66,7 @@ bool EmployeeDB::Console::insertInQA() {
 	else {
 		std::cout << "Please enter to continue...\n";
 		std::cin.get();
-		return false; //For Menu OF Enginner 
-		//return true; //for again show insert option
+		return false;
 	}
 
 
@@ -179,19 +113,7 @@ bool EmployeeDB::Console::updateInQA() {
 				while (true) {
 					if (EmployeeDB::Validator::validateUpdate(input)) {
 						if (std::stoi(input) == 13) {
-							while (true) {
-								std::string inputField;
-								std::cout << "testingTool: ";
-								std::getline(std::cin, inputField);
-								inputField = trim(inputField);
-								if (inputField.size() == 0) {
-									std::cout << "Please enter some value...\n";
-								}
-								else {
-									q.setTestingTool(inputField);
-									break;
-								}
-							}
+							q.setTestingTool(mandatoryWithoutValidation("testingTool", "testingTool is mandatory...Please enter again!!"));
 						}
 						else {
 							updateEmp(input, q);

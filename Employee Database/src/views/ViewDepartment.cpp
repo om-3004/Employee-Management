@@ -3,57 +3,7 @@
 #include "../../include/views/Common.h"
 
 void EmployeeDB::Console::inDepartment() noexcept {
-
-	while (true) {
-		std::cout << "0. Quit\n";
-		std::cout << "1. Insert\n";
-		std::cout << "2. Update\n";
-		std::cout << "3. Delete\n";
-		std::cout << "4. View\n";
-		std::cout << "5. Main Menu\n";
-		std::cout << "Please select operation which you want to perform on Department: ";
-
-		char input = std::cin.get();
-
-		if (input == '\n') {
-			std::cout << "Please enter valid input...\n";
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-		else if (std::cin.peek() != '\n') {
-			input = ' ';
-
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)...\n";
-
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-		else if (EmployeeDB::Validator::validateInputMenu(input)) {
-			system("cls");
-
-			if (input == '0') {
-				std::exit(0);
-			}
-			if (input == '5') {
-				std::cin.clear();
-				std::cin.ignore();
-				return;
-			}
-			operationOfDept(input);
-		}
-		else {
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)...\n";
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-	}
+	inputForEnt("Department");
 }
 
 void EmployeeDB::Console::operationOfDept(const char& input) noexcept {
@@ -102,76 +52,10 @@ bool EmployeeDB::Console::insertDept() {
 	}
 	else {
 		std::cin.ignore();
-		while (true) {
-			std::string inputField;
-			std::cout << "departmentName*: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "departmentName is mandatory...Please enter again!!" << '\n';
-			}
-			else {
-				d.setDepartmentName(inputField);
-				break;
-			}
-		}
-		while (true) {
-			std::string inputField;
-			std::cout << "baseSalary*: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "baseSalary is mandatory...Please enter again!!" << '\n';
-			}
-			else {
-				try {
-					d.setBaseSalary(std::stod(inputField));
-				}
-				catch (...) {
-					std::cerr << "Invalid input...Please enter numeric value!!\n";
-					continue;
-				}
-				break;
-			}
-		}
-		while (true) {
-			std::string inputField;
-			std::cout << "allowance*: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "allowance is mandatory...Please enter again!!" << '\n';
-			}
-			else {
-				try {
-					d.setAllowance(std::stod(inputField));
-				}
-				catch (...) {
-					std::cerr << "Invalid input...Please enter numeric value!!\n";
-					continue;
-				}
-				break;
-			}
-		}
-		while (true) {
-			std::string inputField;
-			std::cout << "deduction*: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "deduction is mandatory...Please enter again!!" << '\n';
-			}
-			else {
-				try {
-					d.setDeduction(std::stod(inputField));
-				}
-				catch (...) {
-					std::cerr << "Invalid input...Please enter numeric value!!\n";
-					continue;
-				}
-				break;
-			}
-		}
+		d.setDepartmentName(mandatoryWithoutValidation("departmentName", "departmentName is mandatory...Please enter again!!"));
+		d.setBaseSalary(std::stod(mandatoryWithValidation("baseSalary", "baseSalary is mandatory...Please enter again!!", EmployeeDB::Validator::validateReal)));
+		d.setAllowance(std::stod(mandatoryWithValidation("allowance", "allowance is mandatory...Please enter again!!", EmployeeDB::Validator::validateReal)));
+		d.setDeduction(std::stod(mandatoryWithValidation("deduction", "deduction is mandatory...Please enter again!!", EmployeeDB::Validator::validateReal)));
 	}
 
 	// ------------------LOGIC----------------------
@@ -237,66 +121,13 @@ bool EmployeeDB::Console::updateDept() {
 					if (EmployeeDB::Validator::validateDeptUpdate(input)) {
 
 						if (std::stoi(input) == 1) {
-							while (true) {
-								std::string inputField;
-								std::cout << "baseSalary: ";
-								std::getline(std::cin, inputField);
-								inputField = trim(inputField);
-								if (inputField.size() == 0) {
-									std::cout << "Please enter some value...\n";
-								}
-								else {
-									try {
-										d.setBaseSalary(std::stod(inputField));
-										break;
-									}
-									catch (...) {
-										std::cout << "Wrong input...Please enter numeric value!!\n";
-									}
-								}
-							}
+							d.setBaseSalary(std::stod(mandatoryWithValidation("baseSalary", "baseSalary is mandatory...Please enter again!!", EmployeeDB::Validator::validateReal)));
 						}
-
 						else if (std::stoi(input) == 2) {
-							while (true) {
-								std::string inputField;
-								std::cout << "allowance: ";
-								std::getline(std::cin, inputField);
-								inputField = trim(inputField);
-								if (inputField.size() == 0) {
-									std::cout << "Please enter some value...\n";
-								}
-								else {
-									try {
-										d.setAllowance(std::stod(inputField));
-										break;
-									}
-									catch (...) {
-										std::cout << "Wrong input...Please enter numeric value!!\n";
-									}
-								}
-							}
+							d.setAllowance(std::stod(mandatoryWithValidation("allowance", "allowance is mandatory...Please enter again!!", EmployeeDB::Validator::validateReal)));
 						}
-
 						else if (std::stoi(input) == 3) {
-							while (true) {
-								std::string inputField;
-								std::cout << "deduction: ";
-								std::getline(std::cin, inputField);
-								inputField = trim(inputField);
-								if (inputField.size() == 0) {
-									std::cout << "Please enter some value...\n";
-								}
-								else {
-									try {
-										d.setDeduction(std::stod(inputField));
-										break;
-									}
-									catch (...) {
-										std::cout << "Wrong input...Please enter numeric value!!\n";
-									}
-								}
-							}
+							d.setDeduction(std::stod(mandatoryWithValidation("deduction", "deduction is mandatory...Please enter again!!", EmployeeDB::Validator::validateReal)));
 						}
 						x = true;
 						break;

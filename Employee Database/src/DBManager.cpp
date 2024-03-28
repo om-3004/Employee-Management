@@ -189,8 +189,8 @@ void DBManager::dumpCSV(const char* queryString, int (*callback)(void*, int, cha
 	}
 }
 
-void DBManager::executeDumpQuery(const char* queryString, int(*Callback)(void*, int, char**, char**), void* arg) {
-	m_ResultCode = sqlite3_exec(m_DB, queryString, Callback, arg, &m_ErrorMessage);
+void DBManager::executeDumpQuery(const char* queryString, int(*callback)(void*, int, char**, char**), void* arg) {
+	m_ResultCode = sqlite3_exec(m_DB, queryString, callback, arg, &m_ErrorMessage);
 
 	if (m_ResultCode == SQLITE_OK) {
 		LogSystem::Info("[SUCCESS]", "Successfully executed Query ->", queryString);

@@ -97,7 +97,6 @@ bool EmployeeController::checkEmployeeExistence(const std::string& ID, const std
 		}
 		queryString = "SELECT employeeID FROM Employee WHERE employeeID = " + ID + " AND departmentID = " + std::to_string(departmentID) + ";";
 	}
-	std::cout << "departmentID: " << departmentID << '\n';
 	int callbackCount{ 0 };
 
 	try {
@@ -111,7 +110,6 @@ bool EmployeeController::checkEmployeeExistence(const std::string& ID, const std
 		std::cout << "Callback is 0\n";
 		return false;
 	}
-	std::cout << "Callback: " << callbackCount << '\n';
 	return true;
 }
 

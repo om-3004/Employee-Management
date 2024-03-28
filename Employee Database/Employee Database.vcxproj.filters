@@ -75,7 +75,7 @@
     <ClCompile Include="src\controller\QAController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="exportToCSV\To_csv.cpp">
+    <ClCompile Include="exportToCSV\ToCSV.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

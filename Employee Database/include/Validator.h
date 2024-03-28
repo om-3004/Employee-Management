@@ -8,20 +8,23 @@ namespace EmployeeDB {
 
 	class Validator {
 	public:
-		static bool validateEmail(const std::string& email);
-		static bool validateMobile(const std::string& number);
-		static bool validateDate(const std::string& date);
-		static int validateGender(const std::string& gender);
-		static bool validateCharInput(char& in);
-		static bool validateInputMenu(char& in);
-		static bool validateInputMainMenu(char& in);
-		static bool validateInputView(char& in);
-		static bool validateViewOfFields(std::string& in);
-		static bool validateUpdate(std::string& in);
-		static bool validateDeptUpdate(std::string& in);
-		static bool validateViewOfDeptFields(std::string& in);
-		static bool validateManUpdate(std::string& in);
-		static bool validateViewOfManFields(std::string& in);
+		static bool validateName(const std::string& in) noexcept;
+		static bool validateNum(const std::string& in) noexcept;
+		static bool validateReal(const std::string& in) noexcept;
+		static bool validateEmail(const std::string& email) noexcept;
+		static bool validateMobile(const std::string& number) noexcept;
+		static bool validateDate(const std::string& date) noexcept;
+		static bool validateGender(const std::string& gender) noexcept;
+		static bool validateCharInput(char& in) noexcept;
+		static bool validateInputMenu(char& in) noexcept;
+		static bool validateInputMainMenu(char& in) noexcept;
+		static bool validateInputView(char& in) noexcept;
+		static bool validateViewOfFields(std::string& in) noexcept;
+		static bool validateUpdate(std::string& in) noexcept;
+		static bool validateDeptUpdate(std::string& in) noexcept;
+		static bool validateViewOfDeptFields(std::string& in) noexcept;
+		static bool validateManUpdate(std::string& in) noexcept;
+		static bool validateViewOfManFields(std::string& in) noexcept;
 	};
 }
 
