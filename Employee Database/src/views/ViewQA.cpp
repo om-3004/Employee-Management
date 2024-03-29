@@ -60,11 +60,9 @@ bool EmployeeDB::Console::insertInQA() {
 	bool DbSuccess;
 	//Logic to send an object
 	DbSuccess = EmployeeDB::Controller::QAController::insertQA(q);
-	if (DbSuccess) {
-		std::cout << "Employee Entered SuccessFull\n";
-	}
+	if (DbSuccess) {}
 	else {
-		std::cout << "Please enter to continue...\n";
+		std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 		std::cin.get();
 		return false;
 	}
@@ -93,14 +91,14 @@ bool EmployeeDB::Console::updateInQA() {
 	while (true) {
 		DBSuccess = EmployeeDB::Controller::QAController::selectQA("employeeID", std::to_string(id));
 		printEmpFields("QA");
-		std::cout << "Enter the field which you want to update(1-13): ";
+		std::cout << "\x1B[36mEnter the field which you want to update(1-13): \033[0m";
 
 		while (true) {
 			char a = std::cin.get();
 			if (a == '\n') {
 				std::cin.clear();
-				std::cout << "Please enter valid input...\n";
-				std::cout << "Press enter to continue...\n";
+				std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
+				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
 				system("cls");
 				x = false;
@@ -123,10 +121,10 @@ bool EmployeeDB::Console::updateInQA() {
 					}
 					else {
 						std::cin.clear();
-						std::cerr << "Please enter valid input in the given range(1-13)\n";
+						std::cerr << "\x1B[31mPlease enter valid input in the given range(1-13)...\033[0m\n";
 						x = false;
 
-						std::cout << "Press enter to continue...\n";
+						std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 						std::cin.get();
 						system("cls");
 						break;
@@ -198,7 +196,7 @@ bool EmployeeDB::Console::viewInQA() {
 			DBSuccess = EmployeeDB::Controller::QAController::selectQA(arg1, arg2);
 			if (DBSuccess) {}
 			else {
-				std::cout << "Press enter to continue...";
+				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
 				return false; //For Menu OF Enginner 			
 			}
@@ -207,12 +205,12 @@ bool EmployeeDB::Console::viewInQA() {
 		case '2': {
 			while (true) {
 				printEmpFieldsWithID("QA");
-				std::cout << "Select the field using which you want to view the Employee details(1-15): ";
+				std::cout << "\x1B[36mSelect the field using which you want to view the Employee details(1-15): \033[0m";
 				char a;
 				a = std::cin.get();
 				if (a == '\n') {
-					std::cout << "Please enter valid input...\n";
-					std::cout << "Press enter to continue...\n";
+					std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
+					std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 					std::cin.get();
 					system("cls");
 				}
@@ -231,7 +229,7 @@ bool EmployeeDB::Console::viewInQA() {
 									std::getline(std::cin, inputField);
 									inputField = trim(inputField);
 									if (inputField.size() == 0) {
-										std::cout << "The input can not be empty...Please enter something\n";
+										std::cerr << "\x1B[31mThe input can not be empty...Please enter something\033[0m\n";
 									}
 									else {
 										arg2 = inputField;
@@ -246,8 +244,8 @@ bool EmployeeDB::Console::viewInQA() {
 							break;
 						}
 						else {
-							std::cout << "Please enter valid input...\n";
-							std::cout << "Press enter to continue...\n";
+							std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
+							std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 							std::cin.get();
 							system("cls");
 							x = false;
@@ -263,7 +261,7 @@ bool EmployeeDB::Console::viewInQA() {
 			DBSuccess = EmployeeDB::Controller::QAController::selectQA(arg1, arg2);
 			if (DBSuccess) {}
 			else {
-				std::cout << "Press enter to continue...";
+				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
 				return false;
 			}

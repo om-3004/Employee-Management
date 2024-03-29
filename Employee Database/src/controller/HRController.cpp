@@ -13,7 +13,7 @@ bool HRController::insertHR(HR& obj) {
 	int departmentID = DepartmentController::getDepartmentIDbyName("HR");
 
 	if (departmentID == -1) {
-		std::cerr << "HR department not found. Please insert a department named HR.\n";
+		std::cerr << "\x1B[31mHR department not found. Please insert a department named HR.\033[0m\n";
 		return false;
 	}
 
@@ -22,7 +22,7 @@ bool HRController::insertHR(HR& obj) {
 	bool employeeResult = EmployeeController::insertEmployee(obj);
 
 	if (!employeeResult) {
-		std::cerr << "HR could not be inserted.\n";
+		std::cerr << "\x1B[31mHR could not be inserted.\033[0m\n";
 		return false;
 	}
 
@@ -34,25 +34,25 @@ bool HRController::insertHR(HR& obj) {
 
 	try {
 		DBManager::instance().executeQuery(queryString.c_str());
-		std::cout << "Successfully inserted an HR.\n";
+		std::cout << "\x1B[32mSuccessfully inserted an HR.\033[0m\n";
 	}
 	catch (const std::exception& e) {
-		std::cerr << e.what() << '\n';
-		std::cerr << "HR could not be inserted.\n";
+		std::cerr << "\x1B[31m" << e.what() << "\033[0m\n";
+		std::cerr << "\x1B[31mHR could not be inserted.\033[0m\n";
 		return false;
 	}
 	return true;
 }
 
 bool HRController::selectHR(const std::string& attributeName, const std::string& attributeValue) {
-	std::string queryString = "SELECT * FROM Employee NATURAL JOIN HR " + ((attributeName.size() != 0) ? "WHERE " + attributeName + " = \"" + attributeValue + "\"" : "") + ";";
+	std::string queryString = "SELECT * FROM Employee NATURAL JOIN HR " + ((attributeName.size() != 0) ? "WHERE " + attributeName + " = \"" + attributeValue + "\" COLLATE NOCASE" : "") + ";";
 
 	try {
 		int rowCount = DBManager::instance().executeSelectQuery(queryString.c_str());
-		std::cout << rowCount << std::string{ " record" } + (rowCount > 1 ? "s" : "") + " found\n";
+		std::cout << "\x1B[33m" << rowCount << std::string{" record"} + (rowCount > 1 ? "s" : "") + " found\033[0m\n";
 	}
 	catch (const std::exception& e) {
-		std::cerr << e.what() << '\n';
+		std::cerr << "\x1B[31m" << e.what() << "\033[0m\n";
 		return false;
 	}
 	return true;
@@ -62,10 +62,10 @@ bool HRController::deleteHRByID(int ID) {
 	int deleteResult = EmployeeController::deleteEmployeeByID(ID);
 
 	if (deleteResult) {
-		std::cout << "Successfully deleted an HR.\n";
+		std::cout << "\x1B[32mSuccessfully deleted an HR.\033[0m\n";
 	}
 	else {
-		std::cerr << "HR could not be deleted.\n";
+		std::cerr << "\x1B[31mHR could not be deleted.\033[0m\n";
 	}
 	return deleteResult;
 }
@@ -85,7 +85,7 @@ bool HRController::updateHR(HR& obj) {
 	bool employeeResult = EmployeeController::updateEmployee(obj);
 
 	if (!employeeResult) {
-		std::cerr << "HR could not be updated.\n";
+		std::cerr << "\x1B[31mHR could not be updated.\033[0m\n";
 		return false;
 	}
 
@@ -96,11 +96,11 @@ bool HRController::updateHR(HR& obj) {
 
 		try {
 			DBManager::instance().executeQuery(queryString.c_str());
-			std::cout << "Successfully updated an HR.\n";
+			std::cout << "\x1B[32mSuccessfully updated an HR.\033[0m\n";
 		}
 		catch (const std::exception& e) {
-			std::cerr << e.what() << '\n';
-			std::cerr << "HR could not be updated.\n";
+			std::cerr << "\x1B[31m" << e.what() << "\033[0m\n";
+			std::cerr << "\x1B[31mHR could not be updated.\033[0m\n";
 			return false;
 		}
 	}

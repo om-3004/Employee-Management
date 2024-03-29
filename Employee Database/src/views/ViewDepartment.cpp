@@ -63,10 +63,10 @@ bool EmployeeDB::Console::insertDept() {
 	//Logic to send an object
 	DbSuccess = EmployeeDB::Controller::DepartmentController::insertDepartment(d);
 	if (DbSuccess) {
-		std::cout << "Department Entered SuccessFull\n";
+		//std::cout << "Department Entered Successfully\n";
 	}
 	else {
-		std::cout << "Please enter to continue...\n";
+		std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 		std::cin.get();
 		return false; //For Menu OF Enginner 
 		//return true; //for again show insert option
@@ -98,15 +98,15 @@ bool EmployeeDB::Console::updateDept() {
 		std::cout << "1. baseSalary*: \n";
 		std::cout << "2. allowance*: \n";
 		std::cout << "3. deduction*: \n";
-		std::cout << "Enter the field which you want to update(1-3): ";
+		std::cout << "\x1B[36mEnter the field which you want to update(1-3): \033[0m";
 
 		while (true) {
 			char a = std::cin.get();
 			if (a == '\n') {
 				std::cin.clear();
-				std::cout << "Please enter valid input...\n";
+				std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 
-				std::cout << "Press enter to continue...\n";
+				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
 				system("cls");
 
@@ -134,10 +134,10 @@ bool EmployeeDB::Console::updateDept() {
 					}
 					else {
 						std::cin.clear();
-						std::cerr << "Please enter valid input in the given range(1-3)\n";
+						std::cerr << "\x1B[31mPlease enter valid input in the given range(1-3)...\033[0m\n";
 						x = false;
 
-						std::cout << "Press enter to continue...\n";
+						std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 						std::cin.get();
 						system("cls");
 
@@ -211,7 +211,7 @@ bool EmployeeDB::Console::viewDept() {
 			DBSuccess = EmployeeDB::Controller::DepartmentController::selectDepartment();
 			if (DBSuccess) {}
 			else {
-				std::cout << "Press enter to continue...";
+				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
 				return false; //For Menu OF Enginner 
 			}
@@ -220,12 +220,12 @@ bool EmployeeDB::Console::viewDept() {
 		case '2': {
 			while (true) {
 				printEmpFieldsWithID("Department");
-				std::cout << "Select the field using which you want to view the Employee details(1-5): ";
+				std::cout << "\x1B[36mSelect the field using which you want to view the Employee details(1-5): \033[0m";
 				char a;
 				a = std::cin.get();
 				if (a == '\n') {
-					std::cout << "Please enter valid input...\n";
-					std::cout << "Press enter to continue...\n";
+					std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
+					std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 					std::cin.get();
 					system("cls");
 				}
@@ -241,8 +241,8 @@ bool EmployeeDB::Console::viewDept() {
 							break;
 						}
 						else {
-							std::cout << "Please enter valid input...\n";
-							std::cout << "Press enter to continue...\n";
+							std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
+							std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 							std::cin.get();
 							system("cls");
 							x = false;
@@ -258,7 +258,7 @@ bool EmployeeDB::Console::viewDept() {
 			DBSuccess = EmployeeDB::Controller::DepartmentController::selectDepartment(arg1, arg2);
 			if (DBSuccess) {}
 			else {
-				std::cout << "Press enter to continue...";
+				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
 				return false; //For Menu OF Enginner 
 			}

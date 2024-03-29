@@ -55,7 +55,7 @@ bool EmployeeDB::Console::makeManager() {
 		std::cin.ignore();
 		while (true) {
 			std::string id;
-			std::cout << "Enter the Employee id whom you want to make manager: ";
+			std::cout << "\x1B[36mEnter the Employee id whom you want to make manager: \033[0m";
 			std::getline(std::cin, id);
 			int ID;
 			try {
@@ -67,7 +67,7 @@ bool EmployeeDB::Console::makeManager() {
 				DepartmentID = EmployeeDB::Controller::EmployeeController::getDepartmentIDbyEmployeeID(m.getManagerID());
 
 				if (DepartmentID == -1) {
-					std::cerr << "No employee was not found for provided managerID...\n";
+					std::cerr << "\x1B[31mNo employee was not found for provided managerID...\033[0m\n";
 					continue;
 				}
 
@@ -76,7 +76,7 @@ bool EmployeeDB::Console::makeManager() {
 				break;
 			}
 			catch (...) {
-				std::cout << "Please enter valid input...\n";
+				std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 			}
 		}
 		m.setTeamSize(std::stoi(mandatoryWithValidation("teamSize", "teamSize is mandatory...Please enter again!!", EmployeeDB::Validator::validateNum)));
@@ -88,11 +88,10 @@ bool EmployeeDB::Console::makeManager() {
 	// ------------------LOGIC----------------------
 	bool DbSuccess;
 	DbSuccess = EmployeeDB::Controller::ManagerController::insertManager(m);
-	if (DbSuccess) {
-		std::cout << "Manager Entered SuccessFully\n";
-	}
+	if (DbSuccess) {}
 	else {
-		std::cout << "Please enter to continue...\n";
+		std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
+
 		std::cin.get();
 		return false; //For Menu OF Enginner 
 	}
@@ -123,14 +122,14 @@ bool EmployeeDB::Console::updateManager() {
 	while (true) {
 		DBSuccess = EmployeeDB::Controller::ManagerController::selectManager("employeeID", std::to_string(id));
 		printEmpFields("Manager");
-		std::cout << "Enter the field which you want to update(1-16): ";
+		std::cout << "\x1B[36mEnter the field which you want to update(1-16): \033[0m";
 
 		while (true) {
 			char a = std::cin.get();
 			if (a == '\n') {
 				std::cin.clear();
-				std::cout << "Please enter valid input...\n";
-				std::cout << "Press enter to continue...\n";
+				std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
+				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
 				system("cls");
 				x = false;
@@ -163,10 +162,10 @@ bool EmployeeDB::Console::updateManager() {
 					}
 					else {
 						std::cin.clear();
-						std::cerr << "Please enter valid input in the given range(1-16)\n";
+						std::cerr << "\x1B[31mPlease enter valid input in the given range(1-16)...\033[0m\n";
 						x = false;
 
-						std::cout << "Press enter to continue...\n";
+						std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 						std::cin.get();
 						system("cls");
 						break;
@@ -238,7 +237,7 @@ bool EmployeeDB::Console::viewManager() {
 			DBSuccess = EmployeeDB::Controller::ManagerController::selectManager();
 			if (DBSuccess) {}
 			else {
-				std::cout << "Press enter to continue...";
+				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
 				return false; //For Menu OF Enginner 
 			}
@@ -247,13 +246,13 @@ bool EmployeeDB::Console::viewManager() {
 		case '2': {
 			while (true) {
 				printEmpFieldsWithID("Manager");
-				std::cout << "Select the field using which you want to view the Employee details(1-18): ";
+				std::cout << "\x1B[36mSelect the field using which you want to view the Employee details(1-18): \033[0m";
 				char input;
 				input = std::cin.get();
 				if (input == '\n') {
-					std::cout << "Please enter valid input...\n";
+					std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 
-					std::cout << "Press enter to continue...\n";
+					std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 					std::cin.get();
 					system("cls");
 				}
@@ -273,7 +272,7 @@ bool EmployeeDB::Console::viewManager() {
 									std::getline(std::cin, inputField);
 									inputField = trim(inputField);
 									if (inputField.size() == 0) {
-										std::cout << "The input can not be empty...Please enter something\n";
+										std::cerr << "\x1B[31mThe input can not be empty...Please enter something\033[0m\n";
 									}
 									else {
 										try {
@@ -282,7 +281,7 @@ bool EmployeeDB::Console::viewManager() {
 											break;
 										}
 										catch (...) {
-											std::cout << "Please enter integer value...\n";
+											std::cerr << "\x1B[31mPlease enter integer value...\033[0m\n";
 										}
 									}
 
@@ -296,7 +295,7 @@ bool EmployeeDB::Console::viewManager() {
 									std::getline(std::cin, inputField);
 									inputField = trim(inputField);
 									if (inputField.size() == 0) {
-										std::cout << "The input can not be empty...Please enter something\n";
+										std::cerr << "\x1B[31mThe input can not be empty...Please enter something\033[0m\n";
 									}
 									else {
 										arg2 = inputField;
@@ -312,7 +311,7 @@ bool EmployeeDB::Console::viewManager() {
 									std::getline(std::cin, inputField);
 									inputField = trim(inputField);
 									if (inputField.size() == 0) {
-										std::cout << "The input can not be empty...Please enter something\n";
+										std::cerr << "\x1B[31mThe input can not be empty...Please enter something\033[0m\n";
 									}
 									else {
 										arg2 = inputField;
@@ -328,7 +327,7 @@ bool EmployeeDB::Console::viewManager() {
 									std::getline(std::cin, inputField);
 									inputField = trim(inputField);
 									if (inputField.size() == 0) {
-										std::cout << "The input can not be empty...Please enter something\n";
+										std::cerr << "\x1B[31mThe input can not be empty...Please enter something\033[0m\n";
 									}
 									else {
 										arg2 = inputField;
@@ -343,8 +342,8 @@ bool EmployeeDB::Console::viewManager() {
 							break;
 						}
 						else {
-							std::cout << "Please enter valid input...\n";
-							std::cout << "Press enter to continue...\n";
+							std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
+							std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 							std::cin.get();
 							system("cls");
 							x = false;
@@ -360,7 +359,7 @@ bool EmployeeDB::Console::viewManager() {
 			DBSuccess = EmployeeDB::Controller::ManagerController::selectManager(arg1, arg2);
 			if (DBSuccess) {}
 			else {
-				std::cout << "Press enter to continue...";
+				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
 				return false; //For Menu OF Enginner 
 			}

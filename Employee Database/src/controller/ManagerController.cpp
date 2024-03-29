@@ -26,25 +26,25 @@ bool ManagerController::insertManager(Manager& obj) {
 
 	try {
 		DBManager::instance().executeQuery(queryString.c_str());
-		std::cout << "Successfully inserted a Manager.\n";
+		std::cout << "\x1B[32mSuccessfully inserted a Manager.\033[0m\n";
 	}
 	catch (std::exception& e) {
-		std::cerr << e.what() << '\n';
-		std::cerr << "Manager could not be inserted.\n";
+		std::cerr << "\x1B[31m" << e.what() << "\033[0m\n";
+		std::cerr << "\x1B[31mManager could not be inserted.\033[0m\n";
 		return false;
 	}
 	return true;
 }
 
 bool ManagerController::selectManager(const std::string& attributeName, const std::string& attributeValue) {
-	std::string queryString = "SELECT * FROM ManagerView " + ((attributeName.size() != 0) ? "WHERE " + attributeName + " = \"" + attributeValue + "\"" : "") + ";";
+	std::string queryString = "SELECT * FROM ManagerView " + ((attributeName.size() != 0) ? "WHERE " + attributeName + " = \"" + attributeValue + "\"  COLLATE NOCASE" : "") + ";";
 
 	try {
 		int rowCount = DBManager::instance().executeSelectQuery(queryString.c_str());
-		std::cout << rowCount << std::string{ " record" } + (rowCount > 1 ? "s" : "") + " found\n";
+		std::cout << "\x1B[33m" << rowCount << std::string{" record"} + (rowCount > 1 ? "s" : "") + " found\033[0m\n";
 	}
 	catch (const std::exception& e) {
-		std::cerr << e.what() << '\n';
+		std::cerr << "\x1B[31m" << e.what() << "\033[0m\n";
 		return false;
 	}
 	return true;
@@ -55,11 +55,11 @@ bool ManagerController::deleteManagerByID(int ID) {
 
 	try {
 		DBManager::instance().executeQuery(queryString.c_str());
-		std::cout << "Successfully deleted a Manager.\n";
+		std::cout << "\x1B[32mSuccessfully deleted a Manager.\033[0m\n";
 	}
 	catch (const std::exception& e) {
-		std::cerr << e.what() << '\n';
-		std::cerr << "Manager could not be deleted.\n";
+		std::cerr << "\x1B[31m" << e.what() << "\033[0m\n";
+		std::cerr << "\x1B[31mManager could not be deleted.\033[0m\n";
 		return false;
 	}
 	return true;
@@ -97,7 +97,7 @@ bool ManagerController::updateManager(Manager& obj) {
 	bool employeeResult = EmployeeController::updateEmployee(obj);
 
 	if (!employeeResult) {
-		std::cerr << "Manager could not be updated.\n";
+		std::cerr << "\x1B[31mManager could not be updated.\033[0m\n";
 		return false;
 	}
 
@@ -107,11 +107,11 @@ bool ManagerController::updateManager(Manager& obj) {
 		std::string queryString = "UPDATE Manager SET " + updateQueryCondition + " WHERE managerID = " + std::to_string(obj.getManagerID()) + ";";
 		try {
 			DBManager::instance().executeQuery(queryString.c_str());
-			std::cout << "Successfully updated a Manager.\n";
+			std::cout << "\x1B[32mSuccessfully updated a Manager.\033[0m\n";
 		}
 		catch (const std::exception& e) {
-			std::cerr << e.what() << '\n';
-			std::cerr << "Manager could not be updated.\n";
+			std::cerr << "\x1B[31m" << e.what() << "\033[0m\n";
+			std::cout << "\x1B[32mSuccessfully updated a Manager.\033[0m\n";
 			return false;
 		}
 	}
@@ -127,7 +127,7 @@ bool ManagerController::checkManagerExistence(const std::string& managerID) {
 		callbackCount = DBManager::instance().executeRowCountQuery(queryString.c_str());
 	}
 	catch (std::exception& e) {
-		std::cerr << e.what() << '\n';
+		std::cerr << "\x1B[31m" << e.what() << "\033[0m\n";
 	}
 
 	if (callbackCount == 0) {
