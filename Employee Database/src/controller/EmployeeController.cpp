@@ -227,11 +227,11 @@ bool EmployeeController::getSalaryDetails(Salary& obj) {
 		Salary* salaryObj = static_cast<Salary*>(data);
 
 		salaryObj->setDepartmentID(argv[1] ? std::stoi(argv[1]) : 0);
-		salaryObj->setPerformanceMetric(argv[2] ? std::stoi(argv[2]) : 0.0);
-		salaryObj->setBonus(argv[3] ? std::stoi(argv[3]) : 0.0);
-		salaryObj->setBaseSalary(argv[4] ? std::stoi(argv[4]) : 0.0);
-		salaryObj->setAllowance(argv[5] ? std::stoi(argv[5]) : 0.0);
-		salaryObj->setDeduction(argv[6] ? std::stoi(argv[6]) : 0.0);
+		salaryObj->setPerformanceMetric(argv[2] ? std::stod(argv[2]) : 0.0);
+		salaryObj->setBonus(argv[3] ? std::stod(argv[3]) : 0.0);
+		salaryObj->setBaseSalary(argv[4] ? std::stod(argv[4]) : 0.0);
+		salaryObj->setAllowance(argv[5] ? std::stod(argv[5]) : 0.0);
+		salaryObj->setDeduction(argv[6] ? std::stod(argv[6]) : 0.0);
 		return 0;  
 	};
 

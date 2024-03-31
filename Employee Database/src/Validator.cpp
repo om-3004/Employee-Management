@@ -3,6 +3,10 @@
 
 using EmployeeDB::Validator;
 
+bool Validator::validateCreateMenu(char& in) noexcept {
+	return std::regex_match(std::to_string(in), std::regex("(^(4[8|9]{1}|5[0|1]{1})$)"));
+}
+
 bool Validator::validateNum(const std::string& in) noexcept {
 	try {
 		[[maybe_unused]] auto temp = std::stoll(in);
@@ -63,7 +67,7 @@ bool Validator::validateCharInput(char& in) noexcept {
 
 //this is for validation of input in main menu
 bool Validator::validateInputMainMenu(char& in) noexcept {
-	return std::regex_match(std::to_string(in), std::regex("(^(4[8|9]{1}|5[0|1|2|3|4|5]{1})$)"));
+	return std::regex_match(std::to_string(in), std::regex("(^(4[8|9]{1}|5[0|1|2|3|4|5|6]{1})$)"));
 }
 //this is for validation of input in other menu like insert , update ,delete , view  
 bool Validator::validateInputMenu(char& in) noexcept {

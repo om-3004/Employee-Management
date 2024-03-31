@@ -5,12 +5,15 @@
 
 void EmployeeDB::Console::inputForEnt(const std::string_view& ent) {
 	while (true) {
+		std::cout << "------------------------------------------------ " << ent << " Menu ------------------------------------------------------- \n";
+
 		std::cout << "0. Quit\n";
 		std::cout << "1. Insert\n";
 		std::cout << "2. Update\n";
 		std::cout << "3. Delete\n";
 		std::cout << "4. View\n";
-		std::cout << "5. Main Menu\n";
+		std::cout << "5. EmployeeDB Menu\n";
+		//std::cout << "5. Main Menu\n";
 		std::cout << "\x1B[36mPlease select operation which you want to perform on " << ent << ": \033[0m";
 
 		char input;
@@ -34,11 +37,10 @@ void EmployeeDB::Console::inputForEnt(const std::string_view& ent) {
 		}
 		else if (EmployeeDB::Validator::validateInputMenu(input)) {
 
-			system("cls");
-
 			if (input == '0') {
 				std::exit(0);
 			}
+			system("cls");
 			if (input == '5') {
 				std::cin.clear();
 				std::cin.ignore();
