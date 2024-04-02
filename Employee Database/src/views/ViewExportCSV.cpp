@@ -1,6 +1,6 @@
-#include "../../include/views/ViewExportCSV.h"
-#include "../../include/controller/ExportCSVController.h"
-#include "../../include/Validator.h"
+#include "views/ViewExportCSV.h"
+#include "controller/ExportCSVController.h"
+#include "Validator.h"
 
 #include <iostream>
 using EmployeeDB::Controller::ExportController;

@@ -1,7 +1,7 @@
-#include "../../include/views/Common.h"
-#include "../../include/controller/EmployeeController.h"
-#include "../../include/controller/ManagerController.h"
-#include "../../include/controller/DepartmentController.h"
+#include "Common.h"
+#include "EmployeeController.h"
+#include "ManagerController.h"
+#include "DepartmentController.h"
 
 void EmployeeDB::Console::inputForEnt(const std::string_view& ent) {
 	while (true) {
@@ -371,6 +371,9 @@ std::string EmployeeDB::Console::mandatoryWithValidation(const std::string& fiel
 		}
 		else {
 			inputField = trim(inputField);
+			if (fieldName == "gender") {
+				std::transform(inputField.begin(), inputField.end(), inputField.begin(), ::tolower);
+			}
 			if (validateField(inputField)) {
 				return inputField;
 			}
@@ -449,10 +452,10 @@ void EmployeeDB::Console::askUserInput(EmployeeDB::Model::Employee& e) {
 	e.setAddress(mandatoryWithoutValidation("address", "address is mandatory...Please enter again!!"));
 
 	auto gen = mandatoryWithValidation("gender", "gender is mandatory...Please enter again!!", EmployeeDB::Validator::validateGender);
-	if (gen == "male" || gen == "Male") {
+	if (gen == "male") {
 		e.setGender(EmployeeDB::Model::Gender::Male);
 	}
-	else if (gen == "female" || gen == "Female") {
+	else if (gen == "female") {
 		e.setGender(EmployeeDB::Model::Gender::Female);
 	}
 	else {
@@ -566,6 +569,7 @@ void EmployeeDB::Console::matchInpField(const std::string& inputField, std::stri
 		while (true) {
 			arg1 = "gender";
 			arg2 = checkInput(arg1);
+			std::transform(arg2.begin(), arg2.end(), arg2.begin(), ::tolower);
 			if (EmployeeDB::Validator::validateGender(arg2) != false) {
 				break;
 			}
@@ -690,10 +694,10 @@ void EmployeeDB::Console::updateEmp(const std::string& input, EmployeeDB::Model:
 	case 8:
 	{
 		auto gen = mandatoryWithValidation("gender", "gender is mandatory...Please enter again!!", EmployeeDB::Validator::validateGender);
-		if (gen == "male" || gen == "Male") {
+		if (gen == "male") {
 			e.setGender(EmployeeDB::Model::Gender::Male);
 		}
-		else if (gen == "female" || gen == "Female") {
+		else if (gen == "female") {
 			e.setGender(EmployeeDB::Model::Gender::Female);
 		}
 		else {
@@ -880,24 +884,6 @@ bool EmployeeDB::Console::insertOperation(char& input, const std::string_view& e
 				else {
 					return true;
 				}
-				/*else if (a == '1') {
-					askUserInput(e);
-					while (true) {
-						std::string inputField;
-						std::cout << "technology*: ";
-						std::getline(std::cin, inputField);
-						inputField = trim(inputField);
-						if (inputField.size() == 0) {
-							std::cout << "technology is mandatory...Please enter again!!" << '\n';
-						}
-						else {
-							e.setTechnology(inputField);
-							break;
-						}
-					}
-					break;
-				}
-				break;*/
 			}
 			else {
 				std::cin.clear();

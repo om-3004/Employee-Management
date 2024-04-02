@@ -213,4 +213,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="data\Database.sql" />
+    <None Include="data\EmployeeDB.db" />
+    <None Include="data\populateDB.sql" />
+  </ItemGroup>
 </Project>

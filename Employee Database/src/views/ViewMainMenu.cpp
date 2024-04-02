@@ -1,7 +1,7 @@
-#include "../../include/views/ViewMainMenu.h"
-#include "../../include/Validator.h"
-#include "../../include/views/ConsoleManager.h"
-#include "../../include/views/ViewTable.h"
+#include "ViewMainMenu.h"
+#include "Validator.h"
+#include "ConsoleManager.h"
+#include "ViewTable.h"
 #include <iostream>
 
 void EmployeeDB::Console::viewMainMenu() noexcept {

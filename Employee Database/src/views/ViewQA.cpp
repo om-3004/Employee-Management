@@ -1,6 +1,6 @@
-#include"../../include/views/ViewQA.h"
-#include "../../include/views/Common.h"
-#include "../../include/controller/QAController.h"
+#include "ViewQA.h"
+#include "Common.h"
+#include "QAController.h"
 
 void EmployeeDB::Console::QAMenu() noexcept {
 	inputForEnt("QA");

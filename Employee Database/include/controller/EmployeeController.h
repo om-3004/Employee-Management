@@ -18,7 +18,7 @@ namespace EmployeeDB::Controller {
 		static bool deleteEmployeeByID(int ID);
 		static bool updateEmployee(Employee& obj);
 		static bool getSalaryDetails(Salary& obj);
-	private:
+	protected:
 		static std::string getUpdateQueryCondition(Employee& obj);
 	};
 }

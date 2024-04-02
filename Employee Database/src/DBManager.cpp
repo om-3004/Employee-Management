@@ -2,10 +2,10 @@
 #include <string>
 #include <iomanip>
 #include <exception>
-#include "../Config.h"
-#include "../DBManager.h"
-#include "../include/model/Salary.h"
-#include "../include/controller/EmployeeController.h"
+#include "Config.h"
+#include "DBManager.h"
+#include "Salary.h"
+#include "EmployeeController.h"
 #include "../logs/Logger.h"
 
 using EmployeeDB::DBManager;
@@ -173,5 +173,16 @@ void DBManager::executeConfigQuery() {
 	catch (const std::exception& e) {
 		std::cerr << e.what() << '\n';
 		LogSystem::Error("[FAIL]", e.what(), "->", queryString);
+	}
+}
+
+void DBManager::executeTruncateQuery(const char* tableName) {
+	std::string queryString = std::string{ "DELETE FROM " } + tableName + ";";
+
+	try {
+		instance().executeQuery(queryString.c_str());
+	}
+	catch (const std::exception& e) {
+		std::cerr << e.what() << '\n';
 	}
 }

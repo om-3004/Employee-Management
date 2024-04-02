@@ -1,4 +1,4 @@
-	#include <exception>
+#include <exception>
 #include "ManagerController.h"
 #include "EmployeeController.h"
 #include "DBManager.h"
@@ -6,16 +6,6 @@
 using EmployeeDB::Controller::ManagerController, EmployeeDB::Controller::EmployeeController;
 
 bool ManagerController::insertManager(Manager& obj) {
-
-	/*int departmentID = EmployeeController::getDepartmentIDbyEmployeeID(obj.getManagerID());
-
-	if (departmentID == -1) {
-		std::cerr << "Department was not found for provided managerID.";
-		return false;
-	}*/
-
-	//obj.setDepartmentID(departmentID);
-
 	std::string queryString = "INSERT INTO Manager (managerID, departmentID, teamSize, yearsOfExp, projectTitle, role) VALUES (" +
 		std::to_string(obj.getManagerID()) + ", " +
 		std::to_string(obj.getDepartmentID()) + ", " +

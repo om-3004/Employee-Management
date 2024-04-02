@@ -1,6 +1,6 @@
-#include"../../include/views/ViewHR.h"
-#include "../../include/views/Common.h"
-#include "../../include/controller/HRController.h"
+#include "ViewHR.h"
+#include "Common.h"
+#include "HRController.h"
 
 void EmployeeDB::Console::HRMenu() noexcept {
 	inputForEnt("HR");

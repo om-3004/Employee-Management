@@ -38,11 +38,3 @@ bin-int/
 
 #others
 *.docx
-logs.txt
-DepartmentBackup.csv
-EmployeeBackup.csv
-EngineerBackup.csv
-FinanceBackup.csv
-HRBackup.csv
-ManagerBackup.csv
-QABackup.csv

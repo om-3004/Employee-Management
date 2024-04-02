@@ -82,8 +82,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)bin-int\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)$(ProjectName)\lib\sqlite\;$(SolutionDir)$(ProjectName)\include\model\;$(SolutionDir)$(ProjectName)\include\controller\;$(SolutionDir)$(ProjectName)\include\;$(SolutionDir)$(ProjectName)\include\views\;$(IncludePath)</IncludePath>
+    <IntDir>$(SolutionDir)bin-int\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IncludePath>$(SolutionDir)$(ProjectName)\lib\sqlite\;$(SolutionDir)$(ProjectName)\include\;$(SolutionDir)$(ProjectName)\include\model\;$(SolutionDir)$(ProjectName)\include\controller\;$(SolutionDir)$(ProjectName)\include\views\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
@@ -218,6 +218,15 @@
     <ClInclude Include="logs\Logger.h" />
     <ClInclude Include="model\Department.h" />
     <ClInclude Include="model\Employee.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\Database.sql">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\EmployeeDB.db" />
+    <None Include="data\populateDB.sql">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

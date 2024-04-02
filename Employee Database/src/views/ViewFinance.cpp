@@ -1,6 +1,6 @@
-#include"../../include/views/ViewFinance.h"
-#include "../../include/views/Common.h"
-#include "../../include/controller/FinanceController.h"
+#include "ViewFinance.h"
+#include "Common.h"
+#include "FinanceController.h"
 
 void EmployeeDB::Console::financeMenu() noexcept {
 	inputForEnt("Finance");

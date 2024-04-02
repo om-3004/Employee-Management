@@ -154,7 +154,7 @@ std::string EmployeeController::getUpdateQueryCondition(Employee& obj) {
 		if (updateQueryCondition.size() != 0) {
 			updateQueryCondition += ", ";
 		}
-		updateQueryCondition += "mobileNumber = " + std::to_string(obj.getMobileNo());
+		updateQueryCondition += "mobileNo = " + std::to_string(obj.getMobileNo());
 	}
 	if (obj.getEmail() != "#") {
 		if (updateQueryCondition.size() != 0) {

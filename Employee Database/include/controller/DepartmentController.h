@@ -16,7 +16,7 @@ namespace EmployeeDB::Controller {
 		static bool selectDepartment(const std::string& attributeName = "", const std::string& attributeValue = "");
 		static bool deleteDepartmentByID(int ID);
 		static bool updateDepartment(Department& obj);
-	private:
+	protected:
 		static std::string getUpdateQueryCondition(Department& obj);
 	};
 }

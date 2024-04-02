@@ -1,6 +1,6 @@
-#include"../../include/views/ViewEngineer.h"
-#include "../../include/views/Common.h"
-#include "../../include/controller/EngineerController.h"
+#include "ViewEngineer.h"
+#include "Common.h"
+#include "EngineerController.h"
 
 void EmployeeDB::Console::engineerMenu() noexcept {
 	inputForEnt("Engineer");

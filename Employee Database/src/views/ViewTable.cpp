@@ -1,6 +1,6 @@
-#include "../../include/views/ViewTable.h"
-#include "../../include/model/Table.h"
-#include "../../include/controller/TableController.h"
+#include "ViewTable.h"
+#include "Table.h"
+#include "TableController.h"
 #include "Common.h"
 #include <iostream>
 
@@ -60,11 +60,11 @@ void takeTableKeyInput(std::string field, std::array<std::string, 4>& arr, int i
 	}
 }
 
-void EmployeeDB::Console::createTable(){
+void EmployeeDB::Console::createTable() {
 	std::cin.ignore();
 
 	char a;
-	while(true){
+	while (true) {
 		std::cout << "\x1B[36mAre you sure you want to continue with the create table operation(0/1): \033[0m";
 		a = std::cin.get();
 
@@ -200,7 +200,7 @@ void EmployeeDB::Console::createTable(){
 							}
 						}
 
-						bool DBSuccess = EmployeeDB::Controller::TableController::createTableQuery(t, colCount, keyCount);
+						bool DBSuccess = EmployeeDB::Controller::TableController::executeCreateQuery(t, colCount, keyCount);
 						if (DBSuccess) {
 							std::cout << '\n';
 						}
@@ -220,7 +220,7 @@ void EmployeeDB::Console::createTable(){
 						}
 						else {
 							system("cls");
-							return ;
+							return;
 						}
 					}
 				}

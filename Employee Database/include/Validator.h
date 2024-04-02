@@ -15,19 +15,19 @@ namespace EmployeeDB {
 		static bool validateMobile(const std::string& number) noexcept;
 		static bool validateDate(const std::string& date) noexcept;
 		static bool validateGender(const std::string& gender) noexcept;
-		static bool validateCharInput(char& in) noexcept;
-		static bool validateInputMenu(char& in) noexcept;
-		static bool validateInputMainMenu(char& in) noexcept;
-		static bool validateInputView(char& in) noexcept;
-		static bool validateViewOfFields(std::string& in) noexcept;
-		static bool validateUpdate(std::string& in) noexcept;
-		static bool validateDeptUpdate(std::string& in) noexcept;
-		static bool validateViewOfDeptFields(std::string& in) noexcept;
-		static bool validateManUpdate(std::string& in) noexcept;
-		static bool validateViewOfManFields(std::string& in) noexcept;
+		static bool validateCharInput(char in) noexcept;
+		static bool validateInputMenu(char in) noexcept;
+		static bool validateInputMainMenu(char in) noexcept;
+		static bool validateInputView(char in) noexcept;
+		static bool validateViewOfFields(const std::string& in) noexcept;
+		static bool validateUpdate(const std::string& in) noexcept;
+		static bool validateDeptUpdate(const std::string& in) noexcept;
+		static bool validateViewOfDeptFields(const std::string& in) noexcept;
+		static bool validateManUpdate(const std::string& in) noexcept;
+		static bool validateViewOfManFields(const std::string& in) noexcept;
 
-		static bool validatecsvInput(char& in) noexcept;
-		static bool validateCreateMenu(char& in) noexcept;
+		static bool validatecsvInput(char in) noexcept;
+		static bool validateCreateMenu(char in) noexcept;
 	};
 }
 

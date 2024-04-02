@@ -3,7 +3,7 @@
 
 using EmployeeDB::Validator;
 
-bool Validator::validateCreateMenu(char& in) noexcept {
+bool Validator::validateCreateMenu(char in) noexcept {
 	return std::regex_match(std::to_string(in), std::regex("(^(4[8|9]{1}|5[0|1]{1})$)"));
 }
 
@@ -43,13 +43,13 @@ bool Validator::validateDate(const std::string& date) noexcept {
 }
 
 bool Validator::validateGender(const std::string& gender) noexcept {
-	if (gender == "male" || gender == "Male") {
+	if (gender == "male") {
 		return true;
 	}
-	else if (gender == "female" || gender == "Female") {
+	else if (gender == "female") {
 		return true;
 	}
-	else if (gender == "other" || gender == "Other") {
+	else if (gender == "other") {
 		return true;
 	}
 	else {
@@ -60,54 +60,54 @@ bool Validator::validateGender(const std::string& gender) noexcept {
 //--------------------------------------------------------------------------------------------------------------------------//
 
 //this is for validation of yes or no using char 
-bool Validator::validateCharInput(char& in) noexcept {
+bool Validator::validateCharInput(char in) noexcept {
 	return std::regex_match(std::to_string(in), std::regex("(^(4[8|9]{1})$)"));
 }
 //--------------------------------------------------------------------------------------------------------------------------//
 
 //this is for validation of input in main menu
-bool Validator::validateInputMainMenu(char& in) noexcept {
+bool Validator::validateInputMainMenu(char in) noexcept {
 	return std::regex_match(std::to_string(in), std::regex("(^(4[8|9]{1}|5[0|1|2|3|4|5|6]{1})$)"));
 }
 //this is for validation of input in other menu like insert , update ,delete , view  
-bool Validator::validateInputMenu(char& in) noexcept {
+bool Validator::validateInputMenu(char in) noexcept {
 	return std::regex_match(std::to_string(in), std::regex("(^(4[8|9]{1}|5[0|1|2|3]{1})$)"));
 }
 
 //--------------------------------------------------------------------------------------------------------------------------//
 
 //check input for engineer , qa , finance , hr in update function
-bool Validator::validateUpdate(std::string& in) noexcept {
+bool Validator::validateUpdate(const std::string& in) noexcept {
 	return std::regex_match(in, std::regex("(^(1[0-3]|[1-9])$)"));
 }
 //check input for Manager in update function
-bool Validator::validateManUpdate(std::string& in) noexcept {
+bool Validator::validateManUpdate(const std::string& in) noexcept {
 	return std::regex_match(in, std::regex("(^(1[0-6]|[1-9])$)"));
 }
 //check input for department in update function
-bool Validator::validateDeptUpdate(std::string& in) noexcept {
+bool Validator::validateDeptUpdate(const std::string& in) noexcept {
 	return std::regex_match(in, std::regex("(^([1-3]{1})$)"));
 }
 
 //--------------------------------------------------------------------------------------------------------------------------//
 
 //This is for starting view check in all view 
-bool Validator::validateInputView(char& in) noexcept {
+bool Validator::validateInputView(char in) noexcept {
 	return std::regex_match(std::to_string(in), std::regex("(^4[8-9]|50$)"));
 }
 //check input for engineer , qa , finance , hr view after validateInputView for selecting field vise view
-bool Validator::validateViewOfFields(std::string& in) noexcept {
+bool Validator::validateViewOfFields(const std::string& in) noexcept {
 	return std::regex_match(in, std::regex("(^(1[0-5]|[1-9])$)"));
 }
 //check input for Managerview after validateInputView for selecting field vise view
-bool Validator::validateViewOfManFields(std::string& in) noexcept {
+bool Validator::validateViewOfManFields(const std::string& in) noexcept {
 	return std::regex_match(in, std::regex("(^(1[0-8]|[1-9])$)"));
 }
 //check input for department after validateInputView for selecting field vise view
-bool Validator::validateViewOfDeptFields(std::string& in) noexcept {
+bool Validator::validateViewOfDeptFields(const std::string& in) noexcept {
 	return std::regex_match(in, std::regex("(^([1-5]{1})$)"));
 }
 
-bool Validator::validatecsvInput(char& in) noexcept {
+bool Validator::validatecsvInput(char in) noexcept {
 	return std::regex_match(std::to_string(in), std::regex("(^(4[8|9]{1}|5[0|1|2|3|4|5|6|7]{1})$)"));
 }

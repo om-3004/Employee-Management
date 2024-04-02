@@ -1,6 +1,6 @@
-#include"../../include/views/ViewDepartment.h"
-#include "../../include/controller/DepartmentController.h"
-#include "../../include/views/Common.h"
+#include "ViewDepartment.h"
+#include "DepartmentController.h"
+#include "Common.h"
 
 void EmployeeDB::Console::departmentMenu() noexcept {
 	inputForEnt("Department");

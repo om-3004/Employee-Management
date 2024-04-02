@@ -1,7 +1,7 @@
-#include"../../include/views/ViewManager.h"
-#include "../../include/views/Common.h"
-#include "../../include/controller/ManagerController.h"
-#include "../../include/controller/EmployeeController.h"
+#include "ViewManager.h"
+#include "Common.h"
+#include "ManagerController.h"
+#include "EmployeeController.h"
 
 void EmployeeDB::Console::managerMenu() noexcept {
 	inputForEnt("Manager");

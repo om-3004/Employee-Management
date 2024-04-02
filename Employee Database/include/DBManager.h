@@ -15,11 +15,12 @@ namespace EmployeeDB {
 		int executeSelectSalaryQuery(const char* queryString);
 		int executeRowCountQuery(const char* queryString);
 		static void executeConfigQuery();
+		static void executeTruncateQuery(const char* tableName);
 
 		char* getErrorMessage() const {
 			return m_ErrorMessage;
 		}
-	private:
+	protected:
 		DBManager() {
 			openConnection();
 		}

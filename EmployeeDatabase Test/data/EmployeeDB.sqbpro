@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/ZTI/OneDrive - ZURU INC/Desktop/OM/C++ Training/Emp_Management/EmployeeDatabase Test/data/EmployeeDB.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="1"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="3952"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,8:mainEmployee"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="Department" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="99"/><column index="2" value="120"/><column index="3" value="80"/><column index="4" value="72"/><column index="5" value="72"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Employee" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="84"/><column index="2" value="70"/><column index="3" value="84"/><column index="4" value="67"/><column index="5" value="83"/><column index="6" value="65"/><column index="7" value="41"/><column index="8" value="60"/><column index="9" value="54"/><column index="10" value="96"/><column index="11" value="99"/><column index="12" value="69"/><column index="13" value="132"/><column index="14" value="47"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">CREATE TABLE &quot;Department&quot; (
+	&quot;departmentID&quot;	INTEGER NOT NULL UNIQUE,
+	&quot;departmentName&quot;	TEXT NOT NULL UNIQUE,
+	&quot;baseSalary&quot;	REAL NOT NULL,
+	&quot;allowance&quot;	REAL NOT NULL,
+	&quot;deduction&quot;	REAL NOT NULL,
+	PRIMARY KEY(&quot;departmentID&quot; AUTOINCREMENT)
+);
+ 
+CREATE TABLE &quot;Employee&quot; (
+	&quot;employeeID&quot;	INTEGER NOT NULL UNIQUE,
+	&quot;firstName&quot;	TEXT NOT NULL,
+	&quot;middleName&quot;	TEXT,
+	&quot;lastName&quot;	TEXT NOT NULL,
+	&quot;dateOfBirth&quot;	TEXT,
+	&quot;mobileNo&quot;	INTEGER NOT NULL UNIQUE,
+	&quot;email&quot;	TEXT NOT NULL UNIQUE,
+	&quot;address&quot;	TEXT NOT NULL,
+	&quot;gender&quot;	TEXT NOT NULL,
+	&quot;dateOfJoining&quot;	TEXT NOT NULL,
+	&quot;departmentID&quot;	INTEGER,
+	&quot;mentorID&quot;	INTEGER,
+	&quot;performanceMetric&quot;	REAL,
+	&quot;bonus&quot;	REAL,
+	FOREIGN KEY(&quot;departmentID&quot;) REFERENCES &quot;Department&quot;(&quot;departmentID&quot;) ON DELETE SET NULL,
+	FOREIGN KEY(&quot;mentorID&quot;) REFERENCES &quot;Employee&quot;(&quot;employeeID&quot;) ON DELETE SET NULL,
+	UNIQUE(&quot;employeeID&quot;),
+	PRIMARY KEY(&quot;employeeID&quot; AUTOINCREMENT)
+);
+ 
+CREATE TABLE &quot;Manager&quot; (
+	&quot;managerID&quot;	INTEGER NOT NULL,
+	&quot;departmentID&quot;	INTEGER NOT NULL,
+	&quot;teamSize&quot;	INTEGER NOT NULL,
+	&quot;yearsOfExp&quot;	REAL NOT NULL,
+	&quot;projectTitle&quot;	TEXT,
+	&quot;role&quot; TEXT,
+	PRIMARY KEY(&quot;managerID&quot;),
+	FOREIGN KEY(&quot;managerID&quot;) REFERENCES &quot;Employee&quot;(&quot;employeeID&quot;) ON DELETE CASCADE,
+	FOREIGN KEY(&quot;departmentID&quot;) REFERENCES &quot;Department&quot;(&quot;departmentID&quot;) ON DELETE CASCADE
+);
+ 
+CREATE TABLE &quot;Engineer&quot; (
+	&quot;employeeID&quot;	INTEGER NOT NULL,
+	&quot;technology&quot;	TEXT NOT NULL,
+	FOREIGN KEY(&quot;employeeID&quot;) REFERENCES &quot;Employee&quot;(&quot;employeeID&quot;) ON DELETE CASCADE
+
+);
+ 
+CREATE TABLE &quot;QA&quot; (
+	&quot;employeeID&quot;	INTEGER NOT NULL,
+	&quot;testingTool&quot;	TEXT NOT NULL,
+	FOREIGN KEY(&quot;employeeID&quot;) REFERENCES &quot;Employee&quot;(&quot;employeeID&quot;) ON DELETE CASCADE
+);
+ 
+CREATE TABLE &quot;Finance&quot; (
+	&quot;employeeID&quot;	INTEGER NOT NULL,
+	&quot;accountingTool&quot; TEXT NOT NULL,
+	FOREIGN KEY(&quot;employeeID&quot;) REFERENCES &quot;Employee&quot;(&quot;employeeID&quot;) ON DELETE CASCADE
+);
+ 
+CREATE TABLE &quot;HR&quot; (
+	&quot;employeeID&quot;	INTEGER NOT NULL,
+	&quot;hrSpecialization&quot;	TEXT NOT NULL,
+	FOREIGN KEY(&quot;employeeID&quot;) REFERENCES &quot;Employee&quot;(&quot;employeeID&quot;) ON DELETE CASCADE
+);
+
+CREATE VIEW ManagerView
+AS
+	SELECT Employee.*,Manager.teamSize,Manager.yearsOfExp,Manager.projectTitle,Manager.role FROM Employee INNER JOIN Manager ON Employee.employeeID = Manager.managerID;
+
+CREATE VIEW SalaryView
+AS
+	SELECT employeeID, departmentID, performanceMetric, bonus ,baseSalary, allowance, deduction FROM Employee NATURAL JOIN Department;</sql><current_tab id="0"/></tab_sql></sqlb_project>
