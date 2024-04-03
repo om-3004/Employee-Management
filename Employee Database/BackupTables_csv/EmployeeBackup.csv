@@ -26,4 +26,4 @@ employeeID,firstName,middleName,lastName,dateOfBirth,mobileNo,email,address,gend
 25,Stephanie,Marie,Clark,23-05-1987,9850123456,stephanie.clark@example.com,345 Cedarwood St City Country,Female,05-03-2020,4,22,0.95,700.0
 26,Rachel,Michelle,Green,17-04-1990,9873123456,rachel.green@example.com,345 Cedarwood St City Country,Female,20-08-2020,4,24,0.79,450.0
 27,Megan,Nicole,Carter,19-05-1989,9870153456,megan.carter@example.com,345 Maplewood St City Country,Female,20-07-2020,4,23,0.78,500.0
-28,Samantha,Marie,Richardson,15-10-1989,9870163456,samantha.richardson@example.com,345 Elmwood St City Country,Female,20-04-2020,4,25,0.87,550.0
+28,Samantha,Marie,Richardson,15-10-1989,9870163456,samantha.richardson@example.com,345 Elmwood St City Country,Female,20-04-2020,4,25,0.9,550.0

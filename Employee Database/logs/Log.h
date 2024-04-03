@@ -60,7 +60,7 @@ namespace LogSystem {
 			print(args...);
 		}
 
-		void appendBuffer() { m_BufferLog.append("\n\n"); }
+		void appendBuffer() { m_BufferLog.append("\n"); }
 		template<typename T, typename ...Args>
 		void appendBuffer(T arg, Args ...args) {
 			m_BufferLog.append(arg).append(" ");
