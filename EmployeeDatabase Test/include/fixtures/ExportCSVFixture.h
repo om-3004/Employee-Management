@@ -8,7 +8,7 @@
 using EmployeeDB::DBManager;
 namespace fs = std::filesystem;
 
-class ExportFixture : public ::testing::Test {
+struct ExportFixture : public ::testing::Test {
 	void SetUp() override {
 		DBManager::executeConfigQuery();
 

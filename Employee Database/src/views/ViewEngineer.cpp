@@ -81,7 +81,7 @@ bool EmployeeDB::Console::insertEngineer() {
 bool EmployeeDB::Console::updateEngineer() {
 	EmployeeDB::Model::Engineer e{ false };
 
-	int id = inputID("update", "Engineer");
+	int id = inputID("Update", "Engineer");
 
 	if (id == 0) {
 		return false;
@@ -162,7 +162,7 @@ bool EmployeeDB::Console::deleteEngineer() {
 
 	EmployeeDB::Model::Engineer e;
 
-	int id = inputID("delete", "Engineer");
+	int id = inputID("Delete", "Engineer");
 
 	if (id == 0) {
 		return false;
@@ -186,7 +186,7 @@ bool EmployeeDB::Console::deleteEngineer() {
 
 bool EmployeeDB::Console::viewEngineer() {
 	char input;
-	bool x = viewOperation(input);
+	bool x = viewOperation(input, "Engineer");
 	if (!x) {
 		return false;
 	}

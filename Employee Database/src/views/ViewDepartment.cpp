@@ -84,7 +84,7 @@ bool EmployeeDB::Console::updateDept() {
 	EmployeeDB::Model::Department d(true);
 	bool x{ true };
 
-	int id = inputID("update", "Department");
+	int id = inputID("Update", "Department");
 
 	if (id == 0) {
 		return false;
@@ -173,7 +173,7 @@ bool EmployeeDB::Console::updateDept() {
 bool EmployeeDB::Console::deleteDept() {
 	EmployeeDB::Model::Department d;
 
-	int id = inputID("delete", "Department");
+	int id = inputID("Delete", "Department");
 
 	if (id == 0) {
 		return false;
@@ -198,7 +198,7 @@ bool EmployeeDB::Console::deleteDept() {
 bool EmployeeDB::Console::viewDept() {
 
 	char input;
-	bool x = viewOperation(input);
+	bool x = viewOperation(input, "Department");
 	if (!x) {
 		return false;
 	}

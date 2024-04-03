@@ -1,10 +1,14 @@
 #include "EngineerControllerTest.h"
 #include "EngineerFixture.h"
 
-using EmployeeDB::Controller::EngineerController;
-
 TEST_F(EngineerFixture, Test_insertEngineer) {
 	EXPECT_TRUE(EngineerController::insertEngineer(*engineer));
+
+	std::string_view queryString = R"(SELECT * FROM Employee WHERE firstName = "Alan" COLLATE NOCASE;)";
+	EXPECT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
+
+	queryString = R"(SELECT * FROM Employee;)";
+	EXPECT_EQ(3, DBManager::instance().executeRowCountQuery(queryString.data()));
 
 	EXPECT_FALSE(EngineerController::insertEngineer(*engineer)); // FAIL
 }
@@ -40,7 +44,7 @@ TEST_F(EngineerFixture, Test_updateEngineer) {
 }
 
 TEST_F(EngineerFixture, Test_getUpdateQueryCondition) {
-	EXPECT_EQ(EngineerControllerTest::getUpdateQueryCondition(*engineer), R"(technology = "Django")");
+	EXPECT_STREQ(EngineerControllerTest::getUpdateQueryCondition(*engineer).c_str(), R"(technology = "Django")");
 
-	EXPECT_NE(EngineerControllerTest::getUpdateQueryCondition(*engineer), R"(technology = "Djangooo")"); // FAIL
+	EXPECT_STRNE(EngineerControllerTest::getUpdateQueryCondition(*engineer).c_str(), R"(technology = "Djangooo")"); // FAIL
 }

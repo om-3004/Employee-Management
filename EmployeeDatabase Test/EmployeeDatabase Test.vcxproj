@@ -69,8 +69,8 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)bin-int\x64\Debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);$(SolutionDir)bin-int\x64\Debug\Validator;$(SolutionDir)bin-int\x64\Debug\sqlite3;$(SolutionDir)bin-int\x64\Debug\DBManager;$(SolutionDir)bin-int\x64\Debug\EmployeeController;$(SolutionDir)bin-int\x64\Debug\DepartmentController;$(SolutionDir)bin-int\x64\Debug\EngineerController;$(SolutionDir)bin-int\x64\Debug\HRController;$(SolutionDir)bin-int\x64\Debug\QAController;$(SolutionDir)bin-int\x64\Debug\FinanceController;$(SolutionDir)bin-int\x64\Debug\ManagerController;$(SolutionDir)bin-int\x64\Debug\ExportCSVController;$(SolutionDir)bin-int\x64\Debug\TableController</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin-int\x64\Debug\Employee Database</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);$(SolutionDir)bin-int\x64\Debug\Employee Database\Validator;$(SolutionDir)bin-int\x64\Debug\Employee Database\sqlite3;$(SolutionDir)bin-int\x64\Debug\Employee Database\DBManager;$(SolutionDir)bin-int\x64\Debug\Employee Database\EmployeeController;$(SolutionDir)bin-int\x64\Debug\Employee Database\DepartmentController;$(SolutionDir)bin-int\x64\Debug\Employee Database\EngineerController;$(SolutionDir)bin-int\x64\Debug\Employee Database\HRController;$(SolutionDir)bin-int\x64\Debug\Employee Database\QAController;$(SolutionDir)bin-int\x64\Debug\Employee Database\FinanceController;$(SolutionDir)bin-int\x64\Debug\Employee Database\ManagerController;$(SolutionDir)bin-int\x64\Debug\Employee Database\ExportCSVController;$(SolutionDir)bin-int\x64\Debug\Employee Database\TableController</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

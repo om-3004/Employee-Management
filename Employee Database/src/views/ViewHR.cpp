@@ -82,7 +82,7 @@ bool EmployeeDB::Console::updateHR() {
 	EmployeeDB::Model::HR h{ true };
 	bool x{ false };
 
-	int id = inputID("update", "HR");
+	int id = inputID("Update", "HR");
 
 	if (id == 0) {
 		return false;
@@ -160,7 +160,7 @@ bool EmployeeDB::Console::updateHR() {
 bool EmployeeDB::Console::deleteHR() {
 	EmployeeDB::Model::HR h;
 
-	int id = inputID("delete", "HR");
+	int id = inputID("Delete", "HR");
 
 	if (id == 0) {
 		return false;
@@ -185,7 +185,7 @@ bool EmployeeDB::Console::deleteHR() {
 bool EmployeeDB::Console::viewHR() {
 
 	char input;
-	bool x = viewOperation(input);
+	bool x = viewOperation(input, "HR");
 	if (!x) {
 		return false;
 	}

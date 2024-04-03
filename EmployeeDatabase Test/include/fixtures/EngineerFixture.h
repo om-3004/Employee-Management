@@ -5,11 +5,14 @@
 #include "Engineer.h"
 #include "DBManager.h"
 
+using EmployeeDB::DBManager;
+using EmployeeDB::Model::Engineer;
+
 struct EngineerFixture : public testing::Test {
-	std::unique_ptr<EmployeeDB::Model::Engineer> engineer;
+	std::unique_ptr<Engineer> engineer;
 
 	void SetUp() override {
-		engineer = std::make_unique<EmployeeDB::Model::Engineer>();
+		engineer = std::make_unique<Engineer>();
 
 		engineer->setEmployeeID(6);
 		engineer->setFirstName("Alan");
@@ -27,25 +30,25 @@ struct EngineerFixture : public testing::Test {
 		engineer->setBonus(100000);
 		engineer->setTechnology("Django");
 
-		EmployeeDB::DBManager::executeConfigQuery();
+		DBManager::executeConfigQuery();
 
 		std::string_view query = R"(INSERT INTO Department("departmentID", "departmentName", "baseSalary", "allowance", "deduction") VALUES (1, 'Engineer', 65000, 7000, 3000);)";
 
-		EmployeeDB::DBManager::instance().executeQuery(query.data());
+		DBManager::instance().executeQuery(query.data());
 
 		query = R"(INSERT INTO Employee("employeeID", "firstName", "middleName", "lastName", "dateOfBirth", "mobileNo", "email", "address", "gender", "dateOfJoining", "departmentID", "mentorID", "performanceMetric", "bonus") VALUES (1, 'John', 'Doe', 'Smith', '15-05-1990', 1234567891, 'john.smith@example.com', '123 Main St, City, Country', 'Male', '10-01-2020', 1, 1, 0.85, 500), (2, 'David', 'Lee', 'Brown', '03-04-1993', 1234509876, 'david.brown@example.com', '345 Oak St, City, Country', 'Male', '12-11-2022', 1, 2, 0.78, 450);)";
 
-		EmployeeDB::DBManager::instance().executeQuery(query.data());
+		DBManager::instance().executeQuery(query.data());
 
 		query = R"(INSERT INTO Engineer("employeeID", "technology") VALUES (1, 'C++'), (2, 'NodeJS');)";
 
-		EmployeeDB::DBManager::instance().executeQuery(query.data());
+		DBManager::instance().executeQuery(query.data());
 	}
 
 	void TearDown() override {
-		EmployeeDB::DBManager::instance().executeTruncateQuery("Department");
-		EmployeeDB::DBManager::instance().executeTruncateQuery("Employee");
-		EmployeeDB::DBManager::instance().executeTruncateQuery("Engineer");
+		DBManager::instance().executeTruncateQuery("Department");
+		DBManager::instance().executeTruncateQuery("Employee");
+		DBManager::instance().executeTruncateQuery("Engineer");
 	}
 };
 

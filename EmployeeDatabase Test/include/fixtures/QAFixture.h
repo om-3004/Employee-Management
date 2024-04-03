@@ -8,8 +8,9 @@
 using EmployeeDB::Model::QA;
 using EmployeeDB::DBManager;
 
-class QAFixture : public ::testing::Test {
-protected:
+struct QAFixture : public ::testing::Test {
+    std::unique_ptr<QA> qa;
+
     void SetUp() override {
         qa = std::make_unique<QA>();
         qa->setEmployeeID(26);
@@ -28,7 +29,6 @@ protected:
         qa->setBonus(50000);
         qa->setTestingTool("JIRA");
 
-        emptyQA = std::make_unique<QA>(true);
 
         DBManager::executeConfigQuery();
 
@@ -51,8 +51,6 @@ protected:
         DBManager::instance().executeTruncateQuery("QA");
     }
 
-    std::unique_ptr<QA> qa;
-    std::unique_ptr<QA> emptyQA;
 };
 
 #endif

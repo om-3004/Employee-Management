@@ -109,7 +109,7 @@ bool EmployeeDB::Console::updateManager() {
 	EmployeeDB::Model::Manager m{ false };
 	bool x{ false };
 
-	int id = inputID("update", "Manager");
+	int id = inputID("Update", "Manager");
 
 	if (id == 0) {
 		return false;
@@ -199,7 +199,7 @@ bool EmployeeDB::Console::updateManager() {
 bool EmployeeDB::Console::deleteManager() {
 	EmployeeDB::Model::Manager m;
 
-	int id = inputID("delete", "Manager");
+	int id = inputID("Delete", "Manager");
 
 	if (id == 0) {
 		return false;
@@ -224,7 +224,7 @@ bool EmployeeDB::Console::deleteManager() {
 bool EmployeeDB::Console::viewManager() {
 
 	char input;
-	bool x = viewOperation(input);
+	bool x = viewOperation(input, "Manager");
 	if (!x) {
 		return false;
 	}

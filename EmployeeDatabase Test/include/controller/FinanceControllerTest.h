@@ -5,10 +5,12 @@
 #include "FinanceController.h"
 #include "Finance.h"
 
-class FinanceControllerTest : public EmployeeDB::Controller::FinanceController {
+using EmployeeDB::Controller::FinanceController;
+
+class FinanceControllerTest : public FinanceController {
 public:
 	static std::string getUpdateQueryCondition(Finance& fin) {
-		return EmployeeDB::Controller::FinanceController::getUpdateQueryCondition(fin);
+		return FinanceController::getUpdateQueryCondition(fin);
 	}
 };
 

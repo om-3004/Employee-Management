@@ -1,78 +1,54 @@
 #include "QAFixture.h"
 #include "QAControllerTest.h"
 
-TEST_F(QAFixture, Test_insertQASuccess) {
+TEST_F(QAFixture, Test_insertQA) {
 	EXPECT_TRUE(QAController::insertQA(*qa));
 
-	std::string_view queryString = "SELECT * FROM QA WHERE testingTool = \"JIRA\" COLLATE NOCASE;";
+	std::string_view queryString = R"(SELECT * FROM Employee WHERE firstName = "Johnieee" COLLATE NOCASE;)";
 	EXPECT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
+
+	EXPECT_FALSE(QAController::insertQA(*qa)); // FAIL
+
+	queryString = R"(SELECT * FROM QA;)";
+	EXPECT_EQ(3, DBManager::instance().executeRowCountQuery(queryString.data()));
 }
 
-TEST_F(QAFixture, Test_insertQAFailure) {
-	emptyQA->setEmail("jessica.taylor@example.com");
-	EXPECT_FALSE(QAController::insertQA(*emptyQA));
+TEST_F(QAFixture, Test_selectQA) {
+	EXPECT_TRUE(QAController::selectQA("testingTool", "JIRA"));
 
-	std::string_view queryString = "SELECT * FROM QA";
-	EXPECT_NE(3, DBManager::instance().executeRowCountQuery(queryString.data()));
-
-	queryString = "SELECT * FROM QA WHERE testingTool = \"Selenium\" COLLATE NOCASE;";
-	EXPECT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
+	EXPECT_FALSE(QAController::selectQA("mobilee", "8690785697")); //FAIL
 }
 
-TEST_F(QAFixture, Test_selectQASuccess) {
-	EXPECT_TRUE(QAController::selectQA("testingTool", "Selenium"));
-}
 
-TEST_F(QAFixture, Test_selectQAFailure) {
-	EXPECT_FALSE(QAController::selectQA("mobile", "6745678980"));
+TEST_F(QAFixture, Test_updateQA) {
+	qa->setEmployeeID(1);
+
+	EXPECT_TRUE(QAController::updateQA(*qa));
+
+	std::string_view queryString = R"(SELECT * FROM Employee WHERE email = "emily.williams@example.com" COLLATE NOCASE;)";
+	EXPECT_EQ(0, DBManager::instance().executeRowCountQuery(queryString.data())); // 0 rows found
+
+	queryString = R"(SELECT * FROM Employee WHERE email = "john.doe.steven@example.com" COLLATE NOCASE;)";
+	EXPECT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data())); // 1 row found
+
+	qa->setEmail("jessica.taylor@example.com");
+
+	EXPECT_FALSE(QAController::updateQA(*qa)); //FAIL
 }
 
 TEST_F(QAFixture, Test_deleteQAByID) {
+	EXPECT_TRUE(QAController::deleteQAByID(1));
 	EXPECT_TRUE(QAController::deleteQAByID(2));
 
-	std::string_view queryString = "SELECT * FROM Employee WHERE employeeID = 2;";
-	EXPECT_EQ(0, DBManager::instance().executeRowCountQuery(queryString.data()));
-
-	queryString = "SELECT * FROM QA;";
-	EXPECT_EQ(1, DBManager::instance().executeSelectQuery(queryString.data()));
-
-	EXPECT_TRUE(QAController::deleteQAByID(1));
-
-	queryString = "SELECT * FROM Employee;";
-	EXPECT_EQ(0, DBManager::instance().executeRowCountQuery(queryString.data()));
-}
-
-TEST_F(QAFixture, Test_updateQASuccess) {
-	emptyQA->setEmployeeID(1);
-	emptyQA->setEmail("emilly@example.com");
-	emptyQA->setTestingTool("JUnit");
-
-	EXPECT_TRUE(QAController::updateQA(*emptyQA));
-
-	std::string_view queryString = "SELECT * FROM Employee WHERE email = \"emilly@example.com\" COLLATE NOCASE;";
-	EXPECT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
-
-	queryString = "SELECT * FROM QA WHERE testingTool = \"Chai\" COLLATE NOCASE;";
-	EXPECT_EQ(0, DBManager::instance().executeRowCountQuery(queryString.data()));
-}
-
-TEST_F(QAFixture, Test_updateQAFailure) {
-	emptyQA->setEmployeeID(2);
-	emptyQA->setMobileNo(9870723456);
-
-	EXPECT_FALSE(QAController::updateQA(*emptyQA));
-}
-
-TEST_F(QAFixture, Test_getUpdateQueryConditionEmpty) {
-	EXPECT_STREQ("", QAControllerTest::getUpdateQueryCondition(*emptyQA).c_str());
+	std::string_view queryStr = R"(SELECT * FROM QA WHERE employeeID = 1)";
+	EXPECT_EQ(0, EmployeeDB::DBManager::instance().executeRowCountQuery(queryStr.data())); // 0 rows found
+	queryStr = R"(SELECT * FROM QA WHERE employeeID = 2)";
+	EXPECT_EQ(0, EmployeeDB::DBManager::instance().executeRowCountQuery(queryStr.data())); // 0 rows found
 }
 
 TEST_F(QAFixture, Test_getUpdateQueryCondition) {
-	emptyQA->setTestingTool("Mocha");
 
-	EXPECT_STREQ("testingTool = \"Mocha\"", QAControllerTest::getUpdateQueryCondition(*emptyQA).c_str());
+	EXPECT_STREQ(R"(testingTool = "JIRA")", QAControllerTest::getUpdateQueryCondition(*qa).c_str());
+	EXPECT_STRNE(R"(testingToool = "JIRA")", QAControllerTest::getUpdateQueryCondition(*qa).c_str());
 
-	emptyQA->setBonus(25000.00);
-
-	EXPECT_STREQ("testingTool = \"Mocha\"", QAControllerTest::getUpdateQueryCondition(*emptyQA).c_str());
 }

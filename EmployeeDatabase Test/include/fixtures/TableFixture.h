@@ -8,8 +8,7 @@
 using EmployeeDB::Model::Table;
 using EmployeeDB::DBManager;
 
-class TableFixture : public ::testing::Test {
-protected:
+struct TableFixture : public ::testing::Test {
 	void SetUp() override {
 		table = std::make_unique<Table>();
 
@@ -30,8 +29,6 @@ protected:
 
 		table->setForeignKeyConstraint(foreignKeys);
 
-		emptyTable = std::make_unique<Table>();
-		emptyTable->setTableName("Roles");
 	}
 
 	void TearDown() override {
@@ -43,7 +40,6 @@ protected:
 	}
 
 	std::unique_ptr<Table> table;
-	std::unique_ptr<Table> emptyTable;
 };
 
 #endif // !__TableFixture_h__

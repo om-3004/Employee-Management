@@ -4,7 +4,6 @@
 #include <filesystem>
 
 namespace fs = std::filesystem;
-using EmployeeDB::Controller::ExportController;
 
 TEST_F(ExportFixture, Test_exportToCSVSuccess) {
 	EXPECT_TRUE(ExportController::exportToCSV("Manager", "Manager"));
@@ -19,10 +18,8 @@ TEST_F(ExportFixture, Test_exportToCSVSuccess) {
 
 	exportPath = "./BackupTables_csv/Department.csv";
 	EXPECT_TRUE(fs::exists(exportPath));
-}
 
-TEST_F(ExportFixture, Test_exportToCSVFailure) {
-	EXPECT_FALSE(ExportController::exportToCSV("Maaaaaanager", "Manager"));
+	EXPECT_FALSE(ExportController::exportToCSV("Maaaaaanager", "Manager")); //FAIL
 }
 
 TEST_F(ExportFixture, Test_exportAll) {

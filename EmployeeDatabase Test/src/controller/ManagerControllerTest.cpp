@@ -1,10 +1,18 @@
 #include "ManagerControllerTest.h"
 #include "ManagerFixture.h"
 
-using EmployeeDB::Controller::ManagerController;
-
 TEST_F(ManagerFixture, Test_insertManager) {
+
+	std::string_view queryString = R"(SELECT * FROM Employee WHERE firstName = "David" COLLATE NOCASE;)";
+	EXPECT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
+
 	EXPECT_TRUE(ManagerController::insertManager(*manager));
+
+	queryString = R"(SELECT * FROM Manager WHERE managerID = "2" COLLATE NOCASE;)";
+	EXPECT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
+
+	queryString = R"(SELECT * FROM Manager;)";
+	EXPECT_EQ(3, DBManager::instance().executeRowCountQuery(queryString.data()));
 
 	EXPECT_FALSE(ManagerController::insertManager(*manager)); //FAIL
 }
@@ -49,7 +57,7 @@ TEST_F(ManagerFixture, Test_checkManagerExistence) {
 }
 
 TEST_F(ManagerFixture, Test_getUpdateQueryCondition) {
-	EXPECT_EQ(ManagerControllerTest::getUpdateQueryCondition(*manager), R"(teamSize = 6, yearsOfExp = 4.500000, projectTitle = "Heartbeat Tracker", role = "Lead C++ developer")");
+	EXPECT_STREQ(ManagerControllerTest::getUpdateQueryCondition(*manager).c_str(), R"(teamSize = 6, yearsOfExp = 4.500000, projectTitle = "Heartbeat Tracker", role = "Lead C++ developer")");
 	
-	EXPECT_NE(ManagerControllerTest::getUpdateQueryCondition(*manager), R"(teamSizeee = 6, yearsOfExp = 4.500000, projectTitle = "Heartbeat Tracker", role = "Lead C++ developer")");
+	EXPECT_STRNE(ManagerControllerTest::getUpdateQueryCondition(*manager).c_str(), R"(teamSizeee = 6, yearsOfExp = 4.500000, projectTitle = "Heartbeat Tracker", role = "Lead C++ developer")");
 }

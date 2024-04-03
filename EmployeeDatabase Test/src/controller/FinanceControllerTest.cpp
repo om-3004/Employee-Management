@@ -1,10 +1,14 @@
 #include "FinanceControllerTest.h"
 #include "FinanceFixture.h"
 
-using EmployeeDB::Controller::FinanceController;
-
 TEST_F(FinanceFixture, Test_insertFinance) {
 	EXPECT_TRUE(FinanceController::insertFinance(*finance));
+
+	std::string_view queryString = R"(SELECT * FROM Employee WHERE firstName = "Alan" COLLATE NOCASE;)";
+	EXPECT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
+
+	queryString = R"(SELECT * FROM Employee;)";
+	EXPECT_EQ(3, DBManager::instance().executeRowCountQuery(queryString.data()));
 
 	EXPECT_FALSE(FinanceController::insertFinance(*finance)); // FAIL
 }
@@ -40,7 +44,7 @@ TEST_F(FinanceFixture, Test_updateFinance) {
 }
 
 TEST_F(FinanceFixture, Test_getUpdateQueryCondition) {
-	EXPECT_EQ(FinanceControllerTest::getUpdateQueryCondition(*finance), R"(accountingTool = "SAP ERP")");
+	EXPECT_STREQ(FinanceControllerTest::getUpdateQueryCondition(*finance).c_str(), R"(accountingTool = "SAP ERP")");
 
-	EXPECT_NE(FinanceControllerTest::getUpdateQueryCondition(*finance), R"(accountingTooool = "SAP ERP")"); // FAIL
+	EXPECT_STRNE(FinanceControllerTest::getUpdateQueryCondition(*finance).c_str(), R"(accountingTooool = "SAP ERP")"); // FAIL
 }

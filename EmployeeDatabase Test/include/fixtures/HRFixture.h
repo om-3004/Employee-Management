@@ -8,8 +8,10 @@
 using EmployeeDB::Model::HR;
 using EmployeeDB::DBManager;
 
-class HRFixture : public ::testing::Test {
-protected:
+struct HRFixture : public ::testing::Test {
+
+    std::unique_ptr<HR> hr;
+
     void SetUp() override {
         hr = std::make_unique<HR>();
         hr->setEmployeeID(30);
@@ -27,8 +29,6 @@ protected:
         hr->setPerformanceMetric(6);
         hr->setBonus(30000);
         hr->setHRSpecialization("HR Executive");
-
-        emptyHR = std::make_unique<HR>(true);
 
         DBManager::executeConfigQuery();
 
@@ -51,8 +51,6 @@ protected:
         DBManager::instance().executeTruncateQuery("HR");
     }
 
-    std::unique_ptr<HR> hr;
-    std::unique_ptr<HR> emptyHR;
 };
 
 #endif

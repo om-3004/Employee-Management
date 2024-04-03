@@ -62,9 +62,9 @@ void takeTableKeyInput(std::string field, std::array<std::string, 4>& arr, int i
 
 void EmployeeDB::Console::createTable() {
 	std::cin.ignore();
-
 	char a;
 	while (true) {
+		std::cout << "------------------------------------------------- CREATE TABLE ------------------------------------------------------\n\n";
 		std::cout << "\x1B[36mAre you sure you want to continue with the create table operation(0/1): \033[0m";
 		a = std::cin.get();
 
@@ -124,6 +124,7 @@ void EmployeeDB::Console::createTable() {
 						}
 
 						std::vector<std::array<std::string, 3>> columns;
+						columns.reserve(5);
 						std::array<std::string, 3> arr;
 						int colCount = 0;
 
@@ -166,6 +167,7 @@ void EmployeeDB::Console::createTable() {
 								std::cin.ignore();
 								if (yesNo == '1') {
 									std::vector<std::array<std::string, 4>> foreingkey;
+									foreingkey.reserve(2);
 									std::array<std::string, 4> array;
 									while (true) {
 										keyCount++;
@@ -235,6 +237,7 @@ void EmployeeDB::Console::deleteTable() {
 	std::cin.ignore();
 	std::string tableName;
 	while (true) {
+		std::cout << "-------------------------------------------------- DELETE TABLE --------------------------------------------------------\n\n";
 		std::cout << "\x1B[36mEnter 0 to GO BACK or enter the table name which you want to delete: \033[0m";
 		std::getline(std::cin, tableName);
 		if (tableName.size() == 0) {

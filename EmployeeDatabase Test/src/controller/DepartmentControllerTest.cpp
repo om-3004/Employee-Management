@@ -1,10 +1,14 @@
 #include "DepartmentControllerTest.h"
 #include "DepartmentFixture.h"
 
-using EmployeeDB::Controller::DepartmentController;
-
 TEST_F(DepartmentFixture, Test_insertDepartment) {
 	EXPECT_TRUE(DepartmentController::insertDepartment(*department));
+
+	std::string_view queryString = R"(SELECT * FROM Department WHERE departmentName = "Engineering" COLLATE NOCASE;)";
+	EXPECT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
+
+	queryString = R"(SELECT * FROM Department;)";
+	EXPECT_EQ(5, DBManager::instance().executeRowCountQuery(queryString.data()));
 
 	EXPECT_FALSE(DepartmentController::insertDepartment(*department)); // FAIL
 }
@@ -54,7 +58,7 @@ TEST_F(DepartmentFixture, Test_updateDepartment) {
 }
 
 TEST_F(DepartmentFixture, Test_getUpdateQueryCondition) {
-	EXPECT_EQ(DepartmentControllerTest::getUpdateQueryCondition(*department), R"(departmentName = "Engineering", baseSalary = 50000.000000, allowance = 24000.000000, deduction = 500.000000)");
+	EXPECT_STREQ(DepartmentControllerTest::getUpdateQueryCondition(*department).c_str(), R"(departmentName = "Engineering", baseSalary = 50000.000000, allowance = 24000.000000, deduction = 500.000000)");
 	
-	EXPECT_NE(DepartmentControllerTest::getUpdateQueryCondition(*department), R"(departmentName = "Engineeringg", baseSalary = 50000.000000, allowance = 24000.000000, deduction = 500.000000)"); // FAIL
+	EXPECT_STRNE(DepartmentControllerTest::getUpdateQueryCondition(*department).c_str(), R"(departmentName = "Engineeringg", baseSalary = 50000.000000, allowance = 24000.000000, deduction = 500.000000)"); // FAIL
 }

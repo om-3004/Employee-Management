@@ -6,8 +6,7 @@
 
 using EmployeeDB::Model::Salary;
 
-class SalaryFixture : public ::testing::Test {
-protected:
+struct SalaryFixture : public ::testing::Test {
 	void SetUp() override {
 		salary = std::make_unique<Salary>();
 		salary->setDepartmentID(1);

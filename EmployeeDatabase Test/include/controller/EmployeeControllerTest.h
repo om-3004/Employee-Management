@@ -5,7 +5,9 @@
 #include "EmployeeController.h"
 #include "Employee.h"
 
-class EmployeeControllerTest : public EmployeeDB::Controller::EmployeeController {
+using EmployeeDB::Controller::EmployeeController;
+
+class EmployeeControllerTest : public EmployeeController {
 public:
 	static std::string getUpdateQueryCondition(EmployeeDB::Model::Employee& emp) {
 		return EmployeeController::getUpdateQueryCondition(emp);

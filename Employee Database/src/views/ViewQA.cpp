@@ -80,7 +80,7 @@ bool EmployeeDB::Console::updateInQA() {
 	EmployeeDB::Model::QA q{ true };
 	bool x{ true };
 
-	int id = inputID("update", "QA");
+	int id = inputID("Update", "QA");
 
 	if (id == 0) {
 		return false;
@@ -158,7 +158,7 @@ bool EmployeeDB::Console::updateInQA() {
 bool EmployeeDB::Console::deleteInQA() {
 	EmployeeDB::Model::QA q;
 
-	int id = inputID("delete", "QA");
+	int id = inputID("Delete", "QA");
 
 	if (id == 0) {
 		return false;
@@ -183,7 +183,7 @@ bool EmployeeDB::Console::deleteInQA() {
 bool EmployeeDB::Console::viewInQA() {
 
 	char input;
-	bool x = viewOperation(input);
+	bool x = viewOperation(input, "QA");
 	if (!x) {
 		return false;
 	}

@@ -45,7 +45,7 @@ namespace EmployeeDB::Console {
 
 	void matchInpFieldDept(const std::string& inputField, std::string& arg1, std::string& arg2);
 
-	bool viewOperation(char& input);
+	bool viewOperation(char& input, const std::string_view& ent);
 
 	bool insertOperation(char& input, const std::string_view& empType);
 };

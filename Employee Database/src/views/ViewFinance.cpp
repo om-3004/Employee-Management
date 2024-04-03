@@ -84,7 +84,7 @@ bool EmployeeDB::Console::updateInFinance() {
 	bool x{ true };
 	// short int cnt = 0; //for cin.ignore() so it will only ignore once 
 
-	int id = inputID("update", "Finance");
+	int id = inputID("Update", "Finance");
 
 	if (id == 0) {
 		return false;
@@ -162,7 +162,7 @@ bool EmployeeDB::Console::updateInFinance() {
 bool EmployeeDB::Console::deleteInFinance() {
 	EmployeeDB::Model::Finance f;
 
-	int id = inputID("delete", "Finance");
+	int id = inputID("Delete", "Finance");
 
 	if (id == 0) {
 		return false;
@@ -188,7 +188,7 @@ bool EmployeeDB::Console::deleteInFinance() {
 bool EmployeeDB::Console::viewInFinance() {
 
 	char input;
-	bool x = viewOperation(input);
+	bool x = viewOperation(input, "Finance");
 	if (!x) {
 		return false;
 	}

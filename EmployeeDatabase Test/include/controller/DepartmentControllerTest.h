@@ -3,10 +3,12 @@
 
 #include "DepartmentController.h"
 
-class DepartmentControllerTest : public EmployeeDB::Controller::DepartmentController {
+using EmployeeDB::Controller::DepartmentController;
+
+class DepartmentControllerTest : public DepartmentController {
 public:
 	static std::string getUpdateQueryCondition(Department& dept) {
-		return EmployeeDB::Controller::DepartmentController::getUpdateQueryCondition(dept);
+		return DepartmentController::getUpdateQueryCondition(dept);
 	}
 };
 

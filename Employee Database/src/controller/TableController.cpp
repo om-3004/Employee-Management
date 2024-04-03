@@ -11,7 +11,11 @@ std::string EmployeeDB::Controller::TableController::createTableQuery(EmployeeDB
 	query += "\"";
 	query += "(";
 
-	for (auto& col : tab.getColumns()) {
+	auto colCount = columnCount;
+	auto kCount = keyCount;
+
+	for (auto i = 0; i < colCount; i++) {
+		auto& col = tab.getColumns()[i];
 		auto& [columnName, columnType, columnConstraint] = col;
 		query += "\"";
 		query += columnName;
@@ -36,8 +40,10 @@ std::string EmployeeDB::Controller::TableController::createTableQuery(EmployeeDB
 			columnCount--;
 		}
 	}
+
 	if (tab.getForeignKeyConstraint().size() != 0) {
-		for (auto& key : tab.getForeignKeyConstraint()) {
+		for (auto i = 0; i < kCount; i++) {
+			auto& key = tab.getForeignKeyConstraint()[i];
 			auto& [columnName, ParentTableName, ParentTablecolName, Constraints] = key;
 			query += "FOREIGN KEY";
 			query += " (";

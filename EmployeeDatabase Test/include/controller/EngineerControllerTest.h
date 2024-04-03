@@ -5,10 +5,12 @@
 #include "EngineerController.h"
 #include "Engineer.h"
 
-class EngineerControllerTest : public EmployeeDB::Controller::EngineerController {
+using EmployeeDB::Controller::EngineerController;
+
+class EngineerControllerTest : public EngineerController {
 public:
 	static std::string getUpdateQueryCondition(Engineer& eng) {
-		return EmployeeDB::Controller::EngineerController::getUpdateQueryCondition(eng);
+		return EngineerController::getUpdateQueryCondition(eng);
 	}
 };
 

@@ -5,11 +5,14 @@
 #include "Department.h"
 #include "DBManager.h"
 
+using EmployeeDB::DBManager;
+using EmployeeDB::Model::Department;
+
 struct DepartmentFixture : public testing::Test {
-	std::unique_ptr<EmployeeDB::Model::Department> department;
+	std::unique_ptr<Department> department;
 
 	void SetUp() override {
-		department = std::make_unique<EmployeeDB::Model::Department>(true);
+		department = std::make_unique<Department>(true);
 		department->setDepartmentID(1);
 		department->setDepartmentName("Engineering");
 		department->setBaseSalary(50000.00);
@@ -19,11 +22,11 @@ struct DepartmentFixture : public testing::Test {
 
 		std::string_view query = R"(INSERT INTO Department("departmentID", "departmentName", "baseSalary", "allowance", "deduction") VALUES (1, 'Engineer', 65000, 7000, 3000), (2, 'Finance', 65000, 6000, 2500), (3, 'HR', 55000, 4000, 1500), (4, 'QA', 59000, 4800, 1900);)";
 
-		EmployeeDB::DBManager::instance().executeQuery(query.data());
+		DBManager::instance().executeQuery(query.data());
 	}
 
 	void TearDown() override {
-		EmployeeDB::DBManager::instance().executeTruncateQuery("Department");
+		DBManager::instance().executeTruncateQuery("Department");
 	}
 };
 
